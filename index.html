@@ -2,20 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>IRON LOG</title>
-
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#e8ff47">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="IRON LOG">
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<!-- SEO / OG -->
-<meta name="description" content="헬스 운동 기록 앱 — 세트, 중량, 횟수를 빠르게 기록">
-
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -379,14 +367,16 @@ body::after {
 }
 
 .ex-card-icon {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   border-radius: 11px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   font-size: 0;
+  gap: 2px;
 }
 
 .ex-card-body { flex: 1; min-width: 0; }
@@ -520,6 +510,26 @@ body::after {
   transition: border-color 0.2s, box-shadow 0.2s;
   -moz-appearance: textfield;
 }
+
+.set-memo-row td {
+  padding: 0 0 8px 0 !important;
+  border-bottom: none !important;
+}
+.set-memo-inp {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text2);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  padding: 6px 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.set-memo-inp:focus { border-color: var(--accent); color: var(--text0); }
+.set-memo-inp::placeholder { color: var(--text3); font-style: italic; }
 
 .set-inp::-webkit-outer-spin-button,
 .set-inp::-webkit-inner-spin-button { -webkit-appearance: none; }
@@ -2022,6 +2032,13 @@ body::after {
   <div class="view" id="view-history">
     <div class="page-eyebrow">RECORD</div>
     <div class="page-title">HISTORY</div>
+    <div style="margin-bottom:16px;">
+      <input id="historySearch"
+        type="text"
+        placeholder="🔍  운동 검색 (예: 숄더프레스, 스쿼트...)"
+        oninput="renderHistory()"
+        style="width:100%;box-sizing:border-box;background:var(--bg3);border:1px solid var(--border);border-radius:12px;color:var(--text0);font-family:'Barlow Condensed',sans-serif;font-size:15px;padding:11px 14px;outline:none;transition:border-color 0.2s;">
+    </div>
     <div id="historyList"></div>
   </div>
 
@@ -2084,8 +2101,8 @@ body::after {
         <div class="section-label">장비 선택</div>
         <div class="eq-grid" id="eqGrid"></div>
         <div class="eq-memo" id="eqMemo">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">메모 (기타 장비명 등)</div>
-          <textarea class="eq-memo-inp" id="eqMemoText" rows="2" placeholder="예) 스미스머신, 케틀벨, 밴드..."></textarea>
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">머신 종류 메모</div>
+          <textarea class="eq-memo-inp" id="eqMemoText" rows="2" placeholder="예) 싯팅, 스탠딩, 스미스, 펙덱..."></textarea>
         </div>
       </div>
     </div>
@@ -2108,11 +2125,31 @@ body::after {
     </div>
     <div class="sheet-body" id="routineBody"></div>
     <div class="sheet-footer">
-      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:8px;">현재 운동을 루틴으로 저장</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:8px;">루틴 저장</div>
       <div class="save-row">
         <input class="routine-inp" id="routineNameInp" placeholder="루틴 이름 입력...">
         <button class="btn-save-routine" onclick="saveRoutine()">저장</button>
       </div>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button onclick="saveRoutineFromToday()" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:10px;cursor:pointer;">📋 오늘 운동으로 저장</button>
+        <button onclick="openBlankRoutineEditor()" style="flex:1;background:var(--accent-dim);border:1px solid rgba(232,255,71,0.2);border-radius:10px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:10px;cursor:pointer;">✏️ 새 루틴 만들기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ ROUTINE EDITOR MODAL ═══════ -->
+<div class="overlay" id="overlay-routineEditor" onclick="overlayClick(event,'routineEditor')">
+  <div class="sheet" style="max-height:90vh;">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title">✏️ 새 루틴 만들기</div>
+      <button class="sheet-close" onclick="closeModal('routineEditor')">✕</button>
+    </div>
+    <div class="sheet-body" id="routineEditorBody" style="padding:0 16px;"></div>
+    <div class="sheet-footer" style="gap:8px;">
+      <button onclick="addExToRoutineDraft()" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:10px;color:var(--text1);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;padding:12px;cursor:pointer;">+ 운동 추가</button>
+      <button onclick="saveRoutineDraft()" style="flex:2;background:var(--accent);border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;padding:12px;cursor:pointer;">루틴 저장</button>
     </div>
   </div>
 </div>
@@ -2239,6 +2276,13 @@ const EQ_SVGS = {
     <line x1="24" y1="30" x2="24" y2="34" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
     <path d="M18 18 L24 24 L30 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   </svg>`,
+  body: `<svg width="24" height="24" viewBox="0 0 48 48" fill="none">
+    <circle cx="24" cy="9" r="5" fill="currentColor"/>
+    <path d="M24 16 L24 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M14 20 L24 24 L34 20" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 30 L18 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M28 30 L30 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
 };
 
 const TYPES = {
@@ -2253,7 +2297,7 @@ const TYPES = {
         diff:3,
         primary:['대흉근 상부'],secondary:['전면삼각근','삼두근']
       },
-      eq:['dumbell','barbell','cable','machine','other']
+      eq:['dumbell','barbell','cable','machine','body']
     },
     {
       id:'flat-press', name:'플랫 프레스', muscles:'가슴 중앙 · 전면 삼각근 · 삼두',
@@ -2265,7 +2309,7 @@ const TYPES = {
         diff:2,
         primary:['대흉근 중부'],secondary:['전면삼각근','삼두근','전거근']
       },
-      eq:['dumbell','barbell','cable','machine','other']
+      eq:['dumbell','barbell','cable','machine','body']
     },
     {
       id:'decline-press', name:'디클라인 프레스', muscles:'하부 가슴 · 삼두',
@@ -2277,7 +2321,7 @@ const TYPES = {
         diff:3,
         primary:['대흉근 하부'],secondary:['삼두근','전면삼각근']
       },
-      eq:['dumbell','barbell','machine','other']
+      eq:['dumbell','barbell','machine','body']
     },
     {
       id:'fly', name:'플라이', muscles:'가슴 내측 · 전체',
@@ -2289,7 +2333,7 @@ const TYPES = {
         diff:2,
         primary:['대흉근 내측'],secondary:['전면삼각근','전거근']
       },
-      eq:['dumbell','cable','machine','other']
+      eq:['dumbell','cable','machine','body']
     },
     {
       id:'dips', name:'딥스', muscles:'하부 가슴 · 삼두 · 어깨',
@@ -2301,7 +2345,7 @@ const TYPES = {
         diff:3,
         primary:['대흉근 하부','삼두근'],secondary:['전면삼각근']
       },
-      eq:['other'] // bodyweight, weighted
+      eq:['body'] // bodyweight, weighted
     },
   ],
   shoulder: [
@@ -2314,7 +2358,7 @@ const TYPES = {
         tip:'착석 자세로 실시하면 더 안정적입니다.',
         diff:2, primary:['전면삼각근','측면삼각근'], secondary:['삼두근','승모근']
       },
-      eq:['dumbell','barbell','cable','machine','other']
+      eq:['dumbell','barbell','cable','machine','body']
     },
     {
       id:'rear-press', name:'리어 프레스', muscles:'후면 삼각근 · 상부 승모',
@@ -2325,7 +2369,7 @@ const TYPES = {
         tip:'어깨 부상 위험이 있어 초보자에게 권장하지 않습니다.',
         diff:4, primary:['후면삼각근','상부승모근'], secondary:['측면삼각근']
       },
-      eq:['dumbell','barbell','other']
+      eq:['dumbell','barbell','body']
     },
     {
       id:'front-raise', name:'프런트 레이즈', muscles:'전면 삼각근',
@@ -2336,7 +2380,7 @@ const TYPES = {
         tip:'과도한 중량보다 가동 범위를 우선하세요.',
         diff:1, primary:['전면삼각근'], secondary:['상부승모근']
       },
-      eq:['dumbell','barbell','cable','other']
+      eq:['dumbell','barbell','cable','body']
     },
     {
       id:'side-raise', name:'사이드 레이즈', muscles:'측면 삼각근',
@@ -2347,7 +2391,7 @@ const TYPES = {
         tip:'가벼운 중량으로 완전한 가동 범위가 효과적입니다.',
         diff:1, primary:['측면삼각근'], secondary:['승모근']
       },
-      eq:['dumbell','cable','machine','other']
+      eq:['dumbell','cable','machine','body']
     },
     {
       id:'rear-raise', name:'리어 레이즈', muscles:'후면 삼각근 · 회전근개',
@@ -2358,7 +2402,7 @@ const TYPES = {
         tip:'후면 삼각근은 과소평가되기 쉬운 부위입니다. 꾸준히!',
         diff:2, primary:['후면삼각근'], secondary:['회전근개','능형근']
       },
-      eq:['dumbell','cable','machine','other']
+      eq:['dumbell','cable','machine','body']
     },
     {
       id:'reverse-fly', name:'리버스 플라이', muscles:'후면 삼각근 · 등 상부',
@@ -2369,7 +2413,7 @@ const TYPES = {
         tip:'리어 레이즈와 함께 하면 시너지 효과.',
         diff:2, primary:['후면삼각근','능형근'], secondary:['중부승모근']
       },
-      eq:['dumbell','cable','machine','other']
+      eq:['dumbell','cable','machine','body']
     },
     {
       id:'face-pull', name:'페이스 풀', muscles:'후면 삼각근 · 회전근개 · 승모근',
@@ -2380,7 +2424,7 @@ const TYPES = {
         tip:'어깨 부상 예방에 매우 효과적입니다. 모든 운동에 추천.',
         diff:2, primary:['후면삼각근','회전근개'], secondary:['중부승모근','능형근']
       },
-      eq:['cable','other']
+      eq:['cable','body']
     },
   ],
   back: [
@@ -2393,7 +2437,7 @@ const TYPES = {
         tip:'풀업이 힘들면 어시스트 밴드나 네거티브부터.',
         diff:4, primary:['광배근'], secondary:['이두근','후면삼각근','코어']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'chinup', name:'친업', muscles:'광배근 · 이두 (이두 비중↑)',
@@ -2404,7 +2448,7 @@ const TYPES = {
         tip:'풀업보다 상대적으로 쉬워 입문에 좋습니다.',
         diff:3, primary:['광배근','이두근'], secondary:['후면삼각근']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'lat-pulldown', name:'랫 풀다운', muscles:'광배근 · 이두',
@@ -2415,7 +2459,7 @@ const TYPES = {
         tip:'와이드/클로즈/리버스 그립으로 자극 변화를 줘보세요.',
         diff:2, primary:['광배근'], secondary:['이두근','후면삼각근']
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'arm-pulldown', name:'암 풀다운', muscles:'광배근 · 전거근',
@@ -2426,7 +2470,7 @@ const TYPES = {
         tip:'스트레이트암 풀다운이라고도 불립니다.',
         diff:2, primary:['광배근 하부','전거근'], secondary:['삼두근 장두']
       },
-      eq:['cable','other']
+      eq:['cable','body']
     },
     {
       id:'front-row', name:'프런트 로우', muscles:'광배근 · 능형근 · 이두',
@@ -2437,7 +2481,7 @@ const TYPES = {
         tip:'바벨 로우는 중량 운동의 핵심입니다.',
         diff:3, primary:['광배근','능형근'], secondary:['이두근','척추기립근']
       },
-      eq:['dumbell','barbell','machine','other']
+      eq:['dumbell','barbell','machine','body']
     },
     {
       id:'seated-row', name:'시티드 로우', muscles:'광배근 · 능형근 · 이두',
@@ -2448,7 +2492,7 @@ const TYPES = {
         tip:'클로즈 그립은 등 중부, 와이드 그립은 광배근에 집중.',
         diff:2, primary:['광배근','능형근'], secondary:['이두근','후면삼각근']
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'bentover-row', name:'벤트오버 로우', muscles:'광배근 · 능형근 · 척추기립근',
@@ -2459,7 +2503,7 @@ const TYPES = {
         tip:'허리 부상 위험이 있으니 자세를 최우선으로.',
         diff:4, primary:['광배근','능형근'], secondary:['척추기립근','이두근','후면삼각근']
       },
-      eq:['dumbell','barbell','other']
+      eq:['dumbell','barbell','body']
     },
     {
       id:'onearm-row', name:'원암 로우', muscles:'광배근 · 능형근',
@@ -2470,7 +2514,7 @@ const TYPES = {
         tip:'무거운 중량보다 완전한 가동 범위가 우선.',
         diff:2, primary:['광배근'], secondary:['능형근','후면삼각근','이두근']
       },
-      eq:['dumbell','cable','machine','other']
+      eq:['dumbell','cable','machine','body']
     },
     {
       id:'deadlift', name:'데드리프트', muscles:'전신 · 척추기립근 · 둔근 · 햄스트링',
@@ -2481,7 +2525,7 @@ const TYPES = {
         tip:'허리 부상 예방을 위해 자세가 최우선입니다.',
         diff:5, primary:['척추기립근','둔근','햄스트링','광배근'], secondary:['대퇴사두','승모근','코어']
       },
-      eq:['barbell','other']
+      eq:['barbell','body']
     },
     {
       id:'hyperextension', name:'하이퍼 익스텐션', muscles:'척추기립근 · 둔근 · 햄스트링',
@@ -2492,7 +2536,7 @@ const TYPES = {
         tip:'데드리프트와 함께 허리 건강의 핵심입니다.',
         diff:2, primary:['척추기립근'], secondary:['둔근','햄스트링']
       },
-      eq:['dumbell','barbell','machine','other']
+      eq:['dumbell','barbell','machine','body']
     },
   ],
   core: [
@@ -2505,7 +2549,7 @@ const TYPES = {
         tip:'크런치보다 넓은 가동 범위가 특징입니다.',
         diff:1, primary:['복직근 상부'], secondary:['장요근','복사근']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'leg-raise', name:'레그 레이즈', muscles:'복직근 하부 · 장요근',
@@ -2516,7 +2560,7 @@ const TYPES = {
         tip:'하복부는 자극하기 어렵습니다. 느리게!',
         diff:2, primary:['복직근 하부'], secondary:['장요근','복횡근']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'knee-up', name:'니업', muscles:'복직근 하부 · 장요근 · 코어',
@@ -2527,7 +2571,7 @@ const TYPES = {
         tip:'레그 레이즈 숙달 후 도전하세요.',
         diff:3, primary:['복직근 하부','장요근'], secondary:['코어 전체']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'russian-twist', name:'러시안 트위스트', muscles:'복사근 · 복직근',
@@ -2538,7 +2582,7 @@ const TYPES = {
         tip:'메디신볼이나 덤벨로 중량을 추가할 수 있습니다.',
         diff:2, primary:['복사근'], secondary:['복직근','장요근']
       },
-      eq:['dumbell','other']
+      eq:['dumbell','body']
     },
     {
       id:'plank', name:'플랭크', muscles:'코어 전체 · 견갑 안정근',
@@ -2549,7 +2593,7 @@ const TYPES = {
         tip:'30초 → 1분 → 2분 순으로 목표 시간을 높이세요.',
         diff:1, primary:['복횡근','복직근'], secondary:['견갑안정근','둔근','척추기립근']
       },
-      eq:['other']
+      eq:['body']
     },
     {
       id:'ab-slide', name:'AB 슬라이드', muscles:'코어 전체 · 광배근 · 어깨',
@@ -2560,7 +2604,7 @@ const TYPES = {
         tip:'허리 부상 위험이 높습니다. 코어 기본기 후 도전.',
         diff:5, primary:['복횡근','복직근'], secondary:['광배근','전면삼각근']
       },
-      eq:['other']
+      eq:['body']
     },
   ],
   legs: [
@@ -2573,7 +2617,7 @@ const TYPES = {
         tip:'깊이가 핵심입니다. 무거운 중량보다 깊이!',
         diff:3, primary:['대퇴사두','둔근'], secondary:['햄스트링','척추기립근','코어']
       },
-      eq:['dumbell','barbell','machine','other']
+      eq:['dumbell','barbell','machine','body']
     },
     {
       id:'leg-press', name:'레그 프레스', muscles:'대퇴사두 · 둔근',
@@ -2595,7 +2639,7 @@ const TYPES = {
         tip:'무릎 부상이 있을 경우 주의가 필요합니다.',
         diff:1, primary:['대퇴사두'], secondary:[]
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'leg-curl', name:'레그 컬', muscles:'햄스트링 (고립)',
@@ -2606,7 +2650,7 @@ const TYPES = {
         tip:'라잉 레그컬 → 시티드 → 스탠딩 순으로 가동 범위 다름.',
         diff:1, primary:['햄스트링'], secondary:['종아리']
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'adductor', name:'어덕터', muscles:'내전근 (허벅지 내측)',
@@ -2617,7 +2661,7 @@ const TYPES = {
         tip:'골반 안정성과 무릎 건강에도 중요합니다.',
         diff:1, primary:['내전근'], secondary:['박근']
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'abductor', name:'앱덕터', muscles:'외전근 · 중둔근 (허벅지 외측)',
@@ -2628,7 +2672,7 @@ const TYPES = {
         tip:'중둔근 발달은 힙 라인과 무릎 건강에 중요합니다.',
         diff:1, primary:['외전근','중둔근'], secondary:[]
       },
-      eq:['cable','machine','other']
+      eq:['cable','machine','body']
     },
     {
       id:'lunge', name:'런지', muscles:'대퇴사두 · 둔근 · 햄스트링',
@@ -2639,7 +2683,7 @@ const TYPES = {
         tip:'불가리안 스플릿 스쿼트로 발전시킬 수 있습니다.',
         diff:2, primary:['대퇴사두','둔근'], secondary:['햄스트링','코어']
       },
-      eq:['dumbell','barbell','cable','other']
+      eq:['dumbell','barbell','cable','body']
     },
   ],
   cardio: [
@@ -2680,17 +2724,17 @@ const TYPES = {
 
 // Equipment definitions
 const EQUIPMENTS = {
-  dumbell:  { label:'덤벨',  sub:'Dumbbell',  color:'var(--eq-dumbell)',  svgKey:'dumbell' },
-  barbell:  { label:'바벨',  sub:'Barbell',   color:'var(--eq-barbell)',  svgKey:'barbell' },
-  cable:    { label:'케이블', sub:'Cable',    color:'var(--eq-cable)',    svgKey:'cable' },
-  machine:  { label:'머신',  sub:'Machine',   color:'var(--eq-machine)',  svgKey:'machine' },
-  other:    { label:'기타',  sub:'Other / Free', color:'var(--eq-other)', svgKey:'other' },
+  dumbell:  { label:'덤벨',      sub:'Dumbbell',    color:'var(--eq-dumbell)',  svgKey:'dumbell',  hasMemo:false },
+  barbell:  { label:'바벨',      sub:'Barbell',     color:'var(--eq-barbell)',  svgKey:'barbell',  hasMemo:false },
+  cable:    { label:'케이블',    sub:'Cable',       color:'var(--eq-cable)',    svgKey:'cable',    hasMemo:false },
+  machine:  { label:'머신',      sub:'Machine',     color:'var(--eq-machine)',  svgKey:'machine',  hasMemo:true  },
+  body:     { label:'바디웨이트', sub:'Bodyweight',  color:'var(--eq-other)',    svgKey:'body',    hasMemo:false },
 };
 
 // Type-specific equipment overrides (null = all, array = allowed)
 const TYPE_EQ_OVERRIDES = {
   // Special types that don't follow standard equipment
-  'dips':             null, // bodyweight/weighted — uses other only logic
+  'dips':             null,
   'pullup':           null,
   'chinup':           null,
   'situp':            null,
@@ -2789,6 +2833,7 @@ function openModal(id) {
     document.getElementById('eqAddBtnWrap').style.display = 'none';
   }
   if (id==='routine') renderRoutineSheet();
+  if (id==='routineEditor') renderRoutineEditor();
   document.getElementById('overlay-'+id).classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -2894,7 +2939,7 @@ function renderEqStep() {
     </div>
   `;
 
-  const allowedEqs = type.eq || ['dumbell','barbell','cable','machine','other'];
+  const allowedEqs = type.eq || ['dumbell','barbell','cable','machine','body'];
 
   document.getElementById('eqGrid').innerHTML = allowedEqs.map(eqId => {
     const eq = EQUIPMENTS[eqId];
@@ -2921,7 +2966,8 @@ function selectEq(eqId) {
   S.selectedEq = eqId;
   renderEqStep();
   const memo = document.getElementById('eqMemo');
-  memo.classList.toggle('show', eqId==='other');
+  const eq = EQUIPMENTS[eqId];
+  memo.classList.toggle('show', !!(eq && eq.hasMemo));
 }
 
 function updateEqLabel() {
@@ -2942,18 +2988,13 @@ function confirmEquipment() {
   const cat  = CATS.find(c=>c.id===S.activeCat);
   const type = TYPES[S.activeCat]?.find(t=>t.id===S.activeType);
   const eq   = EQUIPMENTS[S.selectedEq];
-  const memo = S.selectedEq==='other' ? (document.getElementById('eqMemoText')?.value||'') : '';
+  const memo = (EQUIPMENTS[S.selectedEq]?.hasMemo) ? (document.getElementById('eqMemoText')?.value||'') : '';
 
-  // Check duplicate
   const key = `${S.activeCat}_${S.activeType}_${S.selectedEq}`;
-  if (S.today.find(e=>e._key===key)) {
-    showToast('이미 추가된 운동입니다');
-    return;
-  }
 
-  const displayName = `${type.name}${eq.label!=="기타"?" — "+eq.label:""}${memo?" ("+memo+")":""}`;
+  const displayName = `${type.name}${eq.label !== "기타" ? " — " + eq.label : ""}${memo ? " (" + memo + ")" : ""}`;
 
-  S.today.push({
+  const newEx = {
     _key: key,
     catId: S.activeCat,
     typeId: S.activeType,
@@ -2968,15 +3009,32 @@ function confirmEquipment() {
     isCardio: !!type.isCardio,
     met: type.met || cat.met,
     muscles: type.muscles,
-    sets: [{ weight: 0, reps: 0, done: false }],
+    sets: [{ weight: 0, reps: 0, done: false, memo: '' }],
     cardio: { time: 0, dist: 0, done: false },
     _open: true,
-  });
+  };
 
   // Reset memo
   const mi = document.getElementById('eqMemoText');
   if (mi) mi.value = '';
   document.getElementById('eqMemo').classList.remove('show');
+
+  // 루틴 편집 모드: draft에 추가
+  if (_routineEditorMode) {
+    _routineEditorMode = false;
+    _routineDraft.exercises.push(newEx);
+    closeModal('exercise');
+    openModal('routineEditor');
+    renderRoutineEditor();
+    return;
+  }
+
+  // 일반 모드: 오늘 운동에 추가
+  if (S.today.find(e => e._key === key)) {
+    showToast('이미 추가된 운동입니다');
+    return;
+  }
+  S.today.push(newEx);
 
   closeModal('exercise');
   renderHomeCards();
@@ -3203,7 +3261,7 @@ function showDetail(e, catId, typeId) {
     </div>`).join('');
 
   // Gear list
-  const allowedEq = type.eq || ['dumbell','barbell','cable','machine','other'];
+  const allowedEq = type.eq || ['dumbell','barbell','cable','machine','body'];
   const gearHTML = allowedEq.map(eqId => {
     const g = GEAR_INFO[eqId];
     const eq = EQUIPMENTS[eqId];
@@ -3451,10 +3509,14 @@ function renderHomeCards() {
       <div class="ex-card-head" onclick="toggleCard(${ei})">
         <div class="ex-card-icon" style="background:${ex.catBg};color:${ex.catColor}">
           ${CAT_SVGS[ex.catId]||""}
+          <div style="font-size:8px;font-weight:800;letter-spacing:1px;margin-top:2px;line-height:1;">${ex.catName}</div>
         </div>
         <div class="ex-card-body">
-          <div class="ex-card-name">${ex.displayName}</div>
-          <div class="ex-card-sub">${ex.catName} · ${setsInfo}</div>
+          <div class="ex-card-name">${ex.typeName}</div>
+          <div class="ex-card-sub" style="display:flex;align-items:center;gap:6px;">
+            ${ex.eqLabel ? `<span style="font-size:10px;font-weight:700;letter-spacing:0.5px;padding:1px 6px;border-radius:4px;background:rgba(255,255,255,0.06);color:var(--text3);">${ex.eqLabel}${ex.eqMemo?" · "+ex.eqMemo:""}</span>` : ""}
+            <span>${setsInfo}</span>
+          </div>
         </div>
         <div class="ex-card-right">
           <div class="ex-card-vol">${toDisplay(volKg)} <span style="font-size:10px;font-weight:400;color:var(--text3)">kg</span></div>
@@ -3492,6 +3554,15 @@ function renderSetsPanel(ex, ei) {
       </td>
       <td>
         <button class="del-set-btn" onclick="delSet(${ei},${si})">✕</button>
+      </td>
+    </tr>
+    <tr class="set-memo-row">
+      <td colspan="5">
+        <input class="set-memo-inp"
+          type="text"
+          value="${s.memo||""}"
+          placeholder="메모 (그립, 머신종류, 좌우 차이 등...)"
+          onchange="upSet(${ei},${si},'memo',this.value)">
       </td>
     </tr>
   `).join('');
@@ -3558,7 +3629,7 @@ function toggleCard(ei) {
 // ═══════════════════════════════════════
 function addSet(ei) {
   const last = S.today[ei].sets.slice(-1)[0];
-  S.today[ei].sets.push({ weight: last?.weight||0, reps: last?.reps||0, done: false });
+  S.today[ei].sets.push({ weight: last?.weight||0, reps: last?.reps||0, done: false, memo: '' });
   S.today[ei]._open = true;
   renderHomeCards();
   updateSummary();
@@ -3575,6 +3646,7 @@ function delSet(ei, si) {
 
 function upSet(ei, si, field, val) {
   if (field==='weight') S.today[ei].sets[si].weight = toKg(parseFloat(val)||0);
+  else if (field==='memo') S.today[ei].sets[si].memo = val;
   else S.today[ei].sets[si][field] = parseInt(val)||0;
   updateSummary();
   persist();
@@ -3708,6 +3780,8 @@ function renderStats() {
 // HISTORY
 // ═══════════════════════════════════════
 function renderHistory() {
+  const searchQ = (document.getElementById('historySearch')?.value||'').trim().toLowerCase();
+
   // Save today into history (live preview only — actual save = finishWorkout)
   let historyToShow = [...S.history];
   if (S.today.length > 0) {
@@ -3724,11 +3798,23 @@ function renderHistory() {
     else historyToShow.unshift(liveEntry);
   }
 
+  // 검색 필터
+  if (searchQ) {
+    historyToShow = historyToShow.map(day => {
+      const matched = day.exercises.filter(ex =>
+        (ex.typeName||'').toLowerCase().includes(searchQ) ||
+        (ex.displayName||'').toLowerCase().includes(searchQ) ||
+        (ex.catName||'').toLowerCase().includes(searchQ)
+      );
+      return matched.length > 0 ? {...day, exercises: matched} : null;
+    }).filter(Boolean);
+  }
+
   const el = document.getElementById('historyList');
   if (historyToShow.length === 0) {
     el.innerHTML = `<div class="empty-state">
       <div class="empty-icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-      <div class="empty-text">히스토리가 없습니다</div>
+      <div class="empty-text">${searchQ ? '"'+searchQ+'" 검색 결과 없음' : '히스토리가 없습니다'}</div>
     </div>`;
     return;
   }
@@ -3757,12 +3843,14 @@ function renderHistory() {
             <div style="width:20px;height:20px;border-radius:5px;background:${ex.catBg};color:${ex.catColor};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               ${CAT_SVGS[ex.catId]||""}
             </div>
-            ${ex.displayName}
+            <span style="color:${ex.catColor};font-size:10px;font-weight:800;letter-spacing:1px;">${ex.catName}</span>
+            ${ex.typeName||ex.displayName}
+            ${ex.eqLabel?`<span style="margin-left:4px;font-size:10px;color:var(--text3);">[${ex.eqLabel}${ex.eqMemo?" · "+ex.eqMemo:""}]</span>`:""}
           </div>
           <div class="history-chips">
             ${ex.isCardio
               ? `<span class="history-chip">${ex.cardio.time}분 · ${ex.cardio.dist}km</span>`
-              : ex.sets.map((s,i)=>`<span class="history-chip">${i+1}. ${s.weight}kg×${s.reps}</span>`).join("")}
+              : ex.sets.map((s,i)=>`<span class="history-chip">${i+1}. ${toDisplay(s.weight)}kg×${s.reps}${s.memo?` <em style="color:var(--text3);font-style:normal;">(${s.memo})</em>`:""}</span>`).join("")}
           </div>
         </div>`).join("")}
     </div>`;
@@ -3793,13 +3881,86 @@ function renderRoutineSheet() {
   `).join('');
 }
 
+// 루틴 draft 상태
+let _routineDraft = { name: '', exercises: [] };
+
+function saveRoutineFromToday() {
+  const name = document.getElementById('routineNameInp').value.trim();
+  if (!name) { showToast('루틴 이름을 입력하세요'); return; }
+  if (S.today.length === 0) { showToast('오늘 운동이 없습니다'); return; }
+  S.routines.push({
+    name,
+    exercises: S.today.map(ex => ({...ex, sets:[{weight:0,reps:0,done:false,memo:''}], cardio:{time:0,dist:0,done:false}, _open:false}))
+  });
+  document.getElementById('routineNameInp').value = '';
+  renderRoutineSheet();
+  persist();
+  showToast(`"${name}" 저장됨`, true);
+}
+
+function openBlankRoutineEditor() {
+  _routineDraft = { name: '', exercises: [] };
+  renderRoutineEditor();
+  closeModal('routine');
+  openModal('routineEditor');
+}
+
+function renderRoutineEditor() {
+  const el = document.getElementById('routineEditorBody');
+  el.innerHTML = `
+    <div style="margin-bottom:14px;margin-top:4px;">
+      <input id="routineDraftName" class="routine-inp" placeholder="루틴 이름..." value="${_routineDraft.name}"
+        oninput="_routineDraft.name=this.value"
+        style="width:100%;box-sizing:border-box;">
+    </div>
+    ${_routineDraft.exercises.length === 0
+      ? `<div style="text-align:center;padding:24px 0;color:var(--text3);font-size:14px;">운동을 추가해보세요</div>`
+      : _routineDraft.exercises.map((ex,i) => `
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:${ex.catBg};color:${ex.catColor};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0;">${CAT_SVGS[ex.catId]||""}</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--text0);">${ex.typeName}</div>
+            <div style="font-size:11px;color:var(--text3);">${ex.catName} · ${ex.eqLabel}</div>
+          </div>
+          <button onclick="removeFromRoutineDraft(${i})" style="background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;padding:4px;">✕</button>
+        </div>`
+      ).join('')}
+  `;
+}
+
+function addExToRoutineDraft() {
+  // 운동 추가 모달을 루틴 편집 모드로 열기
+  _routineEditorMode = true;
+  closeModal('routineEditor');
+  openModal('exercise');
+  goStep('cat');
+}
+
+function removeFromRoutineDraft(i) {
+  _routineDraft.exercises.splice(i, 1);
+  renderRoutineEditor();
+}
+
+function saveRoutineDraft() {
+  const name = _routineDraft.name.trim() || document.getElementById('routineDraftName')?.value.trim();
+  if (!name) { showToast('루틴 이름을 입력하세요'); return; }
+  if (_routineDraft.exercises.length === 0) { showToast('운동을 추가하세요'); return; }
+  S.routines.push({ name, exercises: _routineDraft.exercises });
+  closeModal('routineEditor');
+  persist();
+  showToast(`"${name}" 루틴 저장됨`, true);
+  _routineDraft = { name: '', exercises: [] };
+}
+
+let _routineEditorMode = false;
+
 function saveRoutine() {
   const name = document.getElementById('routineNameInp').value.trim();
   if (!name) { showToast('루틴 이름을 입력하세요'); return; }
   if (S.today.length === 0) { showToast('운동을 먼저 추가하세요'); return; }
   S.routines.push({
     name,
-    exercises: S.today.map(ex => ({...ex, sets:[{weight:0,reps:0,done:false}], cardio:{time:0,dist:0,done:false}, _open:false}))
+    exercises: S.today.map(ex => ({...ex, sets:[{weight:0,reps:0,done:false,memo:''}], cardio:{time:0,dist:0,done:false}, _open:false}))
   });
   document.getElementById('routineNameInp').value = '';
   renderRoutineSheet();
@@ -3844,17 +4005,6 @@ function showToast(msg, accent=false) {
 // START
 // ═══════════════════════════════════════
 init();
-
-// ═══════════════════════════════════════
-// SERVICE WORKER (PWA)
-// ═══════════════════════════════════════
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.log('SW failed:', err));
-  });
-}
 </script>
 </body>
 </html>
