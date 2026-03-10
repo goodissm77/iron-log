@@ -2101,8 +2101,8 @@ body::after {
         <div class="section-label">장비 선택</div>
         <div class="eq-grid" id="eqGrid"></div>
         <div class="eq-memo" id="eqMemo">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">머신 종류 메모</div>
-          <textarea class="eq-memo-inp" id="eqMemoText" rows="2" placeholder="예) 싯팅, 스탠딩, 스미스, 펙덱..."></textarea>
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">메모 (선택)</div>
+          <textarea class="eq-memo-inp" id="eqMemoText" rows="2" placeholder="예) 싯팅, 스탠딩, 와이드그립, 언더그립, 왼쪽 집중..."></textarea>
         </div>
       </div>
     </div>
@@ -2724,11 +2724,11 @@ const TYPES = {
 
 // Equipment definitions
 const EQUIPMENTS = {
-  dumbell:  { label:'덤벨',      sub:'Dumbbell',    color:'var(--eq-dumbell)',  svgKey:'dumbell',  hasMemo:false },
-  barbell:  { label:'바벨',      sub:'Barbell',     color:'var(--eq-barbell)',  svgKey:'barbell',  hasMemo:false },
-  cable:    { label:'케이블',    sub:'Cable',       color:'var(--eq-cable)',    svgKey:'cable',    hasMemo:false },
-  machine:  { label:'머신',      sub:'Machine',     color:'var(--eq-machine)',  svgKey:'machine',  hasMemo:true  },
-  body:     { label:'바디웨이트', sub:'Bodyweight',  color:'var(--eq-other)',    svgKey:'body',    hasMemo:false },
+  dumbell:  { label:'덤벨',      sub:'Dumbbell',    color:'var(--eq-dumbell)',  svgKey:'dumbell',  hasMemo:true },
+  barbell:  { label:'바벨',      sub:'Barbell',     color:'var(--eq-barbell)',  svgKey:'barbell',  hasMemo:true },
+  cable:    { label:'케이블',    sub:'Cable',       color:'var(--eq-cable)',    svgKey:'cable',    hasMemo:true },
+  machine:  { label:'머신',      sub:'Machine',     color:'var(--eq-machine)',  svgKey:'machine',  hasMemo:true },
+  body:     { label:'바디웨이트', sub:'Bodyweight',  color:'var(--eq-other)',    svgKey:'body',     hasMemo:true },
 };
 
 // Type-specific equipment overrides (null = all, array = allowed)
@@ -3509,12 +3509,11 @@ function renderHomeCards() {
       <div class="ex-card-head" onclick="toggleCard(${ei})">
         <div class="ex-card-icon" style="background:${ex.catBg};color:${ex.catColor}">
           ${CAT_SVGS[ex.catId]||""}
-          <div style="font-size:8px;font-weight:800;letter-spacing:1px;margin-top:2px;line-height:1;">${ex.catName}</div>
+          <div style="font-size:11px;font-weight:900;letter-spacing:0.5px;margin-top:3px;line-height:1;">${ex.catName}</div>
         </div>
         <div class="ex-card-body">
-          <div class="ex-card-name">${ex.typeName}</div>
+          <div class="ex-card-name">${ex.typeName}${ex.eqLabel ? ` <span style="font-size:12px;font-weight:600;color:var(--text3);">[${ex.eqLabel}${ex.eqMemo?" · "+ex.eqMemo:""}]</span>` : ""}</div>
           <div class="ex-card-sub" style="display:flex;align-items:center;gap:6px;">
-            ${ex.eqLabel ? `<span style="font-size:10px;font-weight:700;letter-spacing:0.5px;padding:1px 6px;border-radius:4px;background:rgba(255,255,255,0.06);color:var(--text3);">${ex.eqLabel}${ex.eqMemo?" · "+ex.eqMemo:""}</span>` : ""}
             <span>${setsInfo}</span>
           </div>
         </div>
