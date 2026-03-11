@@ -1210,62 +1210,205 @@ body::after {
   color: var(--text3);
 }
 
-/* ─── GEAR EQUIPMENT IMAGE ─── */
-.gear-card {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-  overflow: hidden;
-  padding: 0;
-}
-.gear-img-wrap {
+/* ─── 도구(TOOL) 탭 스타일 ─── */
+
+/* 4분할 사진 그리드 */
+.tool-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
   width: 100%;
-  height: 160px;
+  height: 210px;
+  border-radius: 14px;
   overflow: hidden;
-  position: relative;
-  background: var(--bg4);
+  margin-bottom: 14px;
 }
-.gear-img-wrap img {
+.tool-photo-grid img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.85;
-  filter: saturate(0.85) contrast(1.1);
-  transition: transform 0.3s ease;
+  opacity: 0.88;
+  filter: saturate(0.9) contrast(1.05);
+  display: block;
 }
-.gear-img-wrap:hover img { transform: scale(1.03); }
-.gear-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(12,12,14,0.9) 0%, transparent 60%);
-}
-.gear-img-label {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-.gear-img-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 1.5px;
-  color: #fff;
-  line-height: 1;
-}
-.gear-body {
-  padding: 12px 14px;
-}
-.gear-name { font-size: 15px; font-weight: 700; color: var(--text0); margin-bottom: 2px; }
-.gear-desc { font-size: 12px; color: var(--text3); line-height: 1.4; }
-.gear-footer {
+.tool-photo-grid .photo-placeholder {
+  background: var(--bg4);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 14px 12px;
+  justify-content: center;
+  color: var(--text3);
+  font-size: 20px;
 }
+
+/* 도구 헤더 */
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.tool-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 2px 9px;
+  background: var(--accent-dim);
+}
+.tool-badge-sec {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 9px;
+  background: var(--bg4);
+}
+.tool-name-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--text0);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.tool-desc-main {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* 도구 특징 */
+.tool-features {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.tool-feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.tool-dot {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 5px;
+}
+
+/* 사용 단계 */
+.tool-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.tool-step-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tool-step-num {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+}
+.tool-step-text {
+  font-size: 12px;
+  color: var(--text1);
+  line-height: 1.6;
+  padding-top: 2px;
+}
+
+/* 팁/주의 박스 */
+.tool-tip-box {
+  background: rgba(232,255,71,0.05);
+  border: 1px solid rgba(232,255,71,0.15);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 11px 13px;
+  margin-bottom: 10px;
+}
+.tool-tip-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+.tool-tip-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.tool-caution-box {
+  background: rgba(251,113,133,0.05);
+  border: 1px solid rgba(251,113,133,0.15);
+  border-left: 3px solid #fb7185;
+  border-radius: 10px;
+  padding: 11px 13px;
+  margin-bottom: 10px;
+}
+.tool-caution-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #fb7185;
+  margin-bottom: 5px;
+}
+.tool-caution-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* 기구별 구분 카드 */
+.tool-machine-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.tool-machine-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text0);
+  padding: 10px 14px 6px;
+}
+.tool-machine-body {
+  padding: 0 14px 12px;
+}
+
+/* 구분선 */
+.tool-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
+/* 구 gear 스타일 호환 */
 .gear-how-title {
   font-size: 11px;
   font-weight: 700;
@@ -2098,7 +2241,7 @@ body::after {
           <span id="breadTypeName">--</span>
         </div>
         <div class="type-item" id="eqTypePreview" style="margin-bottom:16px; cursor:default;"></div>
-        <div class="section-label">장비 선택</div>
+        <div class="section-label">도구 선택</div>
         <div class="eq-grid" id="eqGrid"></div>
         <div class="eq-memo" id="eqMemo">
           <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">메모 (선택)</div>
@@ -2108,7 +2251,7 @@ body::after {
     </div>
     <div class="sheet-footer" id="exModalFooter">
       <div id="eqAddBtnWrap" style="display:none;">
-        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;" id="eqSelLabel">장비를 선택하세요</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;" id="eqSelLabel">도구를 선택하세요</div>
         <button class="btn-add" id="eqConfirmBtn" onclick="confirmEquipment()" style="width:100%">추가</button>
       </div>
     </div>
@@ -2864,7 +3007,7 @@ function goStep(step) {
     renderTypeList();
   }
   if (step==='eq') {
-    document.getElementById('exModalTitle').textContent = '장비 선택';
+    document.getElementById('exModalTitle').textContent = '도구 선택';
     renderEqStep();
     document.getElementById('eqAddBtnWrap').style.display = 'block';
   }
@@ -2977,13 +3120,13 @@ function updateEqLabel() {
     lbl.textContent = `${eq.label}로 추가합니다`;
     lbl.style.color = eq.color;
   } else {
-    lbl.textContent = '장비를 선택하세요';
+    lbl.textContent = '도구를 선택하세요';
     lbl.style.color = '';
   }
 }
 
 function confirmEquipment() {
-  if (!S.selectedEq) { showToast('장비를 선택하세요'); return; }
+  if (!S.selectedEq) { showToast('도구를 선택하세요'); return; }
 
   const cat  = CATS.find(c=>c.id===S.activeCat);
   const type = TYPES[S.activeCat]?.find(t=>t.id===S.activeType);
@@ -3190,33 +3333,120 @@ function getMuscleSVG(primary, secondary, catColor) {
 const GEAR_INFO = {
   dumbell: {
     name:'덤벨', note:'추천', rec:true,
-    desc:'자유로운 가동 범위, 좌우 균형 발달에 효과적',
-    img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
-    how:'덤벨 한 쌍을 양손에 쥐고 운동합니다. 좌우 각각 독립적으로 움직여 근육 불균형을 교정하고 자연스러운 관절 움직임을 허용합니다. 초보자부터 고급자까지 모두 사용 가능.'
+    badge:'프리웨이트',
+    badgeSec:'초보~고급',
+    desc:'좌우 독립 움직임으로 가동 범위가 넓고 근육 불균형 교정에 탁월한 자유 중량 도구',
+    imgs:[
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
+      'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80',
+      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&q=80',
+    ],
+    features:['좌우 각각 독립 움직임 → 근육 불균형 교정','바벨보다 넓은 가동 범위로 더 깊은 자극 가능','2kg~50kg+ 다양한 무게로 누구나 사용 가능','관절에 자연스러운 움직임 허용 → 부상 위험 낮음'],
+    steps:[
+      '무게 선택: 12~15회 겨우 할 수 있는 무게로 시작, 자세가 무너지면 즉시 감량',
+      '그립: 손바닥 전체로 단단히 쥐고, 손목이 과도하게 꺾이지 않도록 중립 유지',
+      '운동 중: 좌우가 같은 속도로 움직이도록 의식 — 약한 쪽이 기준',
+      '내릴 때: 올릴 때보다 2~3배 천천히 버티며 이완 (네거티브 자극)',
+    ],
+    tip:'수축 시(올릴 때) 내쉬고, 이완 시(내릴 때) 들이쉬세요. 덤벨은 바벨보다 안정성이 낮으므로 처음엔 거울 앞에서 좌우 균형을 확인하며 운동하는 것이 좋습니다.',
+    caution:'손목이 꺾이거나 팔꿈치가 과하게 흔들리면 무게를 줄이세요. 피로 시 덤벨을 갑자기 내려놓으면 부상 위험 — 천천히 내려두세요.',
   },
   barbell: {
     name:'바벨', note:'고중량', rec:true,
-    desc:'고중량 훈련 가능, 근력 향상에 최적화',
-    img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80',
-    how:'긴 봉 양쪽에 원판을 끼워 사용합니다. 양손으로 동시에 들어 안정성이 높고 최대 중량을 다룰 수 있어 근력 강화에 최적. 스쿼트랙/벤치프레스대와 함께 사용.'
+    badge:'프리웨이트',
+    badgeSec:'근력·매스 특화',
+    desc:'양손 동시 사용으로 최대 중량을 다룰 수 있어 스쿼트·데드리프트·벤치프레스 3대 운동의 핵심 도구',
+    imgs:[
+      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80',
+      'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?w=400&q=80',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
+      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&q=80',
+    ],
+    features:['최대 중량 적재 가능 → 근력·근매스 극대화','양손 동시 사용으로 안정성 높음','표준 봉 무게 20kg, 원판으로 중량 세밀 조절','스쿼트랙·벤치프레스대 등 전용 장치와 함께 사용'],
+    steps:[
+      '원판 장착: 봉 양쪽에 동일한 무게의 원판을 끼우고 클립(칼라)으로 단단히 고정',
+      '랙 높이: 바벨을 꺼낼 때 살짝 들기만 해도 되는 높이 — 어깨보다 약간 아래',
+      '그립: 손목이 일직선 되도록 잡고, 엄지로 봉을 감싸는 풀그립 사용 (훅그립 제외)',
+      '고중량 시: 반드시 보조자(스팟터)와 함께, 세이프티 바 위치 사전 확인 필수',
+    ],
+    tip:'봉이 손바닥 아랫부분(손목 가까이)에 위치해야 손목 부담이 줄어듭니다. 리스트랩을 활용하면 그립 피로를 줄이고 더 무거운 중량에 집중할 수 있어요.',
+    caution:'절대 혼자 최고 중량 도전 금지! 벤치프레스·스쿼트 시 세이프티 바를 반드시 설치하세요. 클립 없이 운동하면 원판이 쏟아질 수 있습니다.',
   },
   cable: {
-    name:'케이블 머신', note:'다양성', rec:false,
-    desc:'지속적인 장력 유지, 다양한 각도 훈련 가능',
-    img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80',
-    how:'풀리 시스템에 연결된 케이블을 당깁니다. 운동 전 범위에 걸쳐 일정한 저항을 제공하며, 높이와 각도를 자유롭게 조절할 수 있어 다양한 변형 동작이 가능합니다.'
+    name:'케이블', note:'다양성', rec:false,
+    badge:'케이블 머신',
+    badgeSec:'다각도 훈련',
+    desc:'운동 전 구간에서 일정한 장력을 유지해 덤벨 대비 더 고른 근육 자극을 주는 풀리 시스템 기구',
+    imgs:[
+      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&q=80',
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80',
+      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+    ],
+    features:['운동 전 구간 일정 저항 → 스트레칭 구간도 자극','높이·각도 자유 조절 → 다양한 운동 변형 가능','로프·바·싱글핸들 등 어태치먼트 교체로 활용 ↑','근육 고립 운동 및 마무리 세트에 최적'],
+    steps:[
+      '높이 설정: 운동 목적에 따라 풀리 위치 조절 — 상단(풀다운), 중단(로우·플라이), 하단(컬·업라이트로우)',
+      '어태치먼트 교체: 로프·바·싱글핸들·발목스트랩 등 목적에 맞게 교체 후 핀 체결 확인',
+      '자세: 케이블 반대 방향으로 체중을 약간 기울여 안정적 기반 확보',
+      '동작 중: 케이블이 항상 팽팽하게 유지 — 완전 이완 시 장력이 끊겨 자극 손실',
+    ],
+    tip:'케이블은 근육이 완전히 늘어난 구간에서도 저항이 유지돼 덤벨보다 효과적인 스트레칭 자극을 줍니다. 마지막 세트에 케이블 번아웃을 추가해 보세요.',
+    caution:'어태치먼트가 제대로 체결되었는지 반드시 확인 후 사용하세요. 고중량 세팅 시 갑작스러운 해제로 인한 부상에 주의하세요.',
   },
   machine: {
-    name:'운동 머신', note:'초보자↑', rec:false,
-    desc:'안전하고 안정적, 초보자 및 고중량 훈련에 적합',
-    img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
-    how:'시트에 앉아 정해진 궤도로 움직이는 기구입니다. 운동 패턴이 고정되어 있어 올바른 자세를 잡기 쉽고, 스포터 없이도 안전하게 고중량을 다룰 수 있습니다.'
+    name:'머신', note:'안전', rec:false,
+    badge:'운동 머신',
+    badgeSec:'초보자 추천',
+    desc:'고정된 움직임 궤도로 올바른 자세를 자동 유도하며, 스팟터 없이도 안전하게 고중량 훈련이 가능한 기구',
+    imgs:[
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80',
+      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&q=80',
+      'https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&q=80',
+    ],
+    features:['고정 궤도 → 올바른 자세 자동 유도 (초보자 최적)','스팟터 없이 안전하게 고중량 가능','핀 하나로 간편한 중량 조절','근육 고립 및 자극 위치 파악에 탁월'],
+    steps:[
+      '시트 조절: 앉았을 때 손잡이·패드가 목표 근육 높이에 오도록 높이 조절 (가장 중요!)','자세 고정: 등·엉덩이를 등받이에 밀착, 발을 지면에 단단히 고정','무게 설정: 핀을 꽂아 중량 설정 — 처음엔 가볍게 시작해서 자세와 자극 확인','동작: 끝까지 완전 수축 후 천천히 이완 — 무게추가 닿기 직전까지만 내리기',
+    ],
+    tip:'머신으로 근육 자극 위치를 확실히 익힌 후 프리웨이트(덤벨·바벨)로 발전하는 것이 가장 효과적인 순서입니다. 머신 → 덤벨 → 바벨 순으로 도전해 보세요.',
+    caution:'머신마다 올바른 조절법이 다릅니다. 처음 사용하는 기구는 헬스장 트레이너에게 세팅법을 먼저 확인하세요. 잘못된 세팅은 관절에 무리를 줄 수 있습니다.',
+  },
+  body: {
+    name:'바디웨이트', note:'언제든', rec:false,
+    badge:'맨몸 운동',
+    badgeSec:'장소 무관',
+    desc:'도구 없이 체중을 저항으로 활용하는 운동. 풀업바·딥스바·저항밴드 추가 시 강도를 대폭 높일 수 있음',
+    imgs:[
+      'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=400&q=80',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
+      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80',
+      'https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=400&q=80',
+    ],
+    features:['도구·장소 필요 없음 — 집·공원 어디서든 가능','체중으로 기능적 움직임 발달 → 일상 동작 향상','풀업바·딥스바·저항밴드 추가 시 강도 ↑','코어 안정성·균형 능력 동시 발달'],
+    steps:[
+      '워밍업: 관절 가동 범위를 충분히 늘린 후 시작 (5~10분) — 부상 예방의 핵심','자세 우선: 중량 없이도 자세가 무너지면 관절이 먼저 손상 — 완벽한 자세부터','난이도 조절: 각도·지지 면적·속도·정지 시간으로 강도 조절','점진적 과부하: 반복 횟수·세트수·속도를 점차 늘려 발전 (같은 동작에 안주 금지)',
+    ],
+    tip:'풀업바(철봉)와 딥스바만 있어도 상체 전반을 완벽히 훈련할 수 있습니다. 저항밴드를 추가하면 하체·어깨·코어까지 다양하게 활용 가능하고 강도 조절도 쉬워져요.',
+    caution:'맨몸 운동이라도 자세가 잘못되면 부상이 생깁니다. 특히 풀업·딥스는 어깨 관절에 부담이 크므로 충분한 워밍업 없이 시작하면 위험합니다.',
   },
   other: {
-    name:'기타 / 맨몸', note:'기타', rec:false,
-    desc:'맨몸·특수 장비·보조기구 등을 사용하는 운동',
-    img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80',
-    how:'맨몸 운동이나 풀업바, 딥스바, 케틀벨, 저항밴드 등 다양한 보조 장비를 활용합니다. 어디서든 할 수 있어 접근성이 높고 기능적 움직임을 강조합니다.'
+    name:'바디웨이트', note:'언제든', rec:false,
+    badge:'맨몸 운동',
+    badgeSec:'장소 무관',
+    desc:'도구 없이 체중을 저항으로 활용하는 운동. 풀업바·딥스바·저항밴드 추가 시 강도를 대폭 높일 수 있음',
+    imgs:[
+      'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=400&q=80',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80',
+      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80',
+      'https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=400&q=80',
+    ],
+    features:['도구·장소 필요 없음 — 집·공원 어디서든 가능','체중으로 기능적 움직임 발달 → 일상 동작 향상','풀업바·딥스바·저항밴드 추가 시 강도 ↑','코어 안정성·균형 능력 동시 발달'],
+    steps:[
+      '워밍업: 관절 가동 범위를 충분히 늘린 후 시작 (5~10분) — 부상 예방의 핵심','자세 우선: 중량 없이도 자세가 무너지면 관절이 먼저 손상 — 완벽한 자세부터','난이도 조절: 각도·지지 면적·속도·정지 시간으로 강도 조절','점진적 과부하: 반복 횟수·세트수·속도를 점차 늘려 발전',
+    ],
+    tip:'풀업바(철봉)와 딥스바만 있어도 상체 전반을 완벽히 훈련할 수 있습니다. 저항밴드를 추가하면 하체·어깨·코어까지 다양하게 활용 가능해요.',
+    caution:'맨몸 운동이라도 자세가 잘못되면 부상이 생깁니다. 특히 풀업·딥스는 어깨 관절에 부담이 크므로 충분한 워밍업 없이 시작하면 위험합니다.',
   },
 };
 
@@ -3260,27 +3490,40 @@ function showDetail(e, catId, typeId) {
       </div>
     </div>`).join('');
 
-  // Gear list
+  // Tool list — 4분할 사진 그리드 + 상세 사용법
   const allowedEq = type.eq || ['dumbell','barbell','cable','machine','body'];
   const gearHTML = allowedEq.map(eqId => {
     const g = GEAR_INFO[eqId];
     const eq = EQUIPMENTS[eqId];
     if (!g || !eq) return '';
+    const imgs = g.imgs || (g.img ? [g.img] : []);
+    const photoItems = Array(4).fill(null).map((_,i) =>
+      imgs[i]
+        ? `<img src="${imgs[i]}" alt="${g.name} ${i+1}" loading="lazy" onerror="this.outerHTML='<div class=\\"photo-placeholder\\">📷</div>'">`
+        : `<div class="photo-placeholder">📷</div>`
+    ).join('');
+    const featureRows = (g.features||[]).map(f =>
+      `<div class="tool-feature-row"><div class="tool-dot"></div><span>${f}</span></div>`
+    ).join('');
+    const stepRows = (g.steps||[]).map((s,i) =>
+      `<div class="tool-step-row"><div class="tool-step-num">${i+1}</div><div class="tool-step-text">${s}</div></div>`
+    ).join('');
     return `
-    <div class="gear-card">
-      <div class="gear-img-wrap">
-        <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.parentElement.style.background='var(--bg4)';this.style.display='none'"/>
-        <div class="gear-img-overlay"></div>
-        <div class="gear-img-label">
-          <div style="width:32px;height:32px;background:rgba(0,0,0,0.5);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${eq.color};flex-shrink:0;border:1px solid rgba(255,255,255,0.1);">${EQ_SVGS[eq.svgKey]||""}</div>
-          <div class="gear-img-name">${g.name}</div>
+    <div class="tool-machine-card">
+      <div class="tool-photo-grid">${photoItems}</div>
+      <div class="tool-machine-body">
+        <div class="tool-name-big">${g.name}</div>
+        <div class="tool-header">
+          <span class="tool-badge">${g.badge||g.note}</span>
+          ${g.badgeSec ? `<span class="tool-badge-sec">${g.badgeSec}</span>` : ""}
         </div>
-      </div>
-      <div class="gear-body">
-        <div class="gear-badge ${g.rec?"rec":""}" style="display:inline-block;margin-bottom:6px;">${g.note}</div>
-        <div class="gear-desc">${g.desc}</div>
-        <div class="gear-how-title" style="margin-top:10px;">사용 방법</div>
-        <div class="gear-how-text">${g.how}</div>
+        <div class="tool-desc-main">${g.desc}</div>
+        ${featureRows ? `<div class="tool-features">${featureRows}</div>` : ""}
+        <div class="tool-divider"></div>
+        <div class="gear-how-title">사용법 단계</div>
+        <div class="tool-steps">${stepRows}</div>
+        ${g.tip ? `<div class="tool-tip-box"><div class="tool-tip-label">💡 꿀팁</div><div class="tool-tip-text">${g.tip}</div></div>` : ""}
+        ${g.caution ? `<div class="tool-caution-box"><div class="tool-caution-label">⚠️ 주의사항</div><div class="tool-caution-text">${g.caution}</div></div>` : ""}
       </div>
     </div>`;
   }).join('');
@@ -3309,7 +3552,7 @@ function showDetail(e, catId, typeId) {
     <div class="guide-tabs">
       <button class="guide-tab active" data-tab="guide" onclick="switchGuideTab('guide')">가이드</button>
       <button class="guide-tab" data-tab="muscles" onclick="switchGuideTab('muscles')">근육</button>
-      <button class="guide-tab" data-tab="gear" onclick="switchGuideTab('gear')">장비</button>
+      <button class="guide-tab" data-tab="gear" onclick="switchGuideTab('gear')">도구</button>
     </div>
 
     <!-- PANELS -->
@@ -3329,7 +3572,7 @@ function showDetail(e, catId, typeId) {
           </div>
           <div class="guide-stat-card">
             <div class="guide-stat-val">${allowedEq.length}</div>
-            <div class="guide-stat-lbl">장비 선택</div>
+            <div class="guide-stat-lbl">도구 선택</div>
           </div>
         </div>
 
@@ -3377,7 +3620,7 @@ function showDetail(e, catId, typeId) {
 
       <!-- GEAR PANEL -->
       <div class="guide-panel" data-panel="gear">
-        <div class="detail-section-title" style="margin-bottom:12px;">사용 가능 장비</div>
+        <div class="detail-section-title" style="margin-bottom:12px;">사용 가능 도구</div>
         <div class="gear-list">${gearHTML}</div>
       </div>
 
