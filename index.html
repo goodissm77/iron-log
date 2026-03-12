@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#050506">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="IRON LOG">
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="/iron-log/manifest.json">
 <title>IRON LOG</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -1568,75 +1569,6 @@ body::after {
   gap: 8px;
 }
 
-/* ─── MACHINE GRID (도구탭) ─── */
-.machine-grid-header {
-  padding: 14px 16px 10px;
-}
-.machine-grid-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 1.5px;
-  color: var(--text0);
-}
-.machine-grid-sub {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 2px;
-}
-.machine-grid {
-  display: grid;
-  gap: 3px;
-  padding: 0 0 0 0;
-}
-.machine-grid.grid-4 {
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-.machine-grid.grid-2 {
-  grid-template-columns: 1fr 1fr;
-}
-.machine-grid-cell {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg4);
-  aspect-ratio: 4/3;
-}
-.machine-grid-cell img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.88;
-  filter: saturate(0.85) contrast(1.05);
-  transition: transform 0.3s ease, opacity 0.3s;
-}
-.machine-grid-cell:hover img { transform: scale(1.04); opacity: 1; }
-.machine-how-box {
-  margin: 14px 16px 0;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-}
-.machine-how-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text1);
-  margin-bottom: 8px;
-}
-.machine-how-text {
-  font-size: 12px;
-  color: var(--text3);
-  line-height: 1.7;
-}
-.no-machine-msg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-
 .gear-card {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -1672,6 +1604,75 @@ body::after {
   white-space: nowrap;
 }
 .gear-badge.rec { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+/* ─── MACHINE GRID & HOWTO (도구·운동법 탭) ─── */
+.machine-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.machine-grid-cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg4);
+  aspect-ratio: 4/3;
+}
+.machine-grid-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: saturate(0.85) contrast(1.05);
+  transition: transform 0.3s, opacity 0.2s;
+}
+.machine-grid-cell:hover img { transform: scale(1.04); opacity: 1; }
+.machine-grid-cell .cell-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.82));
+  padding: 18px 8px 6px;
+  font-size: 10px; font-weight: 700; color: #fff; letter-spacing: 0.3px;
+}
+.machine-grid-cell .cell-num {
+  position: absolute; top: 6px; left: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; color: #000;
+}
+.machine-section-title {
+  font-size: 13px; font-weight: 800; color: var(--text0);
+  letter-spacing: 0.4px; margin-bottom: 4px;
+}
+.machine-section-sub {
+  font-size: 11px; color: var(--text3); margin-bottom: 12px; line-height: 1.5;
+}
+.machine-how-box {
+  margin: 12px 0 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.machine-how-title {
+  font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 8px;
+}
+.machine-how-text {
+  font-size: 12px; color: var(--text3); line-height: 1.7;
+}
+.no-machine-box {
+  text-align: center; padding: 36px 20px;
+}
+.howto-steps { margin: 12px 0; }
+.howto-step {
+  display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start;
+}
+.howto-step-num {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900;
+  flex-shrink: 0; margin-top: 1px;
+}
+.howto-step-text {
+  font-size: 13px; color: var(--text1); line-height: 1.55;
+}
+
 
 /* Guide sheet override — bigger */
 #overlay-detail .sheet {
@@ -3262,6 +3263,437 @@ function getMuscleSVG(primary, secondary, catColor) {
 
 // ── GEAR INFO per equipment ID ──
 
+// ═══════════════════════════════════════════════════════
+// MACHINE_PHOTOS - 도구탭: 운동별 머신 종류 사진 4분할
+// ═══════════════════════════════════════════════════════
+const MACHINE_PHOTOS = {
+  // 가슴
+  'flat-press': {
+    title: '체스트 프레스 머신',
+    desc: '앉아서 수행하는 가슴 전용 머신. 궤도가 고정되어 초보자도 안전하게 대흉근을 자극합니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Chest-Press.gif', label: '체스트 프레스 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Bench-Press.gif', label: '스미스 머신 벤치 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Hammer-Strength-Chest-Press.gif', label: '해머 스트렝스 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Decline-Chest-Press-Machine.gif', label: '디클라인 체스트 프레스' },
+    ]
+  },
+  'incline-press': {
+    title: '인클라인 프레스 머신',
+    desc: '상부 가슴을 집중 공략하는 경사형 프레스 머신. 30~45도 각도로 쇄골 아래 상부 가슴을 키웁니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Chest-Press-Machine.gif', label: '인클라인 체스트 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Incline-Bench-Press.gif', label: '스미스 머신 인클라인' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Incline-Fly.gif', label: '인클라인 케이블 플라이' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Chest-Press.gif', label: '해머 스트렝스 인클라인' },
+    ]
+  },
+  'fly': {
+    title: '펙 덱 플라이 & 케이블 크로스오버',
+    desc: '가슴 내측 선명도를 높이는 플라이 계열 머신. 펙 덱과 케이블 크로스오버 두 종류가 대표적입니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif', label: '펙 덱 플라이 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Crossover.gif', label: '케이블 크로스오버' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/High-Cable-Fly.gif', label: '케이블 플라이 (하이)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Low-Cable-Fly.gif', label: '케이블 플라이 (로우)' },
+    ]
+  },
+  // 어깨
+  'front-press': {
+    title: '숄더 프레스 머신',
+    desc: '어깨 전·측면 삼각근을 발달시키는 프레스 머신. 시티드, 스미스 등 다양한 형태가 있습니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Shoulder-Press.gif', label: '숄더 프레스 머신 (시티드)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Seated-Shoulder-Press.gif', label: '스미스 머신 숄더 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Plate-Loaded-Shoulder-Press.gif', label: '플레이트 로디드 숄더 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Overhead-Press.gif', label: '케이블 오버헤드 프레스' },
+    ]
+  },
+  'rear-raise': {
+    title: '리어 델트 플라이 머신',
+    desc: '후면 삼각근 고립 머신. 펙 덱을 역방향으로 사용하거나 전용 리어 델트 머신을 활용합니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Fly.gif', label: '리어 델트 플라이 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Rear-Delt-Fly.gif', label: '케이블 리어 델트 플라이' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif', label: '펙 덱 역방향 사용' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Cable-Crossover.gif', label: '리버스 케이블 크로스오버' },
+    ]
+  },
+  'face-pull': {
+    title: '케이블 페이스 풀',
+    desc: '케이블 머신에 로프를 연결해 수행. 풀리를 얼굴 높이에 세팅하고 당깁니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Face-Pull.gif', label: '페이스 풀 (로프)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Rear-Delt-Fly.gif', label: '케이블 리어 델트' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Crossover.gif', label: '케이블 크로스 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Cable-Crossover.gif', label: '리버스 케이블' },
+    ]
+  },
+  // 등
+  'lat-pulldown': {
+    title: '랫 풀다운 머신',
+    desc: '광배근을 집중 발달시키는 풀다운 머신. 와이드·언더·클로즈 그립 등 다양한 변형이 가능합니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif', label: '랫 풀다운 (와이드 그립)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Grip-Lat-Pulldown.gif', label: '리버스 그립 풀다운' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Close-Grip-Lat-Pulldown.gif', label: '클로즈 그립 풀다운' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Straight-Arm-Lat-Pulldown.gif', label: '스트레이트 암 풀다운' },
+    ]
+  },
+  'seated-row': {
+    title: '시티드 로우 머신',
+    desc: '앉아서 당기는 로잉 머신. 광배근·능형근·이두근을 자극합니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif', label: '케이블 시티드 로우' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Seated-Row.gif', label: '레버리지 시티드 로우' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Row-Machine.gif', label: '시티드 로우 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Close-Grip-Seated-Cable-Row.gif', label: '클로즈 그립 로우' },
+    ]
+  },
+  'hyperextension': {
+    title: '하이퍼익스텐션 벤치 (로만 체어)',
+    desc: '척추기립근과 둔근을 단련하는 전용 벤치. 45도형과 수평형, GHD 머신 등 여러 종류가 있습니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Back-Extension.gif', label: '45도 하이퍼익스텐션' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Back-Extension.gif', label: '웨이티드 백 익스텐션' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/GHD-Back-Extension.gif', label: 'GHD 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Back-Extension.gif', label: '케이블 백 익스텐션' },
+    ]
+  },
+  // 하체
+  'squat': {
+    title: '스쿼트 랙 & 스미스 머신',
+    desc: '바벨 스쿼트를 안전하게 수행하기 위한 파워랙, 스미스 머신, 핵 스쿼트 머신 등.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Squat.gif', label: '바벨 스쿼트 (파워랙)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Squat.gif', label: '스미스 머신 스쿼트' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Hack-Squat.gif', label: '핵 스쿼트 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Belt-Squat.gif', label: '벨트 스쿼트 머신' },
+    ]
+  },
+  'leg-press': {
+    title: '레그 프레스 머신',
+    desc: '대퇴사두·둔근을 안전하게 단련하는 하체 전문 머신. 45도 경사형과 수평형 두 종류가 일반적입니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Press.gif', label: '45도 레그 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Horizontal-Leg-Press.gif', label: '수평형 레그 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Single-Leg-Press.gif', label: '싱글 레그 프레스' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Wide-Stance-Leg-Press.gif', label: '와이드 스탠스 레그 프레스' },
+    ]
+  },
+  'leg-extension': {
+    title: '레그 익스텐션 머신',
+    desc: '대퇴사두근을 고립 단련하는 단관절 머신. 앉아서 발판을 올리는 방식입니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Extension.gif', label: '레그 익스텐션 머신' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Single-Leg-Extension.gif', label: '싱글 레그 익스텐션' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Leg-Extension.gif', label: '레버 레그 익스텐션' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Leg-Extension.gif', label: '케이블 레그 익스텐션' },
+    ]
+  },
+  'leg-curl': {
+    title: '레그 컬 머신',
+    desc: '햄스트링을 고립 단련하는 머신. 라잉(엎드린), 시티드(앉은), 스탠딩 세 가지 형태가 있습니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Curl.gif', label: '라잉 레그 컬 (엎드린)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Leg-Curl.gif', label: '시티드 레그 컬 (앉은)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Standing-Leg-Curl.gif', label: '스탠딩 레그 컬' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Leg-Curl.gif', label: '케이블 레그 컬' },
+    ]
+  },
+  'adductor': {
+    title: '어덕터 & 앱덕터 머신',
+    desc: '내전근(어덕터)과 외전근(앱덕터)을 전문으로 단련하는 머신. 대부분 한 기구로 양쪽 다 사용 가능합니다.',
+    photos: [
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Hip-Adduction-Machine.gif', label: '어덕터 머신 (모으기)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Hip-Abduction-Machine.gif', label: '앱덕터 머신 (벌리기)' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Hip-Adduction.gif', label: '케이블 힙 어덕션' },
+      { url: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Hip-Abduction.gif', label: '케이블 힙 앱덕션' },
+    ]
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+// WORKOUT_METHODS - 운동법탭: 동작 사진 4분할 + 단계별 설명
+// ═══════════════════════════════════════════════════════
+const WORKOUT_METHODS = {
+  // 가슴
+  'flat-press': {
+    title: '플랫 벤치 프레스 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bench-Press.gif', label: '① 시작 자세 (바 언랙)' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Bench-Press.gif', label: '② 덤벨 벤치 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Bench-Press.gif', label: '③ 스미스 머신 변형' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Chest-Press.gif', label: '④ 머신 체스트 프레스' },
+    ],
+    steps: [
+      '벤치에 누워 어깨너비보다 약간 넓게 바를 잡습니다. 팔꿈치가 75~80도 각도가 되게 조절하세요.',
+      '견갑골을 벤치에 고정하고 허리는 자연스럽게 아치를 유지합니다.',
+      '숨을 들이마시며 바를 가슴 중앙(젖꼭지 라인)까지 천천히 내립니다.',
+      '숨을 내쉬며 가슴 근육으로 밀어 올립니다. 팔꿈치를 완전히 다 펴지 않아도 됩니다.',
+    ],
+    tip: '팔꿈치가 너무 벌어지면 어깨 부상 위험이 있습니다. 몸통 기준 약 75도 각도를 유지하세요.'
+  },
+  'incline-press': {
+    title: '인클라인 프레스 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Barbell-Bench-Press.gif', label: '① 인클라인 바벨 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif', label: '② 인클라인 덤벨 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Chest-Press-Machine.gif', label: '③ 인클라인 머신 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Dumbbell-Fly.gif', label: '④ 인클라인 덤벨 플라이' },
+    ],
+    steps: [
+      '벤치 각도를 30~45도로 조절합니다. 각도가 너무 높으면 어깨 운동이 됩니다.',
+      '바를 쇄골 바로 아래 가슴 상단에 내립니다.',
+      '견갑골을 모아 등받이에 고정하고 상부 가슴 근육으로 밀어 올립니다.',
+      '동작 내내 가슴 상부에 자극이 느껴지는지 확인하며 수행합니다.',
+    ],
+    tip: '30도 각도가 45도보다 상부 가슴을 더 잘 자극합니다. 처음에는 낮은 각도로 시작하세요.'
+  },
+  'fly': {
+    title: '케이블 플라이 & 펙 덱 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Crossover.gif', label: '① 케이블 크로스오버' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pec-Deck-Fly.gif', label: '② 펙 덱 플라이 머신' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/High-Cable-Fly.gif', label: '③ 하이 케이블 플라이' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Dumbbell-Fly.gif', label: '④ 인클라인 덤벨 플라이' },
+    ],
+    steps: [
+      '케이블 풀리를 어깨 높이 또는 위로 설정하고 양 핸들을 잡습니다.',
+      '한 발을 앞으로 내밀어 중심을 잡고 상체를 살짝 앞으로 기울입니다.',
+      '큰 나무를 안는 느낌으로 팔꿈치를 살짝 굽혀 가슴 앞으로 모읍니다.',
+      '가슴 안쪽이 쥐어짜지는 자극에 집중하고 천천히 되돌립니다.',
+    ],
+    tip: '팔꿈치 각도를 처음부터 끝까지 동일하게 유지하는 것이 핵심입니다.'
+  },
+  'dips': {
+    title: '딥스 & 디클라인 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Chest-Dip.gif', label: '① 체스트 딥스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Decline-Push-Up.gif', label: '② 디클라인 푸쉬업' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Dip.gif', label: '③ 웨이티드 딥스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Chest-Dip.gif', label: '④ 머신 딥스 (보조)' },
+    ],
+    steps: [
+      '평행봉을 잡고 팔을 펴서 몸을 들어 올립니다.',
+      '상체를 앞으로 30도 숙이고 무릎을 살짝 굽혀 뒤로 모읍니다.',
+      '팔꿈치가 90도 될 때까지 천천히 몸을 내립니다.',
+      '가슴 근육의 힘으로 밀어 올립니다. 팔을 완전히 펴지 않아요.',
+    ],
+    tip: '상체를 세우면 삼두 운동, 앞으로 숙이면 가슴 하부 운동이 됩니다.'
+  },
+  // 어깨
+  'front-press': {
+    title: '밀리터리 프레스 & 아놀드 프레스 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Military-Press.gif', label: '① 바벨 밀리터리 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Arnold-Press.gif', label: '② 아놀드 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Machine-Shoulder-Press.gif', label: '③ 머신 숄더 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Seated-Shoulder-Press.gif', label: '④ 시티드 덤벨 프레스' },
+    ],
+    steps: [
+      '바벨을 쇄골 위에 놓고 어깨너비보다 약간 넓게 잡습니다.',
+      '발을 어깨너비로 벌리고 코어를 긴장시킵니다.',
+      '바벨을 머리 위로 수직으로 밀어 올립니다. 허리 반동 금지!',
+      '무게를 버티며 천천히 쇄골 위치까지 내립니다.',
+    ],
+    tip: '허리가 뒤로 꺾이지 않도록 복압을 유지하는 것이 가장 중요합니다.'
+  },
+  'side-raise': {
+    title: '사이드 레이즈 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif', label: '① 덤벨 사이드 레이즈' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Lateral-Raise.gif', label: '② 케이블 사이드 레이즈' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Machine-Lateral-Raise.gif', label: '③ 머신 사이드 레이즈' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Plate-Front-Raise.gif', label: '④ 프런트 레이즈 변형' },
+    ],
+    steps: [
+      '덤벨을 양옆에 두고 발은 어깨너비로 벌립니다.',
+      '팔꿈치를 살짝 굽힌 채로 어깨 높이까지 옆으로 들어 올립니다.',
+      '어깨가 귀 쪽으로 으쓱 올라가지 않도록 주의합니다.',
+      '근육 긴장을 유지하면서 천천히 내립니다.',
+    ],
+    tip: '새끼손가락이 약간 위를 향하도록 기울이면 측면 삼각근 자극이 더 강해집니다.'
+  },
+  'rear-raise': {
+    title: '리어 레이즈 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Fly.gif', label: '① 리어 델트 머신' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Lateral-Raise.gif', label: '② 벤트오버 레터럴 레이즈' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Rear-Delt-Fly.gif', label: '③ 케이블 리어 델트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Fly.gif', label: '④ 덤벨 리버스 플라이' },
+    ],
+    steps: [
+      '덤벨을 잡고 상체를 앞으로 숙여 바닥과 평행하게 만듭니다.',
+      '허리를 곧게 펴고 복부에 힘을 주어 고정합니다.',
+      '팔꿈치를 살짝 굽혀 어깨 후면 근육으로 양옆으로 들어 올립니다.',
+      '날개뼈를 너무 조이지 말고 어깨 뒷부분 자극에 집중합니다.',
+    ],
+    tip: '인클라인 벤치에 엎드려 수행하면 허리 부담 없이 더 정확하게 할 수 있습니다.'
+  },
+  'face-pull': {
+    title: '페이스 풀 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Face-Pull.gif', label: '① 케이블 페이스 풀' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Cable-Rear-Delt-Fly.gif', label: '② 케이블 리어 델트 플라이' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Cable-Crossover.gif', label: '③ 리버스 케이블 크로스오버' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Fly.gif', label: '④ 리어 델트 머신 플라이' },
+    ],
+    steps: [
+      '케이블 도르래를 얼굴 높이 또는 그보다 약간 높게 설정합니다.',
+      '로프 손잡이를 연결하고 양손으로 잡습니다.',
+      '팔꿈치를 어깨보다 높게 유지하면서 코 방향으로 당깁니다.',
+      '최고 수축 지점에서 손등이 뒤를 향하도록 외회전시킵니다.',
+    ],
+    tip: '무게보다 정확한 자세가 중요합니다. 가벼운 무게로 근육 수축을 충분히 느끼세요.'
+  },
+  // 등
+  'lat-pulldown': {
+    title: '랫 풀다운 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif', label: '① 와이드 그립 풀다운' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Grip-Lat-Pulldown.gif', label: '② 리버스 그립 풀다운' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Close-Grip-Lat-Pulldown.gif', label: '③ 클로즈 그립 풀다운' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Straight-Arm-Lat-Pulldown.gif', label: '④ 스트레이트 암 풀다운' },
+    ],
+    steps: [
+      '패드를 허벅지에 단단히 고정하고 바를 어깨너비보다 넓게 잡습니다.',
+      '상체를 약간 뒤로 기울이고 가슴을 활짝 펍니다.',
+      '팔꿈치를 아래로 당긴다는 느낌으로 바를 가슴 윗부분까지 당깁니다.',
+      '광배근이 최대로 수축되는 지점에서 1초 멈추고 천천히 올립니다.',
+    ],
+    tip: '팔(이두근) 힘이 아닌 팔꿈치를 주머니에 넣는다는 느낌으로 등 근육을 먼저 사용하세요.'
+  },
+  'seated-row': {
+    title: '시티드 로우 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif', label: '① 케이블 시티드 로우' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Seated-Row.gif', label: '② 레버리지 시티드 로우' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Row-Machine.gif', label: '③ 머신 시티드 로우' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Close-Grip-Seated-Cable-Row.gif', label: '④ 클로즈 그립 로우' },
+    ],
+    steps: [
+      '발판에 발을 고정하고 무릎을 살짝 굽힙니다.',
+      '상체를 세우고 복압을 유지합니다. 허리를 구부리지 마세요.',
+      '손잡이를 배꼽 방향으로 당기고 팔꿈치가 몸 뒤로 지나갈 때 등 중앙을 조입니다.',
+      '천천히 팔을 앞으로 펴 처음 위치로 돌아갑니다.',
+    ],
+    tip: '당기는 동작보다 되돌리는 동작(이완)에서 더 천천히 버티면 자극이 배가됩니다.'
+  },
+  'deadlift': {
+    title: '데드리프트 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Deadlift.gif', label: '① 컨벤셔널 데드리프트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Romanian-Deadlift.gif', label: '② 루마니안 데드리프트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Sumo-Deadlift.gif', label: '③ 스모 데드리프트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Deadlift.gif', label: '④ 덤벨 데드리프트' },
+    ],
+    steps: [
+      '바벨 앞에서 발을 골반 너비로 벌리고 미드풋 위에 바가 오게 합니다.',
+      '상체를 숙여 어깨너비로 바를 잡고 가슴을 펴고 허리를 중립으로 합니다.',
+      '복압을 유지하며 바닥을 발로 밀어내듯 들어 올립니다. 바는 몸에 밀착!',
+      '역순으로 엉덩이를 뒤로 빼며 천천히 바닥에 내립니다.',
+    ],
+    tip: '바벨이 몸에서 멀어질수록 허리 부담이 급격히 늘어납니다. 항상 몸에 붙여서 수행하세요.'
+  },
+  'hyperextension': {
+    title: '하이퍼익스텐션 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Back-Extension.gif', label: '① 기본 하이퍼익스텐션' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Back-Extension.gif', label: '② 웨이티드 백 익스텐션' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/GHD-Back-Extension.gif', label: '③ GHD 백 익스텐션' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Glute-Ham-Raise.gif', label: '④ 글루트 햄 레이즈' },
+    ],
+    steps: [
+      '패드를 골반 아래에 맞추고 발판에 발을 단단히 고정합니다.',
+      '팔을 가슴 위에 교차하거나 머리 뒤에 가볍게 댑니다.',
+      '허리를 곧게 편 상태로 천천히 상체를 앞으로 숙입니다.',
+      '허리 기립근의 힘으로 몸이 일직선 될 때까지만 올라옵니다.',
+    ],
+    tip: '과신전(뒤로 너무 젖히기)은 척추에 무리를 줍니다. 몸이 일직선이 한계선입니다.'
+  },
+  // 하체
+  'squat': {
+    title: '스쿼트 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Squat.gif', label: '① 바벨 백 스쿼트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Front-Squat.gif', label: '② 프런트 스쿼트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Hack-Squat.gif', label: '③ 핵 스쿼트 머신' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Squat.gif', label: '④ 스미스 머신 스쿼트' },
+    ],
+    steps: [
+      '바벨을 승모근 위에 올리고 발은 어깨너비보다 약간 넓게 벌립니다.',
+      '발끝을 15~30도 바깥으로 향하게 하고 가슴을 펴고 허리를 중립으로 합니다.',
+      '무릎이 발끝 방향으로 나가도록 앉습니다. 허벅지가 바닥과 평행 될 때까지!',
+      '발바닥 전체로 바닥을 밀어내며 올라옵니다.',
+    ],
+    tip: '무릎이 안으로 모이지 않도록 발끝 방향으로 밀어내는 것이 핵심입니다.'
+  },
+  'leg-press': {
+    title: '레그 프레스 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Press.gif', label: '① 기본 레그 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Wide-Stance-Leg-Press.gif', label: '② 와이드 스탠스 (둔근↑)' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Single-Leg-Press.gif', label: '③ 싱글 레그 프레스' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Horizontal-Leg-Press.gif', label: '④ 수평형 레그 프레스' },
+    ],
+    steps: [
+      '등받이에 등을 밀착하고 발판에 어깨 너비로 발을 올립니다.',
+      '안전 잠금장치를 풀고 무릎을 굽혀 가슴 쪽으로 내립니다.',
+      '발로 발판을 밀어 올립니다. 무릎이 완전히 펴지기 직전까지만!',
+      '동작 완료 후 잠금장치를 먼저 걸고 내립니다.',
+    ],
+    tip: '발 위치를 높이면 둔근, 낮추면 대퇴사두에 자극이 더 집중됩니다.'
+  },
+  'leg-extension': {
+    title: '레그 익스텐션 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Extension.gif', label: '① 레그 익스텐션' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Single-Leg-Extension.gif', label: '② 싱글 레그 익스텐션' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Curl.gif', label: '③ 라잉 레그 컬 (슈퍼셋)' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Leg-Curl.gif', label: '④ 시티드 레그 컬 (슈퍼셋)' },
+    ],
+    steps: [
+      '의자에 앉아 등을 등받이에 밀착합니다. 발목 뒤쪽이 패드에 닿도록 조절합니다.',
+      '발끝을 약간 안쪽으로 향하면 안쪽 광두근, 바깥쪽이면 바깥쪽 광두근 자극이 강해집니다.',
+      '대퇴사두의 힘으로 무릎을 완전히 펴 올립니다.',
+      '최고점에서 1초 수축하고 천천히 되돌립니다.',
+    ],
+    tip: '무릎 관절에 통증이 있으면 가동 범위를 줄이고 가벼운 무게로 수행하세요.'
+  },
+  'leg-curl': {
+    title: '레그 컬 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Curl.gif', label: '① 라잉 레그 컬 (엎드린)' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Leg-Curl.gif', label: '② 시티드 레그 컬 (앉은)' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Standing-Leg-Curl.gif', label: '③ 스탠딩 레그 컬' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Leg-Curl.gif', label: '④ 케이블 레그 컬' },
+    ],
+    steps: [
+      '엎드려 발목 뒤에 패드를 맞춥니다(라잉형).',
+      '허리가 들리지 않도록 복부에 힘을 줍니다.',
+      '햄스트링의 힘으로 발꿈치를 엉덩이 쪽으로 당깁니다.',
+      '최고점에서 잠깐 수축하고 천천히 내립니다.',
+    ],
+    tip: '발끝을 바깥으로 돌리면 안쪽 햄스트링, 안으로 돌리면 바깥쪽 햄스트링 자극이 강해집니다.'
+  },
+  'lunge': {
+    title: '런지 운동법',
+    photos: [
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Dumbbell-Walking-Lunge.gif', label: '① 워킹 런지' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Dumbbell-Reverse-Lunge.gif', label: '② 리버스 런지' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Bulgarian-Split-Squat.gif', label: '③ 불가리안 스플릿 스쿼트' },
+      { img: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Lunge.gif', label: '④ 스미스 머신 런지' },
+    ],
+    steps: [
+      '똑바로 서서 한 발을 앞으로 크게 내딛습니다.',
+      '앞 무릎이 발끝 뒤에 오도록 하고 뒷 무릎은 바닥 가까이 내립니다.',
+      '앞발 뒤꿈치로 바닥을 밀어내며 원래 자세로 돌아옵니다.',
+      '반대 발도 동일하게 반복합니다.',
+    ],
+    tip: '보폭이 좁으면 무릎에 부담이 가고, 너무 넓으면 균형이 흔들립니다. 앞뒤 90도가 기준!'
+  },
+};
 
 const GEAR_INFO = {
   dumbell: {
@@ -3293,433 +3725,6 @@ const GEAR_INFO = {
     desc:'맨몸·특수 장비·보조기구 등을 사용하는 운동',
     img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80',
     how:'맨몸 운동이나 풀업바, 딥스바, 케틀벨, 저항밴드 등 다양한 보조 장비를 활용합니다. 어디서든 할 수 있어 접근성이 높고 기능적 움직임을 강조합니다.'
-  },
-};
-
-// ── MACHINE PHOTOS: 운동별 머신 종류 사진 (도구 탭) ──
-const MACHINE_PHOTOS = {
-  // 가슴
-  'flat-press': {
-    title:'체스트 프레스 머신',
-    desc:'앉아서 수행하는 가슴 운동 전용 머신. 궤도가 고정되어 안전하고 초보자도 쉽게 대흉근을 자극할 수 있습니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'체스트 프레스 머신'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'시티드 체스트 프레스'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'컨버지 체스트 프레스'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'스미스 머신 벤치 프레스'},
-    ]
-  },
-  'incline-press': {
-    title:'인클라인 프레스 머신',
-    desc:'상부 가슴을 집중 공략하는 인클라인(경사) 프레스 머신. 쇄골 아래 상부 가슴 볼륨을 키우는 데 효과적입니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'인클라인 체스트 프레스'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'스미스 머신 인클라인'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'인클라인 머신 (30도)'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'인클라인 케이블 프레스'},
-    ]
-  },
-  'fly': {
-    title:'펙 덱 플라이 머신 & 케이블 크로스오버',
-    desc:'가슴 내측 선명도를 높이는 플라이 계열 머신. 펙 덱과 케이블 크로스오버 두 종류가 대표적입니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 크로스오버'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'펙 덱 플라이 머신'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 플라이 (하이)'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 플라이 (로우)'},
-    ]
-  },
-  // 어깨
-  'front-press': {
-    title:'숄더 프레스 머신',
-    desc:'어깨 전·측면 삼각근을 발달시키는 프레스 머신. 시티드, 스탠딩, 스미스 등 다양한 형태가 있습니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'숄더 프레스 머신 (시티드)'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'플레이트 로디드 숄더 프레스'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'스미스 머신 밀리터리 프레스'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 숄더 프레스'},
-    ]
-  },
-  'rear-raise': {
-    title:'리어 델트 플라이 머신 (펙 덱 역방향)',
-    desc:'후면 삼각근을 고립시키는 머신. 펙 덱 머신을 역방향으로 앉아 사용하거나 전용 리어 델트 머신을 활용합니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'리어 델트 플라이 머신'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 리버스 플라이'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'펙 덱 역방향 사용'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'리어 델트 케이블 머신'},
-    ]
-  },
-  'face-pull': {
-    title:'케이블 페이스 풀 머신',
-    desc:'케이블 머신에 로프를 연결해 수행. 어깨 높이에 풀리를 세팅하고 얼굴 쪽으로 당기는 방식입니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 머신 (로프 연결)'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'고 풀리 케이블 세팅'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'듀얼 케이블 크로스'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 타워 풀리'},
-    ]
-  },
-  // 등
-  'lat-pulldown': {
-    title:'랫 풀다운 머신',
-    desc:'광배근을 집중 발달시키는 풀다운 머신. 와이드·뉴트럴·언더 그립 등 다양한 그립으로 변형이 가능합니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'랫 풀다운 (와이드 그립)'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'클로즈 그립 풀다운'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'언더 그립 풀다운'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'스트레이트 암 풀다운'},
-    ]
-  },
-  'seated-row': {
-    title:'시티드 로우 머신',
-    desc:'앉아서 케이블이나 레버를 당기는 로잉 머신. 광배근·능형근·이두근을 자극합니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 시티드 로우'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'레버리지 시티드 로우'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드 로우'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'머신 로우 (그립 변형)'},
-    ]
-  },
-  'hyper-extension': {
-    title:'하이퍼익스텐션 벤치 (로만 체어)',
-    desc:'척추기립근과 둔근을 단련하는 전용 벤치. 로만 체어(Roman Chair)라고도 불립니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'로만 체어 45도형'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'수평형 하이퍼벤치'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'GHD 머신 (글루트햄)'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 백 익스텐션'},
-    ]
-  },
-  // 하체
-  'leg-press': {
-    title:'레그 프레스 머신',
-    desc:'대퇴사두·둔근을 안전하게 단련하는 하체 전문 머신. 45도 경사형과 수평형 두 가지가 일반적입니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'45도 레그 프레스'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'수평형 레그 프레스'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드 레그 프레스'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'싱글 레그 프레스'},
-    ]
-  },
-  'leg-extension': {
-    title:'레그 익스텐션 머신',
-    desc:'대퇴사두근을 고립 단련하는 머신. 앉아서 발판을 올리는 단관절 운동입니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'레그 익스텐션 머신'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드형'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 레그 익스텐션'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'콤보 익스텐션/컬 머신'},
-    ]
-  },
-  'leg-curl': {
-    title:'레그 컬 머신',
-    desc:'햄스트링을 고립 단련하는 머신. 라잉(엎드린), 시티드(앉은), 스탠딩 세 가지 형태가 있습니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'라잉 레그 컬 (엎드린)'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'시티드 레그 컬 (앉은)'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'스탠딩 레그 컬'},
-      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 레그 컬'},
-    ]
-  },
-  'squat': {
-    title:'스쿼트 랙 & 스미스 머신',
-    desc:'스쿼트 수행을 위한 파워랙과 스미스 머신. 바벨 스쿼트를 안전하게 수행할 수 있습니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'파워 랙 (스쿼트 케이지)'},
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'스미스 머신 스쿼트'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'핵 스쿼트 머신'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'펜듈럼 스쿼트 머신'},
-    ]
-  },
-  'adductor': {
-    title:'어덕터 & 앱덕터 머신',
-    desc:'내전근(어덕터)과 외전근(앱덕터)을 전문으로 단련하는 머신. 대부분 한 기구로 양쪽 다 사용 가능합니다.',
-    photos:[
-      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'어덕터 머신 (모으기)'},
-      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'앱덕터 머신 (벌리기)'},
-      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 힙 어덕션'},
-      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'콤보 어덕터/앱덕터 머신'},
-    ]
-  },
-};
-
-// ── WORKOUT METHODS: 운동법 사진 + 단계별 설명 (운동법 탭) ──
-const WORKOUT_METHODS = {
-  // 가슴
-  'fly': {
-    title:'케이블 크로스오버 & 덤벨 플라이 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 케이블 크로스오버 시작 자세'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 케이블 수축 동작'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 인클라인 덤벨 플라이'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 최대 수축 지점'},
-    ],
-    steps:[
-      '케이블 풀리를 어깨 높이 또는 그보다 약간 높게 설정합니다.',
-      '양 손잡이를 잡고 기구 중앙에 한 발 앞으로 내딛어 중심을 잡습니다.',
-      '큰 나무를 껴안는 느낌으로 팔을 원형으로 가슴 앞쪽으로 모아줍니다.',
-      '팔꿈치는 살짝 굽힌 상태를 유지하며 가슴 안쪽 수축에 집중합니다.',
-      '무게를 버티며 천천히 팔을 원래 위치로 되돌립니다.',
-    ],
-    tip:'케이블 풀리 높이에 따라 타격 부위가 달라집니다 — 높을수록 가슴 하부, 낮을수록 가슴 상부를 자극합니다. 반동 없이 천천히 수행하는 것이 핵심입니다.'
-  },
-  'flat-press': {
-    title:'벤치 프레스 & 스미스 머신 벤치 프레스 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 벤치 프레스 준비'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 가슴까지 내리기'},
-      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 스미스 머신 벤치'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 덤벨 벤치 프레스'},
-    ],
-    steps:[
-      '벤치에 누워 발바닥을 지면에 고정하고 견갑골을 모아 가슴을 활짝 폅니다.',
-      '바벨을 어깨너비보다 약간 넓게 잡고 가슴 정중앙(젖꼭지 라인) 위에 위치시킵니다.',
-      '숨을 들이마시며 팔꿈치를 몸통과 45~75도 각도로 유지하며 천천히 가슴까지 내립니다.',
-      '숨을 내뱉으며 가슴 근육의 힘으로 바벨을 수직으로 밀어 올립니다.',
-      '팔을 완전히 다 펴서 관절을 잠그기(Lock-out) 직전까지만 올립니다.',
-    ],
-    tip:'바벨이 손바닥 아랫부분(두툼한 곳)에 수직으로 얹혀야 손목이 꺾이지 않습니다. 허리 아치를 너무 과하게 만들면 부상 위험이 있으니 자연스러운 아치를 유지하세요.'
-  },
-  'incline-press': {
-    title:'인클라인 프레스 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 인클라인 벤치 세팅 (30~45도)'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 바벨 인클라인 프레스'},
-      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 덤벨 인클라인 프레스'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 상부 가슴 수축 지점'},
-    ],
-    steps:[
-      '벤치 각도를 30~45도로 맞춥니다. 각도가 너무 높으면 가슴보다 어깨가 더 개입됩니다.',
-      '바벨이나 덤벨을 쇄골 아래 상부 가슴 쪽에 위치시킵니다.',
-      '견갑골을 벤치에 밀착시키고 가슴을 활짝 편 상태로 준비합니다.',
-      '천천히 내리면서 상부 가슴이 늘어나는 스트레칭 느낌을 받습니다.',
-      '가슴 힘으로 밀어 올리며 상부 가슴 수축에 집중합니다.',
-    ],
-    tip:'벤치 각도가 높아질수록 어깨 전면 삼각근이 더 많이 개입됩니다. 처음에는 30도 정도의 낮은 각도로 시작해 상부 가슴 자극을 익히는 것을 권장합니다.'
-  },
-  'dips': {
-    title:'딥스 & 디클라인 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80', label:'① 딥스 준비 자세 (상체 앞으로)'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 90도까지 내려가기'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'③ 가슴 힘으로 올라오기'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 어시스트 딥스 머신'},
-    ],
-    steps:[
-      '평행봉을 잡고 팔을 펴서 몸을 띄웁니다.',
-      '가슴에 집중하려면 상체를 앞으로 30도 정도 숙이고 무릎을 뒤로 모읍니다.',
-      '팔꿈치가 90도가 될 때까지 천천히 내려갑니다.',
-      '가슴 근육의 힘으로 바닥을 밀어내듯 올라옵니다.',
-      '팔을 완전히 다 펴서 관절에 충격이 가기 직전까지만 올립니다.',
-    ],
-    tip:'상체를 세우면 삼두근 위주, 앞으로 숙이면 가슴 하부 위주의 자극이 됩니다. 맨몸으로 어렵다면 어시스트 딥스 머신을 활용해 근력을 먼저 키우세요.'
-  },
-  // 어깨
-  'front-press': {
-    title:'밀리터리 프레스 & 아놀드 프레스 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 밀리터리 프레스 준비'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 머리 위로 밀기'},
-      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 아놀드 프레스 (덤벨 회전)'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 덤벨 숄더 프레스 (시티드)'},
-    ],
-    steps:[
-      '바벨을 어깨너비보다 약간 넓게 잡고 쇄골 윗부분에 위치시킵니다.',
-      '발은 어깨너비로 벌리고 복부에 힘을 주어 척추를 고정합니다.',
-      '숨을 내뱉으며 바벨을 머리 위로 수직으로 밀어 올립니다.',
-      '바가 얼굴을 스쳐 지나가도록 하며 머리 위에서 일직선을 만듭니다.',
-      '무게를 버티며 천천히 쇄골 위치까지 내립니다.',
-    ],
-    tip:'허리가 뒤로 꺾이지 않도록 복압을 유지하는 것이 핵심입니다. 무릎을 굽혔다 펴는 반동을 쓰면 밀리터리 프레스가 아닌 푸쉬 프레스가 됩니다.'
-  },
-  'side-raise': {
-    title:'사이드 레이즈 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 준비 자세 (덤벨 허벅지 옆)'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 어깨 높이까지 들어 올리기'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 케이블 사이드 레이즈'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 내리기 (이완)'},
-    ],
-    steps:[
-      '덤벨을 양손에 잡고 허벅지 옆에 둡니다.',
-      '팔꿈치를 아주 살짝 굽혀 고정하고 이 각도를 끝까지 유지합니다.',
-      '어깨 근육의 힘으로 덤벨을 어깨 높이까지 들어 올립니다.',
-      '이 때 새끼손가락이 엄지보다 약간 높게 올라가도록 손목을 조절합니다.',
-      '근육의 긴장을 유지하며 천천히 덤벨을 처음 위치로 내립니다.',
-    ],
-    tip:'어깨가 귀 쪽으로 으쓱 올라가지 않도록 항상 아래로 눌러 고정하세요. 승모근 개입을 막아야 측면 삼각근에 정확한 자극을 줄 수 있습니다.'
-  },
-  'front-raise': {
-    title:'프런트 레이즈 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 덤벨 프런트 레이즈 준비'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 눈높이까지 올리기'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 바벨 프런트 레이즈'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 케이블 프런트 레이즈'},
-    ],
-    steps:[
-      '덤벨을 양손에 잡고 허벅지 앞에 위치시킵니다.',
-      '팔꿈치를 살짝 굽혀 고정한 채 정면으로 눈높이까지 들어 올립니다.',
-      '어깨 전면 근육의 힘으로만 올린다는 느낌에 집중합니다.',
-      '근육의 저항을 느끼며 천천히 처음 위치로 내립니다.',
-    ],
-    tip:'반동을 쓰면 허리에 무리가 갑니다. 무게가 부담스럽다면 한 팔씩 번갈아 수행하는 얼터네이트 방식을 추천합니다.'
-  },
-  'rear-raise': {
-    title:'벤트오버 레터럴 레이즈 & 리버스 플라이 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 상체를 앞으로 숙인 준비 자세'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 양팔 옆으로 벌리기 (수축)'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 케이블 리버스 플라이'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 인클라인 벤치 활용'},
-    ],
-    steps:[
-      '덤벨을 잡고 무릎을 살짝 굽혀 상체를 바닥과 평행하게 숙입니다.',
-      '허리는 곧게 펴고 복부에 힘을 주어 고정합니다.',
-      '팔꿈치를 살짝 굽힌 채 양팔을 옆으로 들어 올립니다.',
-      '날개뼈를 접어서 당기지 말고, 팔을 옆으로 던진다는 느낌으로 수행합니다.',
-      '어깨 후면 근육의 긴장을 느끼며 천천히 처음 위치로 내립니다.',
-    ],
-    tip:'새끼손가락이 약간 위를 향하도록 손등 각도를 조절하면 후면 삼각근에 더 강한 자극을 줄 수 있습니다.'
-  },
-  // 등
-  'lat-pulldown': {
-    title:'랫 풀다운 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 와이드 그립 준비 자세'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 가슴까지 당기기 (수축)'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 언더 그립 변형'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 올리기 (이완)'},
-    ],
-    steps:[
-      '팩(패드)을 허벅지에 단단히 고정하고 바를 어깨너비보다 넓게 잡습니다.',
-      '상체를 약간 뒤로 기울이고 가슴을 활짝 폅니다.',
-      '팔꿈치를 아래로 당긴다는 느낌으로 바를 가슴 윗부분까지 당깁니다.',
-      '광배근이 최대로 수축되는 지점에서 1초 멈추고 자극을 느낍니다.',
-      '무게를 버티며 천천히 팔을 펴 처음 위치로 돌아갑니다.',
-    ],
-    tip:'팔(이두근) 힘으로 당기지 말고 팔꿈치를 주머니에 넣는다는 느낌으로 등 근육을 먼저 사용하세요. 그립 넓이에 따라 자극 부위가 달라집니다.'
-  },
-  'seated-row': {
-    title:'시티드 로우 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 뉴트럴 그립 준비 자세'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 복부 쪽으로 당기기 (수축)'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 와이드 그립 시티드 로우'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 머신 로우 변형'},
-    ],
-    steps:[
-      '발판에 발을 올리고 무릎을 살짝 굽혀 케이블 핸들을 잡습니다.',
-      '상체를 곧게 세우고 팔을 앞으로 뻗어 등 근육의 스트레칭을 느낍니다.',
-      '팔꿈치를 몸에 붙이며 복부 쪽으로 핸들을 당깁니다.',
-      '날개뼈가 서로 모이는 느낌으로 등 근육을 최대한 수축합니다.',
-      '무게를 버티며 천천히 팔을 펴 스트레칭 자세로 돌아갑니다.',
-    ],
-    tip:'당길 때 상체를 뒤로 젖히거나 앞으로 숙이지 마세요. 상체를 고정하고 팔과 등만으로 당겨야 광배근에 정확한 자극이 갑니다.'
-  },
-  'deadlift': {
-    title:'데드리프트 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 앞 초기 자세'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 복압 유지하며 들어올리기'},
-      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 루마니안 데드리프트'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 완전히 선 자세 (락아웃)'},
-    ],
-    steps:[
-      '바벨 앞에 발을 골반 너비로 벌리고 바가 발등 중앙 위에 오도록 합니다.',
-      '상체를 숙여 어깨너비로 바를 잡고 정강이가 바에 살짝 닿도록 무릎을 굽힙니다.',
-      '가슴을 활짝 펴고 허리를 곧게 세워 척추 중립을 만듭니다.',
-      '숨을 크게 들이마셔 복압을 유지하며 바닥을 발로 강하게 밀어 바를 들어 올립니다.',
-      '바는 정강이와 허벅지에 밀착시키며 수직으로 움직여야 허리 부담이 줄어듭니다.',
-    ],
-    tip:'허리를 굽히는 것은 절대 금지입니다. 복압 유지와 척추 중립이 데드리프트에서 가장 중요한 요소입니다. 처음에는 가벼운 무게로 자세부터 완성하세요.'
-  },
-  'hyper-extension': {
-    title:'하이퍼익스텐션 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80', label:'① 로만 체어 자세 세팅'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 상체 내리기 (이완)'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'③ 허리 힘으로 올라오기 (수축)'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 플레이트 추가 (고급)'},
-    ],
-    steps:[
-      '패드 높이를 골반 라인보다 약간 아래에 오도록 조절합니다.',
-      '발판에 발을 고정하고 양손은 가슴 위에 X자로 모으거나 머리 뒤에 댑니다.',
-      '허리를 곧게 편 상태를 유지하며 천천히 상체를 앞으로 숙입니다.',
-      '허리 근육의 힘을 사용하여 몸이 일직선이 되는 지점까지 올라옵니다.',
-      '과신전(너무 뒤로 젖히기)은 척추에 무리를 주므로 반드시 피합니다.',
-    ],
-    tip:'허리 집중: 상체를 곧게 / 엉덩이·햄스트링 집중: 등을 약간 둥글게 말고 골반 축으로 움직입니다. 부하를 높이고 싶다면 가슴에 플레이트를 들고 수행합니다.'
-  },
-  // 하체
-  'squat': {
-    title:'바벨 스쿼트 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 어깨에 올리기'},
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 무릎 굽히며 앉기'},
-      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 허벅지 평행까지 내려가기'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'④ 힘껏 올라오기'},
-    ],
-    steps:[
-      '바벨을 승모근 위(하이바) 또는 후면 삼각근(로우바)에 올려 어깨 뒤에 안정적으로 위치시킵니다.',
-      '발은 어깨너비로 벌리고 발끝을 15~30도 바깥을 향하게 합니다.',
-      '가슴을 세우고 코어에 힘을 주며 무릎을 발끝 방향으로 밀면서 천천히 앉습니다.',
-      '허벅지가 바닥과 평행이 될 때까지 내려갑니다.',
-      '발바닥 전체로 지면을 강하게 밀어내며 올라옵니다.',
-    ],
-    tip:'무릎이 안쪽으로 모이지 않도록 항상 발끝 방향으로 밀어내야 합니다. 등이 굽어지거나 뒤꿈치가 들리면 무게를 줄이고 자세를 먼저 교정하세요.'
-  },
-  'leg-press': {
-    title:'레그 프레스 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 발판에 발 위치시키기'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 무릎 굽혀 내리기'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 발판 강하게 밀어 올리기'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 발 위치에 따른 자극 부위'},
-    ],
-    steps:[
-      '시트에 앉아 허리를 패드에 밀착시키고 발판에 발을 어깨너비로 올립니다.',
-      '안전 잠금 장치를 풀고 발판이 몸 쪽으로 천천히 내려오도록 합니다.',
-      '무릎이 90도 정도가 될 때까지 내립니다. 허리가 패드에서 떨어지지 않도록 주의합니다.',
-      '발바닥 전체로 발판을 강하게 밀어 올립니다.',
-      '무릎을 완전히 잠그지 않는 지점까지만 펴 근육 긴장을 유지합니다.',
-    ],
-    tip:'발 위치에 따라 타격 부위가 달라집니다 — 높으면 둔근·햄스트링, 낮으면 대퇴사두 위주입니다. 무릎이 안으로 모이지 않도록 바깥으로 밀어내세요.'
-  },
-  'leg-extension': {
-    title:'레그 익스텐션 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 시트 높이 & 롤러 조절'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 발 들어 올리기 (수축)'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 대퇴사두 최대 수축'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 내리기 (이완)'},
-    ],
-    steps:[
-      '시트에 앉아 롤러가 발목 앞쪽에 오도록 높이를 조절합니다.',
-      '등받이를 등에 밀착시키고 허벅지를 시트에 고정합니다.',
-      '대퇴사두 근육의 힘으로 다리를 거의 일직선이 될 때까지 들어 올립니다.',
-      '최대 수축 지점에서 1~2초 멈추고 허벅지 앞면에 자극을 느낍니다.',
-      '무게를 버티며 천천히 처음 위치로 내립니다.',
-    ],
-    tip:'관절 부담을 줄이려면 완전히 다 내리지 말고 70~80% 정도까지만 내립니다. 무릎 통증이 있다면 가동 범위를 줄이세요.'
-  },
-  'leg-curl': {
-    title:'레그 컬 운동법',
-    photos:[
-      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 라잉 레그 컬 준비 (엎드려)'},
-      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 발꿈치 엉덩이 쪽으로 당기기'},
-      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 시티드 레그 컬 (앉아서)'},
-      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 이완'},
-    ],
-    steps:[
-      '머신에 엎드려 발목 뒤쪽에 롤러가 오도록 위치를 조절합니다.',
-      '골반을 패드에 밀착시키고 허리가 들리지 않도록 고정합니다.',
-      '햄스트링 힘으로 발꿈치를 엉덩이 쪽으로 당깁니다.',
-      '최대 수축 지점에서 잠깐 멈추고 허벅지 뒤쪽 자극을 느낍니다.',
-      '무게를 버티며 천천히 처음 위치로 내립니다.',
-    ],
-    tip:'발꿈치를 당길 때 엉덩이가 들리면 햄스트링이 아닌 둔근이 개입됩니다. 골반을 고정하고 허벅지 뒤쪽 힘만 사용하세요.'
   },
 };
 
@@ -3763,67 +3768,63 @@ function showDetail(e, catId, typeId) {
       </div>
     </div>`).join('');
 
-  // Muscle legend
-  const muscleLegendHTML = [
-    ...(d.primary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot primary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type" style="color:${cat.color}">주동근</div></div>`),
-    ...(d.secondary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot secondary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type">보조근</div></div>`),
-  ].join('');
-
-  // 도구 탭 - 머신 사진 4분할 그리드
+  // 도구탭 - 머신 사진 4분할 그리드
   const mp = MACHINE_PHOTOS[type.id];
   const machineGearHTML = mp
-    ? `<div style="padding:4px 0 8px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text0);letter-spacing:0.5px;margin-bottom:4px;">${mp.title}</div>
-        <div style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:14px;">${mp.desc}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+    ? `<div style="padding:2px 0 8px;">
+        <div class="machine-section-title">${mp.title}</div>
+        <div class="machine-section-sub">${mp.desc}</div>
+        <div class="machine-grid">
           ${mp.photos.map(p => `
-            <div style="border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3;background:var(--bg4);">
-              <img src="${p.url}" alt="${p.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>
-              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:18px 8px 6px;">
-                <div style="font-size:10px;font-weight:700;color:#fff;letter-spacing:0.3px;">${p.label}</div>
-              </div>
-            </div>`).join('')}
+            <div class="machine-grid-cell">
+              <img src="${p.url}" alt="${p.label}" loading="lazy" onerror="this.parentElement.style.background='var(--bg4)';this.style.display='none'"/>
+              <div class="cell-label">${p.label}</div>
+            </div>`).join("")}
         </div>
       </div>`
-    : `<div style="text-align:center;padding:40px 16px;color:var(--text3);">
-        <div style="font-size:32px;margin-bottom:12px;">🔧</div>
+    : `<div class="no-machine-box">
+        <div style="font-size:32px;margin-bottom:12px;">🏋️</div>
         <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:6px;">전용 머신 없음</div>
-        <div style="font-size:12px;">이 운동은 덤벨·바벨·바디웨이트로 수행합니다.</div>
+        <div style="font-size:12px;color:var(--text3);">이 운동은 덤벨·바벨·바디웨이트로 수행합니다.</div>
       </div>`;
 
-  // 운동법 탭 - 사진 4분할 + 단계별 설명
+  // 운동법탭 - 사진 4분할 + 단계별 설명
   const wm = WORKOUT_METHODS[type.id];
   const howtoHTML = wm
-    ? `<div style="padding:4px 0 8px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text0);letter-spacing:0.5px;margin-bottom:12px;">${wm.title}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+    ? `<div style="padding:2px 0 8px;">
+        <div class="machine-section-title">${wm.title}</div>
+        <div class="machine-grid" style="margin-bottom:14px;">
           ${wm.photos.map((p,i) => `
-            <div style="border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3;background:var(--bg4);">
-              <img src="${p.img}" alt="${p.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>
-              <div style="position:absolute;top:6px;left:6px;width:20px;height:20px;border-radius:50%;background:${cat.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#000;">${i+1}</div>
-              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:18px 8px 6px;">
-                <div style="font-size:10px;font-weight:700;color:#fff;">${p.label}</div>
-              </div>
-            </div>`).join('')}
+            <div class="machine-grid-cell">
+              <img src="${p.img}" alt="${p.label}" loading="lazy" onerror="this.parentElement.style.background='var(--bg4)';this.style.display='none'"/>
+              <div class="cell-num" style="background:${cat.color};">${i+1}</div>
+              <div class="cell-label">${p.label}</div>
+            </div>`).join("")}
         </div>
-        <div style="margin-bottom:14px;">
+        <div class="howto-steps">
           ${wm.steps.map((s,i) => `
-            <div style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;">
-              <div style="width:22px;height:22px;border-radius:6px;background:${cat.bg};color:${cat.color};font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${i+1}</div>
-              <div style="font-size:13px;color:var(--text1);line-height:1.55;">${s}</div>
-            </div>`).join('')}
+            <div class="howto-step">
+              <div class="howto-step-num" style="background:${cat.bg};color:${cat.color};">${i+1}</div>
+              <div class="howto-step-text">${s}</div>
+            </div>`).join("")}
         </div>
         ${wm.tip ? `<div class="tip-box"><div class="tip-icon">💡</div><div class="tip-text">${wm.tip}</div></div>` : ""}
       </div>`
-    : `<div style="text-align:center;padding:40px 16px;color:var(--text3);">
-        <div style="font-size:32px;margin-bottom:12px;">💪</div>
+    : `<div class="no-machine-box">
+        <div style="font-size:32px;margin-bottom:12px;">📖</div>
         <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:6px;">운동법 준비 중</div>
-        <div style="font-size:12px;">가이드 탭의 자세 가이드를 참고하세요.</div>
+        <div style="font-size:12px;color:var(--text3);">가이드 탭의 자세 가이드를 참고하세요.</div>
       </div>`;
 
-  _guideTabState = 'guide';
+  // 근육 범례
+  const muscleLegendHTML = [
+    ...(d.primary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot primary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type" style="color:${cat.color}">주동근</div></div>`),
+    ...(d.secondary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot secondary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type">보조근</div></div>`),
+  ].join("");
 
-  document.getElementById('detailBody').innerHTML = `
+  _guideTabState = "guide";
+
+  document.getElementById("detailBody").innerHTML = `
     <!-- HERO IMAGE -->
     <div class="guide-hero">
       <img class="guide-hero-img" src="${imgUrl}" alt="${type.name}" onerror="this.style.display='none'"/>
@@ -3835,7 +3836,7 @@ function showDetail(e, catId, typeId) {
       </div>
     </div>
 
-    <!-- TABS -->
+    <!-- TABS: 3탭 -->
     <div class="guide-tabs">
       <button class="guide-tab active" data-tab="guide" onclick="switchGuideTab('guide')">가이드 · 근육</button>
       <button class="guide-tab" data-tab="gear" onclick="switchGuideTab('gear')">도구</button>
@@ -3845,9 +3846,8 @@ function showDetail(e, catId, typeId) {
     <!-- PANELS -->
     <div class="guide-panels">
 
-      <!-- GUIDE PANEL -->
+      <!-- 가이드+근육 통합 패널 -->
       <div class="guide-panel active" data-panel="guide">
-        <!-- Stats row -->
         <div class="guide-stats">
           <div class="guide-stat-card">
             <div class="guide-stat-val" style="color:${diffColor}">${diffLabel}</div>
@@ -3858,32 +3858,22 @@ function showDetail(e, catId, typeId) {
             <div class="guide-stat-lbl">주동근</div>
           </div>
           <div class="guide-stat-card">
-            <div class="guide-stat-val">${allowedEq.length}</div>
+            <div class="guide-stat-val">${(type.eq||['dumbell']).length}</div>
             <div class="guide-stat-lbl">장비 선택</div>
           </div>
         </div>
-
-        <!-- Summary -->
         <div class="detail-section">
           <div class="detail-section-title">운동 설명</div>
           <div class="detail-text">${d.summary}</div>
         </div>
-
-        <!-- Step-by-step -->
         <div class="detail-section">
           <div class="detail-section-title">자세 가이드</div>
           <div class="steps-guide">${stepsHTML}</div>
         </div>
+        ${d.tip ? `<div class="tip-box"><div class="tip-icon">💡</div><div class="tip-text">${d.tip}</div></div>` : ""}
 
-        <!-- Tip -->
-        ${d.tip ? `
-        <div class="tip-box">
-          <div class="tip-icon">💡</div>
-          <div class="tip-text">${d.tip}</div>
-        </div>` : ""}
-
-        <!-- 근육 다이어그램 (가이드 탭 하단 합침) -->
-        <div class="detail-section" style="margin-top:16px;">
+        <!-- 근육 다이어그램 (가이드탭 하단 합침) -->
+        <div class="detail-section" style="margin-top:20px;">
           <div class="detail-section-title">근육 분포</div>
           <div class="muscle-diagram" style="margin-top:8px;">
             <div class="muscle-figure">${muscleSVG}</div>
@@ -3893,20 +3883,20 @@ function showDetail(e, catId, typeId) {
             </div>
           </div>
           <div style="margin-top:10px;">
-            <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">주동근</div>
-            <div class="muscle-tags" style="margin-bottom:8px;">${(d.primary||[]).map(m=>`<span class="muscle-tag primary">${m}</span>`).join("")}</div>
-            <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">보조근</div>
+            <div class="detail-section-title" style="margin-bottom:6px;">주동근</div>
+            <div class="muscle-tags" style="margin-bottom:10px;">${(d.primary||[]).map(m=>`<span class="muscle-tag primary">${m}</span>`).join("")}</div>
+            <div class="detail-section-title" style="margin-bottom:6px;">보조근</div>
             <div class="muscle-tags">${(d.secondary||[]).map(m=>`<span class="muscle-tag">${m}</span>`).join("")}</div>
           </div>
         </div>
       </div>
 
-      <!-- GEAR PANEL (도구 - 머신 이미지 그리드) -->
+      <!-- 도구탭 -->
       <div class="guide-panel" data-panel="gear">
         ${machineGearHTML}
       </div>
 
-      <!-- HOWTO PANEL (운동법) -->
+      <!-- 운동법탭 -->
       <div class="guide-panel" data-panel="howto">
         ${howtoHTML}
       </div>
@@ -4536,75 +4526,68 @@ function showToast(msg, accent=false) {
 init();
 
 // ═══════════════════════════════════════
-// PWA 설치 프롬프트
+// PWA 설치
 // ═══════════════════════════════════════
 let _deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   _deferredPrompt = e;
-  // 설치 버튼 표시
-  const btn = document.getElementById('pwaInstallBtn');
-  if (btn) btn.style.display = 'flex';
+  const btn = document.getElementById("pwaInstallBtn");
+  if (btn) btn.style.display = "flex";
 });
 
-window.addEventListener('appinstalled', () => {
+window.addEventListener("appinstalled", () => {
   _deferredPrompt = null;
-  const btn = document.getElementById('pwaInstallBtn');
-  if (btn) btn.style.display = 'none';
-  showToast('앱이 설치되었습니다! 🎉', true);
+  const btn = document.getElementById("pwaInstallBtn");
+  if (btn) btn.style.display = "none";
+  showToast("앱이 설치되었습니다! 🎉", true);
 });
 
 async function triggerPWAInstall() {
   if (_deferredPrompt) {
     _deferredPrompt.prompt();
     const { outcome } = await _deferredPrompt.userChoice;
-    if (outcome === 'accepted') showToast('설치 완료! 홈 화면을 확인하세요 🎉', true);
+    if (outcome === "accepted") showToast("홈 화면에 추가됐어요 🎉", true);
     _deferredPrompt = null;
-    const btn = document.getElementById('pwaInstallBtn');
-    if (btn) btn.style.display = 'none';
+    const btn = document.getElementById("pwaInstallBtn");
+    if (btn) btn.style.display = "none";
   } else {
-    // iOS or already installed — 안내 모달
-    showInstallGuide();
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const msg = isIOS
+      ? "Safari 하단 공유(□↑) → 홈 화면에 추가를 선택하세요"
+      : "브라우저 메뉴(⋮) → 앱 설치 또는 홈 화면에 추가를 선택하세요";
+    document.getElementById("installGuideMsg").textContent = msg;
+    openModal("installGuide");
   }
 }
 
-function showInstallGuide() {
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const msg = isIOS
-    ? 'Safari에서 하단 공유 버튼(□↑) → "홈 화면에 추가"를 선택하세요'
-    : '브라우저 메뉴(⋮) → "앱 설치" 또는 "홈 화면에 추가"를 선택하세요';
-  document.getElementById('installGuideText').textContent = msg;
-  openModal('installGuide');
-}
-
-// Service Worker 등록
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/iron-log/sw.js").catch(() => {});
   });
 }
 </script>
 
-<!-- PWA 설치 안내 모달 -->
+<!-- PWA 안내 모달 -->
 <div class="overlay" id="overlay-installGuide" onclick="overlayClick(event,'installGuide')">
-  <div class="sheet" style="max-height:50vh;">
+  <div class="sheet" style="max-height:44vh;">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-      <div class="sheet-title">📱 앱 설치</div>
+      <div class="sheet-title">📱 홈 화면에 추가</div>
       <button class="sheet-close" onclick="closeModal('installGuide')">✕</button>
     </div>
-    <div style="padding:20px 20px 0;">
-      <div style="display:flex;gap:14px;align-items:center;background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:16px;">
-        <div style="width:52px;height:52px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <div style="padding:16px 20px 0;">
+      <div style="display:flex;gap:14px;align-items:center;background:var(--bg3);border-radius:14px;padding:14px;margin-bottom:14px;">
+        <div style="width:48px;height:48px;background:var(--accent);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--text0);">IRON LOG</div>
-          <div style="font-size:12px;color:var(--text3);">헬스 운동 기록 앱</div>
+          <div style="font-size:11px;color:var(--text3);">헬스 운동 기록 앱</div>
         </div>
       </div>
-      <div id="installGuideText" style="font-size:14px;color:var(--text1);line-height:1.7;background:var(--bg3);border-radius:12px;padding:14px;margin-bottom:16px;"></div>
+      <div id="installGuideMsg" style="font-size:13px;color:var(--text1);line-height:1.7;background:var(--bg3);border-radius:11px;padding:13px;"></div>
     </div>
     <div class="sheet-footer" style="padding:12px 20px;">
       <button class="btn-add" onclick="closeModal('installGuide')" style="width:100%;">확인</button>
@@ -4616,10 +4599,13 @@ if ('serviceWorker' in navigator) {
 <button id="pwaInstallBtn" onclick="triggerPWAInstall()"
   style="display:none;position:fixed;bottom:80px;right:16px;z-index:500;
     background:var(--accent);color:#000;border:none;border-radius:50px;
-    padding:10px 18px;gap:8px;align-items:center;cursor:pointer;
-    font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;
-    letter-spacing:0.5px;box-shadow:0 4px 20px rgba(232,255,71,0.35);">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v13M8 11l4 4 4-4"/><rect x="3" y="17" width="18" height="4" rx="2"/></svg>
+    padding:11px 20px;gap:8px;align-items:center;cursor:pointer;
+    font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;
+    letter-spacing:0.5px;box-shadow:0 4px 24px rgba(232,255,71,0.4);
+    transition:transform 0.15s,box-shadow 0.15s;"
+  onmousedown="this.style.transform='scale(0.96)'"
+  onmouseup="this.style.transform='scale(1)'">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v13M8 11l4 4 4-4"/><rect x="3" y="17" width="18" height="4" rx="2"/></svg>
   앱 설치
 </button>
 </body>
