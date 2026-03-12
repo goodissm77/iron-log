@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#050506">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IRON LOG">
+<link rel="manifest" href="/manifest.json">
 <title>IRON LOG</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -41,11 +46,6 @@
   --cardio-bg: rgba(52,211,153,0.1);
 
   /* Equipment colors */
-  --arms-c: #f472b6;
-  --arms-bg: rgba(244,114,182,0.1);
-  --glutes-c: #f59e0b;
-  --glutes-bg: rgba(245,158,11,0.1);
-
   --eq-dumbell: #60a5fa;
   --eq-barbell: #f97316;
   --eq-cable: #a78bfa;
@@ -1568,6 +1568,75 @@ body::after {
   gap: 8px;
 }
 
+/* ─── MACHINE GRID (도구탭) ─── */
+.machine-grid-header {
+  padding: 14px 16px 10px;
+}
+.machine-grid-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  color: var(--text0);
+}
+.machine-grid-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+.machine-grid {
+  display: grid;
+  gap: 3px;
+  padding: 0 0 0 0;
+}
+.machine-grid.grid-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.machine-grid.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.machine-grid-cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg4);
+  aspect-ratio: 4/3;
+}
+.machine-grid-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+  filter: saturate(0.85) contrast(1.05);
+  transition: transform 0.3s ease, opacity 0.3s;
+}
+.machine-grid-cell:hover img { transform: scale(1.04); opacity: 1; }
+.machine-how-box {
+  margin: 14px 16px 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.machine-how-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text1);
+  margin-bottom: 8px;
+}
+.machine-how-text {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.7;
+}
+.no-machine-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+
 .gear-card {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -2195,10 +2264,8 @@ body::after {
 const CATS = [
   { id:'chest',    name:'체스트',  nameEn:'CHEST',    color:'var(--chest-c)',    bg:'var(--chest-bg)',    met:5.0 },
   { id:'shoulder', name:'숄더',    nameEn:'SHOULDER', color:'var(--shoulder-c)', bg:'var(--shoulder-bg)', met:4.5 },
-  { id:'arms',     name:'암',      nameEn:'ARMS',     color:'var(--arms-c)',     bg:'var(--arms-bg)',     met:4.0 },
-  { id:'core',     name:'코어',    nameEn:'CORE',     color:'var(--core-c)',     bg:'var(--core-bg)',     met:4.0 },
   { id:'back',     name:'백',      nameEn:'BACK',     color:'var(--back-c)',     bg:'var(--back-bg)',     met:5.0 },
-  { id:'glutes',   name:'글루트',  nameEn:'GLUTES',   color:'var(--glutes-c)',   bg:'var(--glutes-bg)',   met:5.0 },
+  { id:'core',     name:'코어',    nameEn:'CORE',     color:'var(--core-c)',     bg:'var(--core-bg)',     met:4.0 },
   { id:'legs',     name:'레그',    nameEn:'LEGS',     color:'var(--legs-c)',     bg:'var(--legs-bg)',     met:5.5 },
   { id:'cardio',   name:'카디오',  nameEn:'CARDIO',   color:'var(--cardio-c)',   bg:'var(--cardio-bg)',   met:8.0 },
 ];
@@ -2238,17 +2305,6 @@ const CAT_SVGS = {
     <rect x="12" y="6" width="24" height="6" rx="3" fill="currentColor" opacity="0.9"/>
     <circle cx="20" cy="28" r="3" fill="currentColor" opacity="0.6"/>
     <circle cx="28" cy="28" r="3" fill="currentColor" opacity="0.6"/>
-  </svg>`,
-  arms: `<svg width="30" height="30" viewBox="0 0 48 48" fill="none">
-    <path d="M14 8 Q10 16 12 24 Q14 32 18 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
-    <path d="M34 8 Q38 16 36 24 Q34 32 30 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
-    <ellipse cx="18" cy="20" rx="5" ry="8" fill="currentColor" opacity="0.7"/>
-    <ellipse cx="30" cy="20" rx="5" ry="8" fill="currentColor" opacity="0.7"/>
-  </svg>`,
-  glutes: `<svg width="30" height="30" viewBox="0 0 48 48" fill="none">
-    <ellipse cx="16" cy="28" rx="10" ry="12" fill="currentColor" opacity="0.8"/>
-    <ellipse cx="32" cy="28" rx="10" ry="12" fill="currentColor" opacity="0.8"/>
-    <rect x="14" y="12" width="20" height="8" rx="4" fill="currentColor" opacity="0.5"/>
   </svg>`,
   cardio: `<svg width="30" height="30" viewBox="0 0 48 48" fill="none">
     <path d="M8 24 L16 12 L24 30 L30 18 L36 26 L40 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -2305,447 +2361,440 @@ const EQ_SVGS = {
 
 const TYPES = {
   chest: [
-    { id:'incline-press', name:'인클라인 프레스', muscles:'상부 가슴 · 전면 삼각근 · 삼두',
-      desc:'30~45° 각도로 상부 가슴을 집중 자극',
-      detail:{ summary:'인클라인 각도(30~45°)에서 실시하는 프레스로 대흉근 상부를 집중 자극합니다. 각도가 높을수록 어깨 개입이 증가합니다.',
-        points:['벤치 각도는 30~45° 사이 유지 (60° 이상은 어깨 운동)','바를 쇄골 아래 가슴 상부에 내리기','내릴 때 천천히, 올릴 때 강하게 밀어올리기','어깨가 귀 쪽으로 올라가지 않도록 견갑 고정'],
-        tip:'각도가 높을수록 어깨 개입 ↑ 30~35°가 상부 가슴 자극 최적',
-        diff:3, primary:['대흉근 상부'], secondary:['전면삼각근','삼두근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'flat-press', name:'플랫 프레스', muscles:'가슴 중앙 · 전면 삼각근 · 삼두',
-      desc:'가슴 전체를 가장 효율적으로 자극하는 기본 프레스',
-      detail:{ summary:'플랫 벤치에서 실시하는 가슴 운동의 기본. 대흉근 전체를 균형있게 자극합니다.',
+    {
+      id:'incline-press', name:'인클라인 프레스', muscles:'상부 가슴 · 전면 삼각근 · 삼두',
+      desc:'상부 가슴을 집중 자극하는 프레스',
+      detail:{
+        summary:'인클라인(30~45°) 각도에서 실시하는 프레스로 대흉근 상부를 집중적으로 자극합니다.',
+        points:['벤치 각도는 30~45° 사이를 유지','바를 쇄골 아래 가슴 상부에 내리기','내릴 때 천천히, 올릴 때 강하게 밀어올리기','어깨가 올라가지 않도록 등을 고정'],
+        tip:'너무 높은 각도(60°+)는 어깨 운동이 됩니다.',
+        diff:3,
+        primary:['대흉근 상부'],secondary:['전면삼각근','삼두근']
+      },
+      eq:['dumbell','barbell','cable','machine','body']
+    },
+    {
+      id:'flat-press', name:'플랫 프레스', muscles:'가슴 중앙 · 전면 삼각근 · 삼두',
+      desc:'가슴 전체를 가장 효율적으로 자극',
+      detail:{
+        summary:'플랫 벤치에서 실시하는 기본 프레스로 대흉근 전체를 자극하는 가장 대표적인 가슴 운동입니다.',
         points:['등을 살짝 아치형으로 유지','바를 젖꼭지 라인(하부 가슴)에 내리기','그립 넓이는 어깨 1.5배 정도','숨은 내릴 때 들이쉬고, 올릴 때 내쉬기'],
         tip:'초보자는 빈 바벨로 자세 먼저 익히세요.',
-        diff:2, primary:['대흉근 중부'], secondary:['전면삼각근','삼두근','전거근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'decline-press', name:'디클라인 프레스', muscles:'하부 가슴 · 삼두',
-      desc:'가슴 하부 라인을 선명하게 만드는 프레스',
-      detail:{ summary:'디클라인 각도(-15~30°)에서 실시하여 대흉근 하부를 집중 자극합니다.',
+        diff:2,
+        primary:['대흉근 중부'],secondary:['전면삼각근','삼두근','전거근']
+      },
+      eq:['dumbell','barbell','cable','machine','body']
+    },
+    {
+      id:'decline-press', name:'디클라인 프레스', muscles:'하부 가슴 · 삼두',
+      desc:'가슴 하부 라인을 선명하게',
+      detail:{
+        summary:'디클라인 각도(-15~30°)에서 실시하여 대흉근 하부를 집중 자극합니다.',
         points:['발을 벤치 끝에 단단히 고정','바를 배꼽 위 하부 가슴에 내리기','플랫보다 좁은 그립도 효과적','목과 어깨에 무리가 가지 않도록 주의'],
         tip:'어깨 부상이 있으면 주의가 필요합니다.',
-        diff:3, primary:['대흉근 하부'], secondary:['삼두근','전면삼각근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'high-fly', name:'하이 플라이', muscles:'가슴 하부 내측',
-      desc:'위에서 아래로 모아 하부 가슴 라인 강조',
-      detail:{ summary:'케이블이나 머신을 높은 위치에서 아래로 당기며 대흉근 하부 내측을 집중 자극합니다.',
-        points:['케이블 풀리를 어깨보다 높게 설정','팔꿈치를 살짝 구부린 채 유지','가슴 아래 방향으로 모아주기','최대 수축 시 손이 배꼽 앞에 위치'],
-        tip:'가슴 하부 라인을 만드는 데 효과적입니다.',
-        diff:2, primary:['대흉근 하부','대흉근 내측'], secondary:['전면삼각근'] },
-      eq:['machine','cable','dumbell','body'] },
-    { id:'mid-fly', name:'미들 플라이', muscles:'가슴 중앙 내측',
-      desc:'수평 방향으로 모아 가슴 중앙 자극',
-      detail:{ summary:'케이블이나 덤벨을 수평 방향으로 모아 대흉근 중앙 내측을 자극합니다.',
-        points:['풀리를 가슴 높이로 설정','팔을 수평으로 뻗어 시작','가슴 정면에서 양손이 만나도록','팔꿈치를 완전히 펴지 않기'],
-        tip:'가슴 중앙 가르기(라인)에 효과적입니다.',
-        diff:2, primary:['대흉근 중부'], secondary:['전면삼각근','전거근'] },
-      eq:['machine','cable','dumbell','body'] },
-    { id:'low-fly', name:'로우 플라이', muscles:'가슴 상부 내측',
-      desc:'아래에서 위로 모아 상부 가슴 내측 자극',
-      detail:{ summary:'케이블 풀리를 낮은 위치에 설정하고 위로 모아 대흉근 상부 내측을 자극합니다.',
-        points:['케이블 풀리를 골반 높이 아래로 설정','팔을 아래에서 위 대각선으로 올리기','최대 수축 시 손이 쇄골 앞에 위치','팔꿈치를 살짝 구부린 채 유지'],
-        tip:'크로스오버와 함께 가슴 상부 라인 완성에 좋습니다.',
-        diff:2, primary:['대흉근 상부','대흉근 내측'], secondary:['전면삼각근'] },
-      eq:['machine','cable','dumbell','body'] },
-    { id:'dips', name:'딥스', muscles:'하부 가슴 · 삼두 · 어깨',
-      desc:'체중으로 하부 가슴과 삼두를 동시 자극',
-      detail:{ summary:'평행봉에서 체중을 이용하는 복합 운동. 상체를 앞으로 기울일수록 가슴, 수직일수록 삼두 자극.',
+        diff:3,
+        primary:['대흉근 하부'],secondary:['삼두근','전면삼각근']
+      },
+      eq:['dumbell','barbell','machine','body']
+    },
+    {
+      id:'fly', name:'플라이', muscles:'가슴 내측 · 전체',
+      desc:'가슴 내측 라인과 스트레칭 자극',
+      detail:{
+        summary:'팔을 좌우로 벌렸다 모으는 동작으로 대흉근을 최대 스트레칭하며 내측을 집중 자극합니다.',
+        points:['팔꿈치를 약간 구부린 채 유지','최대한 넓게 벌려 스트레칭 느끼기','모을 때 가슴이 쥐어짜지는 느낌','무거운 중량보다 정확한 범위가 중요'],
+        tip:'관절 보호를 위해 팔꿈치를 완전히 펴지 마세요.',
+        diff:2,
+        primary:['대흉근 내측'],secondary:['전면삼각근','전거근']
+      },
+      eq:['dumbell','cable','machine','body']
+    },
+    {
+      id:'dips', name:'딥스', muscles:'하부 가슴 · 삼두 · 어깨',
+      desc:'자체 체중으로 하부 가슴과 삼두 자극',
+      detail:{
+        summary:'평행봉에서 체중을 이용하는 복합 운동. 상체를 앞으로 기울일수록 가슴, 수직일수록 삼두에 집중됩니다.',
         points:['상체를 15~30° 앞으로 기울여 가슴 자극','내려갈 때 팔꿈치가 90° 이상 구부러지도록','어깨가 귀 쪽으로 올라가지 않게 유지','충분히 내려가야 가슴 자극'],
         tip:'근력이 부족하면 어시스트 밴드를 사용하세요.',
-        diff:3, primary:['대흉근 하부','삼두근'], secondary:['전면삼각근'] },
-      eq:['machine','body'] },
-    { id:'pushup', name:'푸시업', muscles:'가슴 · 삼두 · 코어',
-      desc:'맨몸으로 가슴과 삼두를 단련하는 기본기',
-      detail:{ summary:'가장 기본적인 맨몸 가슴 운동. 다양한 변형으로 부위별 자극을 바꿀 수 있습니다.',
-        points:['손 간격은 어깨 1.5배 (와이드) 또는 좁게 (나로우)','몸이 일직선이 되도록 코어 긴장','가슴이 바닥에 거의 닿을 때까지 내리기','인클라인/디클라인으로 자극 부위 변경 가능'],
-        tip:'와이드 → 가슴, 나로우 → 삼두, 인클라인 → 하부, 디클라인 → 상부',
-        diff:1, primary:['대흉근'], secondary:['삼두근','전면삼각근','코어'] },
-      eq:['body'] },
+        diff:3,
+        primary:['대흉근 하부','삼두근'],secondary:['전면삼각근']
+      },
+      eq:['body'] // bodyweight, weighted
+    },
   ],
   shoulder: [
-    { id:'military-press', name:'밀리터리 프레스', muscles:'전면·측면 삼각근 · 삼두',
-      desc:'삼각근 전체를 발달시키는 기본 숄더 프레스',
-      detail:{ summary:'바벨이나 덤벨을 머리 위로 밀어올리는 어깨 운동의 기본. 삼각근 전체를 균형있게 발달시킵니다.',
+    {
+      id:'front-press', name:'프런트 프레스', muscles:'전면·측면 삼각근 · 삼두',
+      desc:'삼각근 전체를 발달시키는 기본 프레스',
+      detail:{
+        summary:'앞쪽에서 올리는 숄더프레스로 전면 삼각근을 중심으로 삼각근 전체를 발달시킵니다.',
         points:['허리를 곧게 세우고 코어 긴장 유지','바를 턱 앞에서 정수리 위로 밀어올리기','내릴 때 팔꿈치가 90° 아래로 내려가게','손목이 꺾이지 않도록 직선 유지'],
         tip:'착석 자세로 실시하면 더 안정적입니다.',
-        diff:2, primary:['전면삼각근','측면삼각근'], secondary:['삼두근','승모근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'reverse-press', name:'리버스 프레스', muscles:'후면 삼각근 · 상부 승모',
+        diff:2, primary:['전면삼각근','측면삼각근'], secondary:['삼두근','승모근']
+      },
+      eq:['dumbell','barbell','cable','machine','body']
+    },
+    {
+      id:'rear-press', name:'리어 프레스', muscles:'후면 삼각근 · 상부 승모',
       desc:'비하인드넥 계열 — 후면 어깨 발달',
-      detail:{ summary:'바를 목 뒤로 내리는 비하인드넥 프레스. 후면 삼각근과 승모근을 자극하지만 유연성이 필요합니다.',
+      detail:{
+        summary:'바를 목 뒤로 내리는 비하인드넥 프레스입니다. 후면 삼각근과 승모근을 자극하지만 어깨 유연성이 필요합니다.',
         points:['목 유연성이 충분할 때만 실시','바를 귀 높이까지만 내리기','상체를 앞으로 숙이지 말 것','어깨 불편 시 즉시 중단'],
         tip:'어깨 부상 위험이 있어 초보자에게 권장하지 않습니다.',
-        diff:4, primary:['후면삼각근','상부승모근'], secondary:['측면삼각근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'arnold-press', name:'아놀드 프레스', muscles:'삼각근 전체 (360°)',
-      desc:'회전 동작으로 삼각근 전체를 360° 자극',
-      detail:{ summary:'손바닥을 몸 쪽으로 시작해 180° 회전하며 올리는 덤벨 프레스. 삼각근 전체를 자극합니다.',
-        points:['시작 시 손바닥이 얼굴을 향하게','올리면서 손바닥을 바깥으로 180° 회전','어깨 높이에서 회전 완료','천천히 역방향으로 내리기'],
-        tip:'아놀드 슈왈제네거가 개발한 동작입니다.',
-        diff:2, primary:['삼각근 전체'], secondary:['삼두근'] },
-      eq:['cable','dumbell','body'] },
-    { id:'front-raise', name:'프런트 레이즈', muscles:'전면 삼각근',
-      desc:'팔을 앞으로 들어올려 전면 삼각근 고립',
-      detail:{ summary:'팔을 앞으로 들어올려 전면 삼각근을 고립 자극합니다.',
+        diff:4, primary:['후면삼각근','상부승모근'], secondary:['측면삼각근']
+      },
+      eq:['dumbell','barbell','body']
+    },
+    {
+      id:'front-raise', name:'프런트 레이즈', muscles:'전면 삼각근',
+      desc:'전면 삼각근 고립 운동',
+      detail:{
+        summary:'팔을 앞으로 들어올려 전면 삼각근을 고립 자극합니다.',
         points:['팔꿈치를 약간 구부린 채 들어올리기','눈높이까지만 올리기 (그 이상은 승모근)','반동 사용 금지, 느리고 컨트롤 있게','양손 교차 또는 동시에 가능'],
         tip:'과도한 중량보다 가동 범위를 우선하세요.',
-        diff:1, primary:['전면삼각근'], secondary:['상부승모근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'side-raise', name:'사이드 레이즈', muscles:'측면 삼각근',
-      desc:'어깨 넓이를 키우는 핵심 고립 운동',
-      detail:{ summary:'팔을 옆으로 들어올려 어깨 넓이를 만드는 측면 삼각근 고립 운동입니다.',
+        diff:1, primary:['전면삼각근'], secondary:['상부승모근']
+      },
+      eq:['dumbell','barbell','cable','body']
+    },
+    {
+      id:'side-raise', name:'사이드 레이즈', muscles:'측면 삼각근',
+      desc:'어깨 넓이를 키우는 핵심 운동',
+      detail:{
+        summary:'팔을 옆으로 들어올려 어깨 넓이를 만드는 측면 삼각근 고립 운동입니다.',
         points:['소지가 약지보다 살짝 높게 (새끼 손가락 위)','팔꿈치를 살짝 구부린 채 유지','어깨 높이까지만 올리기','몸통이 흔들리지 않게 코어 고정'],
         tip:'가벼운 중량으로 완전한 가동 범위가 효과적입니다.',
-        diff:1, primary:['측면삼각근'], secondary:['승모근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'bentover-raise', name:'벤트오버 레이즈', muscles:'후면 삼각근 · 회전근개',
-      desc:'상체를 숙이고 팔을 뒤로 들어 후면 어깨 자극',
-      detail:{ summary:'상체를 앞으로 숙이고 팔을 뒤로 들어올려 후면 삼각근을 자극합니다.',
+        diff:1, primary:['측면삼각근'], secondary:['승모근']
+      },
+      eq:['dumbell','cable','machine','body']
+    },
+    {
+      id:'rear-raise', name:'리어 레이즈', muscles:'후면 삼각근 · 회전근개',
+      desc:'후면 어깨 라운딩 방지 및 발달',
+      detail:{
+        summary:'상체를 앞으로 숙이고 팔을 뒤로 들어올려 후면 삼각근을 자극합니다.',
         points:['상체를 지면과 수평이 되게 숙이기','팔꿈치를 살짝 구부린 채 뒤로 들어올리기','어깨 높이까지 들어올리기','목 긴장을 풀고 시선은 바닥'],
         tip:'후면 삼각근은 과소평가되기 쉬운 부위입니다. 꾸준히!',
-        diff:2, primary:['후면삼각근'], secondary:['회전근개','능형근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'reverse-fly', name:'리버스 플라이', muscles:'후면 삼각근 · 등 상부',
-      desc:'머신·케이블로 후면 어깨와 등 상부 동시 자극',
-      detail:{ summary:'펙덱 머신이나 케이블로 팔을 뒤로 벌려 후면 삼각근과 등 상부를 자극합니다.',
+        diff:2, primary:['후면삼각근'], secondary:['회전근개','능형근']
+      },
+      eq:['dumbell','cable','machine','body']
+    },
+    {
+      id:'reverse-fly', name:'리버스 플라이', muscles:'후면 삼각근 · 등 상부',
+      desc:'등 상부와 후면 어깨를 동시 자극',
+      detail:{
+        summary:'펙덱 머신이나 케이블로 팔을 뒤로 벌려 후면 삼각근과 등 상부를 자극합니다.',
         points:['가슴을 패드에 밀착','팔을 최대한 뒤로 벌리기','최대 수축 지점에서 1초 홀딩','천천히 원위치로 복귀'],
         tip:'리어 레이즈와 함께 하면 시너지 효과.',
-        diff:2, primary:['후면삼각근','능형근'], secondary:['중부승모근'] },
-      eq:['machine','cable','dumbell','body'] },
-    { id:'face-pull', name:'페이스 풀', muscles:'후면 삼각근 · 회전근개 · 승모근',
-      desc:'어깨 건강의 핵심 — 회전근개 강화',
-      detail:{ summary:'케이블을 얼굴 방향으로 당기는 운동으로 후면 삼각근, 회전근개, 상부 승모근을 자극합니다.',
+        diff:2, primary:['후면삼각근','능형근'], secondary:['중부승모근']
+      },
+      eq:['dumbell','cable','machine','body']
+    },
+    {
+      id:'face-pull', name:'페이스 풀', muscles:'후면 삼각근 · 회전근개 · 승모근',
+      desc:'어깨 건강의 핵심 — 후면 어깨 & 회전근개',
+      detail:{
+        summary:'케이블을 얼굴 방향으로 당기는 운동으로 후면 삼각근, 회전근개, 상부 승모근을 자극합니다.',
         points:['케이블은 눈높이 또는 약간 위에 설정','팔꿈치를 어깨 높이로 유지하며 당기기','손목을 바깥쪽으로 회전하며 당기기','천천히 컨트롤해서 돌아오기'],
-        tip:'어깨 부상 예방에 매우 효과적입니다. 모든 루틴에 추천.',
-        diff:2, primary:['후면삼각근','회전근개'], secondary:['중부승모근','능형근'] },
-      eq:['cable','body'] },
-    { id:'upright-row', name:'업라이트 로우', muscles:'측면 삼각근 · 승모근 · 이두',
-      desc:'바·덤벨을 턱까지 당겨 전면 삼각근·승모 자극',
-      detail:{ summary:'바벨이나 덤벨을 턱 아래까지 수직으로 당기는 운동. 전면 삼각근과 승모근을 자극합니다.',
-        points:['그립은 어깨 넓이보다 좁게','팔꿈치가 손보다 항상 높게 유지','턱 아래 높이까지만 당기기','천천히 내리며 컨트롤'],
-        tip:'어깨 충돌 증후군 위험이 있으니 그립 너무 좁히지 마세요.',
-        diff:2, primary:['측면삼각근','전면삼각근'], secondary:['승모근','이두근'] },
-      eq:['cable','dumbell','barbell','body'] },
-  ],
-  arms: [
-    { id:'barbell-curl', name:'바벨 컬', muscles:'이두근 · 전완근',
-      desc:'이두 운동의 기본 — 고중량으로 매스 증대',
-      detail:{ summary:'바벨을 언더핸드 그립으로 잡고 팔꿈치를 구부려 이두근을 자극하는 기본 운동입니다.',
-        points:['팔꿈치를 옆구리에 고정하고 시작','손목을 중립으로 유지','최대 수축 지점에서 1초 홀딩','천천히 내리며 이두 스트레칭'],
-        tip:'반동 사용 금지! 팔꿈치가 앞으로 나가면 무게를 줄이세요.',
-        diff:2, primary:['이두근'], secondary:['전완근','전면삼각근'] },
-      eq:['barbell','cable','body'] },
-    { id:'dumbell-curl', name:'덤벨 컬', muscles:'이두근 · 전완근',
-      desc:'좌우 독립으로 이두 불균형 교정',
-      detail:{ summary:'덤벨을 양손 또는 교대로 들어올리는 이두 운동. 좌우 근력 불균형을 교정합니다.',
-        points:['팔꿈치를 옆구리에 고정','올리면서 손바닥을 바깥으로 회전 (슈피네이션)','최대 수축에서 잠깐 멈추기','교대 또는 동시에 가능'],
-        tip:'해머 컬로 변형하면 전완과 장두를 더 자극합니다.',
-        diff:1, primary:['이두근'], secondary:['전완근'] },
-      eq:['dumbell','cable','body'] },
-    { id:'hammer-curl', name:'해머 컬', muscles:'이두근 장두 · 전완근',
-      desc:'중립 그립으로 이두 장두와 전완 집중',
-      detail:{ summary:'손바닥이 서로 마주보는 중립 그립으로 실시하는 컬. 이두 장두와 전완근을 집중 자극합니다.',
-        points:['손바닥이 서로 마주보는 그립 유지','팔꿈치를 옆구리에 고정','엄지손가락이 위를 향하게','천천히 컨트롤하여 내리기'],
-        tip:'팔뚝 두께를 키우는 데 효과적입니다.',
-        diff:1, primary:['이두근 장두','전완근'], secondary:['이두근 단두'] },
-      eq:['dumbell','cable','body'] },
-    { id:'concentration-curl', name:'컨센트레이션 컬', muscles:'이두근 (고립)',
-      desc:'앉아서 팔꿈치 고정 — 이두 완전 고립',
-      detail:{ summary:'앉아서 팔꿈치를 허벅지 안쪽에 고정하고 실시하는 이두 고립 운동입니다.',
-        points:['팔꿈치를 허벅지 안쪽에 완전히 고정','상체를 흔들지 말고 팔꿈치만 사용','최대 수축에서 근육 쥐어짜기','천천히 완전히 내리기'],
-        tip:'이두근 피크(볼록함)를 만드는 데 효과적입니다.',
-        diff:1, primary:['이두근'], secondary:[] },
-      eq:['dumbell','cable','body'] },
-    { id:'cable-curl', name:'케이블 컬', muscles:'이두근',
-      desc:'일정한 장력으로 이두 전 구간 자극',
-      detail:{ summary:'케이블 머신으로 실시하는 이두 운동. 운동 전 구간에 일정한 장력이 유지됩니다.',
-        points:['풀리를 아래에 설정','언더핸드 그립으로 당기기','팔꿈치를 옆구리에 고정','천천히 내리며 완전 이완'],
-        tip:'EZ바나 로프 어태치먼트로 변형 가능합니다.',
-        diff:1, primary:['이두근'], secondary:['전완근'] },
-      eq:['cable','machine','body'] },
-    { id:'tricep-pushdown', name:'트라이셉 푸시다운', muscles:'삼두근',
-      desc:'케이블로 삼두 전체를 고립 자극',
-      detail:{ summary:'케이블 머신에서 팔을 아래로 밀어내려 삼두근을 고립 자극합니다.',
-        points:['팔꿈치를 옆구리에 고정 (가장 중요)','완전히 펴서 삼두 수축 느끼기','천천히 위로 올리며 스트레칭','상체가 앞으로 숙여지지 않게'],
-        tip:'로프 어태치먼트 사용 시 바깥으로 벌리며 더 큰 수축 가능.',
-        diff:1, primary:['삼두근'], secondary:[] },
-      eq:['cable','machine','body'] },
-    { id:'overhead-extension', name:'오버헤드 익스텐션', muscles:'삼두근 장두',
-      desc:'머리 위에서 실시해 삼두 장두 집중 자극',
-      detail:{ summary:'팔을 머리 위로 들어올린 상태에서 구부렸다 펴는 삼두 운동. 장두를 최대로 스트레칭합니다.',
-        points:['팔꿈치를 최대한 귀 옆에 고정','팔꿈치가 앞이나 옆으로 벌어지지 않게','완전히 펴서 삼두 수축 느끼기','천천히 내리며 장두 스트레칭'],
-        tip:'삼두 장두는 오버헤드 자세에서만 완전히 늘어납니다.',
-        diff:2, primary:['삼두근 장두'], secondary:['삼두근'] },
-      eq:['dumbell','cable','body'] },
-    { id:'skull-crusher', name:'스컬 크러셔', muscles:'삼두근',
-      desc:'바벨·EZ바로 삼두 전체를 강하게 자극',
-      detail:{ summary:'누운 자세에서 바를 이마 쪽으로 내렸다 올리는 삼두 운동. 고중량으로 삼두를 강하게 자극합니다.',
-        points:['바를 이마 또는 귀 위로 내리기','팔꿈치가 벌어지지 않도록 고정','천천히 내리고 강하게 밀어올리기','손목이 꺾이지 않도록 주의'],
-        tip:'EZ바 사용 시 손목 부담이 줄어듭니다.',
-        diff:3, primary:['삼두근'], secondary:[] },
-      eq:['dumbell','barbell','cable','body'] },
-    { id:'kickback', name:'킥백', muscles:'삼두근 (고립)',
-      desc:'팔꿈치 고정 후 뒤로 밀어 삼두 완전 수축',
-      detail:{ summary:'상체를 숙인 채 팔꿈치를 고정하고 덤벨을 뒤로 밀어 삼두를 고립 자극합니다.',
-        points:['상체를 지면과 수평으로 숙이기','팔꿈치를 어깨 높이로 고정','뒤로 완전히 밀어 삼두 완전 수축','천천히 구부리며 내리기'],
-        tip:'무게보다 완전한 수축이 중요합니다.',
-        diff:2, primary:['삼두근'], secondary:[] },
-      eq:['dumbell','cable','body'] },
-    { id:'wrist-curl', name:'리스트 컬', muscles:'전완근 (굴곡)',
-      desc:'손목을 구부려 전완 굴곡근 강화',
-      detail:{ summary:'손목을 구부리는 동작으로 전완 굴곡근을 강화합니다.',
-        points:['벤치 위에 전완을 올려 고정','손목만 구부렸다 폈다','천천히 완전한 가동 범위로','양손 또는 한손씩 가능'],
-        tip:'악력과 전완 근육은 모든 운동의 기반입니다.',
-        diff:1, primary:['전완굴곡근'], secondary:['악력근'] },
-      eq:['dumbell','barbell','cable','body'] },
-  ],
-  core: [
-    { id:'crunch', name:'크런치', muscles:'복직근 상부',
-      desc:'기본 복근 운동 — 상부 복직근 고립',
-      detail:{ summary:'등을 바닥에 누운 채 상체를 짧게 말아올려 상부 복직근을 집중 자극합니다.',
-        points:['무릎을 구부려 발을 바닥에 고정','손을 귀 옆에 가볍게 댐 (뒤통수 당기지 말기)','배꼽을 등 쪽으로 당기며 말아올리기','허리는 바닥에 유지, 상체만 말아올리기'],
-        tip:'싯업보다 허리 부담이 적고 복근 고립이 좋습니다.',
-        diff:1, primary:['복직근 상부'], secondary:['복사근'] },
-      eq:['machine','body'] },
-    { id:'leg-raise', name:'레그 레이즈', muscles:'복직근 하부 · 장요근',
-      desc:'다리를 들어올려 하복부 집중 자극',
-      detail:{ summary:'누운 채 다리를 들어올려 하복부를 집중 자극합니다. 행잉 방식은 난이도가 더 높습니다.',
-        points:['허리가 바닥에서 떨어지지 않도록','다리를 90° 이상 올리기','천천히 내리며 하복부 긴장 유지','행잉 시 반동 사용 금지'],
-        tip:'하복부는 자극하기 어렵습니다. 느리게!',
-        diff:2, primary:['복직근 하부'], secondary:['장요근','복횡근'] },
-      eq:['machine','cable','body'] },
-    { id:'knee-up', name:'니업', muscles:'복직근 하부 · 장요근 · 코어',
-      desc:'무릎을 가슴으로 당기는 코어 운동',
-      detail:{ summary:'행잉 또는 딥바에서 무릎을 가슴까지 당겨 올리는 운동으로 하복부를 강하게 자극합니다.',
-        points:['반동 없이 복근으로만 당기기','무릎을 최대한 가슴까지 끌어당기기','정점에서 1초 홀딩','천천히 내리며 복근 긴장 유지'],
-        tip:'레그 레이즈 숙달 후 도전하세요.',
-        diff:3, primary:['복직근 하부','장요근'], secondary:['코어 전체'] },
-      eq:['body'] },
-    { id:'russian-twist', name:'러시안 트위스트', muscles:'복사근 · 복직근',
-      desc:'좌우 회전으로 복사근 집중 단련',
-      detail:{ summary:'앉은 자세에서 상체를 좌우로 비틀어 복사근을 집중 자극합니다.',
-        points:['상체를 45° 뒤로 기울이기','발을 들어올리면 난이도 상승','좌우 번갈아가며 터치하기','허리가 아닌 복사근으로 회전'],
-        tip:'메디신볼이나 덤벨로 중량을 추가할 수 있습니다.',
-        diff:2, primary:['복사근'], secondary:['복직근','장요근'] },
-      eq:['dumbell','body'] },
-    { id:'plank', name:'플랭크', muscles:'코어 전체 · 견갑 안정근',
-      desc:'코어 전체를 등척성 수축으로 강화',
-      detail:{ summary:'팔꿈치와 발끝으로 몸을 지지하는 자세를 유지하는 코어 안정화 운동입니다.',
-        points:['머리부터 발까지 일직선 유지','엉덩이가 올라가거나 처지지 않게','숨을 참지 말고 정상 호흡 유지','시선은 바닥, 목 이완'],
-        tip:'30초 → 1분 → 2분 순으로 목표 시간을 높이세요.',
-        diff:1, primary:['복횡근','복직근'], secondary:['견갑안정근','둔근','척추기립근'] },
-      eq:['body'] },
-    { id:'side-plank', name:'사이드 플랭크', muscles:'복사근 · 외복사근',
-      desc:'옆으로 누워 복사근과 측면 코어 강화',
-      detail:{ summary:'옆으로 누워 팔꿈치와 발로 지지하는 자세. 복사근과 측면 코어를 강화합니다.',
-        points:['팔꿈치를 어깨 바로 아래에 위치','몸이 일직선이 되도록 유지','엉덩이가 처지지 않게','좌우 동일 시간 실시'],
-        tip:'힙 딥(위아래 움직임) 추가 시 난이도 상승.',
-        diff:2, primary:['외복사근','복사근'], secondary:['코어 전체'] },
-      eq:['body'] },
-    { id:'ab-slide', name:'AB 슬라이드', muscles:'코어 전체 · 광배근 · 어깨',
-      desc:'롤아웃으로 코어 전체를 극한 자극',
-      detail:{ summary:'AB휠을 이용해 앞으로 롤아웃하는 운동으로 코어 전체와 광배근을 극한으로 자극합니다.',
-        points:['무릎을 바닥에 대고 시작 (초보)','코어를 최대한 긴장시켜 허리 보호','천천히 앞으로 밀고, 복근으로 당기기','허리가 바닥에 닿을 때까지 내려가지 말 것'],
-        tip:'허리 부상 위험이 높습니다. 코어 기본기 후 도전.',
-        diff:5, primary:['복횡근','복직근'], secondary:['광배근','전면삼각근'] },
-      eq:['body'] },
-    { id:'cable-crunch', name:'케이블 크런치', muscles:'복직근',
-      desc:'케이블 중량으로 복직근에 과부하',
-      detail:{ summary:'케이블 머신을 이용해 중량을 추가한 크런치. 복직근에 더 강한 자극을 줄 수 있습니다.',
-        points:['로프 어태치먼트를 머리 위 풀리에 연결','무릎 꿇고 로프를 머리 양옆에 잡기','배꼽을 무릎 방향으로 말아내리기','천천히 올라오며 복근 긴장 유지'],
-        tip:'복근도 다른 근육처럼 중량 운동이 필요합니다.',
-        diff:2, primary:['복직근'], secondary:['복사근'] },
-      eq:['cable','machine','body'] },
+        tip:'어깨 부상 예방에 매우 효과적입니다. 모든 운동에 추천.',
+        diff:2, primary:['후면삼각근','회전근개'], secondary:['중부승모근','능형근']
+      },
+      eq:['cable','body']
+    },
   ],
   back: [
-    { id:'row', name:'로우', muscles:'광배근 · 능형근 · 이두',
-      desc:'그립·도구에 따라 다양한 등 자극',
-      detail:{ summary:'바벨, 덤벨, 케이블로 당기는 등 운동의 기본. 그립과 도구에 따라 자극 부위가 달라집니다.',
-        points:['허리를 일자로 유지 — 가장 중요!','배꼽 방향으로 당기기 (광배근)','가슴 방향으로 당기기 (상부 등)','등이 둥글지 않게 척추 중립'],
-        tip:'오버그립→광배근, 언더그립→이두 비중 증가.',
-        diff:3, primary:['광배근','능형근'], secondary:['이두근','척추기립근'] },
-      eq:['machine','cable','dumbell','barbell','body'] },
-    { id:'seated-row', name:'시티드 로우', muscles:'광배근 · 능형근 · 이두',
-      desc:'앉아서 당기는 안정적인 케이블·머신 로우',
-      detail:{ summary:'시티드 케이블 로우 또는 머신 로우로 등 중부를 집중 자극합니다.',
-        points:['허리를 곧게 세우고 코어 긴장','배꼽을 향해 당기기','어깨 뒤로 빼며 견갑골 모으기','천천히 완전히 펴며 스트레칭'],
-        tip:'클로즈 그립→등 중부, 와이드 그립→광배근.',
-        diff:2, primary:['광배근','능형근'], secondary:['이두근','후면삼각근'] },
-      eq:['machine','cable','body'] },
-    { id:'lat-pulldown', name:'랫 풀다운', muscles:'광배근 · 이두',
-      desc:'그립에 따라 다양하게 광배근 발달',
-      detail:{ summary:'케이블 머신에서 바를 당겨 내리는 운동. 풀업과 동일한 근육을 자극하며 중량 조절이 자유롭습니다.',
+    {
+      id:'pullup', name:'풀업', muscles:'광배근 · 이두 · 코어',
+      desc:'체중으로 광배근을 단련하는 기본기',
+      detail:{
+        summary:'바에 매달려 턱이 바 위로 올라오도록 끌어올리는 운동. 광배근과 이두를 강하게 자극합니다.',
+        points:['오버핸드 그립, 어깨 넓이보다 넓게','어깨부터 아래로 끌어내리는 느낌','흉골을 바에 가져가듯 당기기','완전히 내려가 광배근 스트레칭'],
+        tip:'풀업이 힘들면 어시스트 밴드나 네거티브부터.',
+        diff:4, primary:['광배근'], secondary:['이두근','후면삼각근','코어']
+      },
+      eq:['body']
+    },
+    {
+      id:'chinup', name:'친업', muscles:'광배근 · 이두 (이두 비중↑)',
+      desc:'언더핸드 그립으로 이두 비중 증가',
+      detail:{
+        summary:'언더핸드(손바닥이 얼굴 쪽) 그립으로 실시하는 풀업 변형. 이두근 자극이 증가합니다.',
+        points:['언더핸드 그립, 어깨 넓이로','턱이 바 위로 올라오도록','팔꿈치를 옆구리 쪽으로 모으기','완전히 내려가 이두 스트레칭'],
+        tip:'풀업보다 상대적으로 쉬워 입문에 좋습니다.',
+        diff:3, primary:['광배근','이두근'], secondary:['후면삼각근']
+      },
+      eq:['body']
+    },
+    {
+      id:'lat-pulldown', name:'랫 풀다운', muscles:'광배근 · 이두',
+      desc:'광배근 발달의 필수 — 다양한 그립 활용',
+      detail:{
+        summary:'케이블 머신에서 바를 당겨 내리는 운동. 풀업과 동일한 근육을 자극하며 중량 조절이 자유롭습니다.',
         points:['가슴을 약간 앞으로 기울이기','바를 쇄골 위 가슴 상부로 당기기','광배근으로 팔꿈치를 아래로 당기는 느낌','천천히 완전히 펴며 스트레칭'],
         tip:'와이드/클로즈/리버스 그립으로 자극 변화를 줘보세요.',
-        diff:2, primary:['광배근'], secondary:['이두근','후면삼각근'] },
-      eq:['machine','cable','body'] },
-    { id:'arm-pulldown', name:'암 풀다운', muscles:'광배근 · 전거근',
-      desc:'팔 편 채로 당겨 광배근 하부 고립',
-      detail:{ summary:'팔꿈치를 편 상태로 케이블을 아래로 당겨 광배근 하부와 전거근을 고립 자극합니다.',
+        diff:2, primary:['광배근'], secondary:['이두근','후면삼각근']
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'arm-pulldown', name:'암 풀다운', muscles:'광배근 · 전거근',
+      desc:'광배근 하부 고립 — 팔을 펴고 당기기',
+      detail:{
+        summary:'팔꿈치를 편 상태로 케이블을 아래로 당겨 광배근 하부와 전거근을 고립 자극합니다.',
         points:['팔꿈치를 완전히 펴고 시작','허벅지 앞까지 일자로 당기기','광배근으로만 당기는 느낌 집중','천천히 올리며 광배근 스트레칭'],
         tip:'스트레이트암 풀다운이라고도 불립니다.',
-        diff:2, primary:['광배근 하부','전거근'], secondary:['삼두근 장두'] },
-      eq:['machine','cable','body'] },
-    { id:'pullup', name:'풀업 / 친업', muscles:'광배근 · 이두 · 코어',
-      desc:'오버·언더 그립으로 광배근과 이두 단련',
-      detail:{ summary:'바에 매달려 턱이 바 위로 올라오도록 끌어올리는 운동. 그립 방향에 따라 자극이 달라집니다.',
-        points:['오버그립→광배근, 언더그립(친업)→이두 비중↑','어깨부터 아래로 끌어내리는 느낌','흉골을 바에 가져가듯 당기기','완전히 내려가 광배근 스트레칭'],
-        tip:'풀업이 힘들면 어시스트 밴드나 네거티브부터.',
-        diff:4, primary:['광배근'], secondary:['이두근','후면삼각근','코어'] },
-      eq:['machine','cable','body'] },
-    { id:'deadlift', name:'데드리프트', muscles:'전신 · 척추기립근 · 둔근 · 햄스트링',
-      desc:'루마니안 포함 — 전신을 자극하는 운동의 왕',
-      detail:{ summary:'바닥의 바벨을 들어올리는 운동. 전신의 거의 모든 근육을 동원하는 최고의 복합 운동입니다.',
+        diff:2, primary:['광배근 하부','전거근'], secondary:['삼두근 장두']
+      },
+      eq:['cable','body']
+    },
+    {
+      id:'front-row', name:'프런트 로우', muscles:'광배근 · 능형근 · 이두',
+      desc:'전방에서 당기는 기본 로우',
+      detail:{
+        summary:'정면에서 바 또는 덤벨을 당기는 복합 운동으로 등 중하부와 이두를 자극합니다.',
+        points:['상체를 45° 전방으로 숙이기','배꼽을 향해 당기기 (광배근)','또는 가슴을 향해 당기기 (상부 등)','등이 둥글지 않게 척추 중립'],
+        tip:'바벨 로우는 중량 운동의 핵심입니다.',
+        diff:3, primary:['광배근','능형근'], secondary:['이두근','척추기립근']
+      },
+      eq:['dumbell','barbell','machine','body']
+    },
+    {
+      id:'seated-row', name:'시티드 로우', muscles:'광배근 · 능형근 · 이두',
+      desc:'앉아서 당기는 안정적인 로우',
+      detail:{
+        summary:'시티드 케이블 로우 또는 머신 로우로 등 중부를 집중 자극합니다.',
+        points:['가슴을 패드에 밀착 (머신) 또는 코어 긴장','배꼽을 향해 당기기','어깨 뒤로 빼며 견갑골 모으기','천천히 완전히 펴며 스트레칭'],
+        tip:'클로즈 그립은 등 중부, 와이드 그립은 광배근에 집중.',
+        diff:2, primary:['광배근','능형근'], secondary:['이두근','후면삼각근']
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'bentover-row', name:'벤트오버 로우', muscles:'광배근 · 능형근 · 척추기립근',
+      desc:'허리와 등 전체를 강화하는 강도 높은 로우',
+      detail:{
+        summary:'상체를 숙인 채 바벨이나 덤벨을 당기는 운동. 광배근과 허리 근육을 강하게 자극합니다.',
+        points:['허리를 일자로 유지 — 가장 중요!','무릎을 약간 구부리고 상체 45° 숙이기','바를 배꼽 향해 당기기','반동 사용 금지'],
+        tip:'허리 부상 위험이 있으니 자세를 최우선으로.',
+        diff:4, primary:['광배근','능형근'], secondary:['척추기립근','이두근','후면삼각근']
+      },
+      eq:['dumbell','barbell','body']
+    },
+    {
+      id:'onearm-row', name:'원암 로우', muscles:'광배근 · 능형근',
+      desc:'단팔 집중으로 좌우 균형 교정',
+      detail:{
+        summary:'한 팔씩 실시하는 덤벨 로우로 좌우 근력 불균형을 교정하고 광배근을 고립 자극합니다.',
+        points:['벤치에 손과 무릎을 올려 안정 확보','허리를 일자로 유지','겨드랑이 방향으로 팔꿈치 당기기','최대 수축에서 견갑골 모으기'],
+        tip:'무거운 중량보다 완전한 가동 범위가 우선.',
+        diff:2, primary:['광배근'], secondary:['능형근','후면삼각근','이두근']
+      },
+      eq:['dumbell','cable','machine','body']
+    },
+    {
+      id:'deadlift', name:'데드리프트', muscles:'전신 · 척추기립근 · 둔근 · 햄스트링',
+      desc:'운동의 왕 — 전신 근육을 자극하는 복합 운동',
+      detail:{
+        summary:'바닥의 바벨을 들어올리는 운동으로 전신의 거의 모든 근육을 동원하는 최고의 복합 운동입니다.',
         points:['발은 어깨 넓이, 바는 정강이 바로 앞','허리는 반드시 아치형 유지 (중립 척추)','가슴을 들고 시선은 약간 위로','엉덩이를 밀어내며 서기 (힙 힌지)'],
-        tip:'루마니안 데드리프트는 햄스트링·둔근에 더 집중됩니다.',
-        diff:5, primary:['척추기립근','둔근','햄스트링','광배근'], secondary:['대퇴사두','승모근','코어'] },
-      eq:['machine','cable','barbell','body'] },
-    { id:'hyperextension', name:'하이퍼 익스텐션', muscles:'척추기립근 · 둔근 · 햄스트링',
+        tip:'허리 부상 예방을 위해 자세가 최우선입니다.',
+        diff:5, primary:['척추기립근','둔근','햄스트링','광배근'], secondary:['대퇴사두','승모근','코어']
+      },
+      eq:['barbell','body']
+    },
+    {
+      id:'hyperextension', name:'하이퍼 익스텐션', muscles:'척추기립근 · 둔근 · 햄스트링',
       desc:'허리와 둔근을 강화하는 필수 운동',
-      detail:{ summary:'익스텐션 벤치에서 상체를 앞으로 숙였다 드는 운동. 허리와 둔근, 햄스트링을 강화합니다.',
+      detail:{
+        summary:'익스텐션 벤치에서 상체를 앞으로 숙였다 드는 운동. 허리와 둔근, 햄스트링을 강화합니다.',
         points:['골반이 패드 끝에 오도록 위치','상체를 지면과 수평이 될 때까지만 올리기','과도한 과신전 금지 (허리 보호)','천천히 컨트롤'],
         tip:'데드리프트와 함께 허리 건강의 핵심입니다.',
-        diff:2, primary:['척추기립근'], secondary:['둔근','햄스트링'] },
-      eq:['machine','body'] },
+        diff:2, primary:['척추기립근'], secondary:['둔근','햄스트링']
+      },
+      eq:['dumbell','barbell','machine','body']
+    },
   ],
-  glutes: [
-    { id:'hip-thrust', name:'힙 쓰러스트', muscles:'대둔근 · 중둔근',
-      desc:'둔근 운동의 왕 — 대둔근 최대 수축',
-      detail:{ summary:'벤치에 등을 기대고 바벨이나 덤벨을 골반에 올려 엉덩이를 들어올리는 운동입니다.',
-        points:['벤치 높이는 어깨뼈 아래쪽에 맞추기','발을 어깨 넓이로 벌리고 무릎 90°','엉덩이를 최대한 높이 들어올리기','정점에서 둔근을 강하게 쥐어짜기'],
-        tip:'발 위치에 따라 자극 부위 변화: 발 멀수록 햄스트링↑',
-        diff:2, primary:['대둔근'], secondary:['중둔근','햄스트링'] },
-      eq:['machine','dumbell','barbell','body'] },
-    { id:'glute-bridge', name:'글루트 브릿지', muscles:'대둔근 · 햄스트링',
-      desc:'바닥에서 실시하는 힙 쓰러스트 기본 버전',
-      detail:{ summary:'바닥에 누워 무릎을 세우고 엉덩이를 들어올리는 운동. 힙 쓰러스트보다 간단하게 실시할 수 있습니다.',
-        points:['무릎을 90°로 세우고 누기','발바닥 전체로 바닥을 누르며 올리기','엉덩이를 최대한 높이 들어올리기','정점에서 둔근을 강하게 수축'],
-        tip:'싱글 레그로 실시하면 난이도와 자극이 증가합니다.',
-        diff:1, primary:['대둔근'], secondary:['햄스트링','척추기립근'] },
-      eq:['dumbell','barbell','body'] },
-    { id:'kickback-glute', name:'글루트 킥백', muscles:'대둔근 · 중둔근',
-      desc:'뒤로 차올려 대둔근 고립',
-      detail:{ summary:'케이블이나 머신으로 다리를 뒤로 차올려 대둔근을 고립 자극합니다.',
-        points:['허리가 꺾이지 않도록 코어 긴장','다리를 뒤로 최대한 차올리기','정점에서 둔근 수축 느끼기','천천히 돌아오며 스트레칭'],
-        tip:'상체를 앞으로 약간 기울이면 자극이 더 강해집니다.',
-        diff:1, primary:['대둔근'], secondary:['중둔근','햄스트링'] },
-      eq:['machine','cable','body'] },
-    { id:'side-kick', name:'사이드 킥', muscles:'중둔근 · 소둔근',
-      desc:'옆으로 차올려 중둔근·소둔근 강화',
-      detail:{ summary:'다리를 옆으로 들어올려 중둔근과 소둔근을 자극합니다.',
-        points:['허리가 흔들리지 않도록 코어 고정','다리를 옆으로 어깨 높이까지 들어올리기','정점에서 잠깐 홀딩','천천히 내리며 컨트롤'],
-        tip:'케이블이나 밴드를 사용하면 저항을 추가할 수 있습니다.',
-        diff:1, primary:['중둔근','소둔근'], secondary:['외전근'] },
-      eq:['machine','cable','body'] },
-    { id:'romanian-deadlift', name:'루마니안 데드리프트', muscles:'햄스트링 · 대둔근',
-      desc:'햄스트링과 둔근을 동시에 늘리고 강화',
-      detail:{ summary:'무릎을 약간 구부린 채 상체를 앞으로 숙여 햄스트링과 둔근을 스트레칭하며 강화합니다.',
-        points:['무릎은 약간만 구부리기','허리를 일자로 유지 (중립 척추)','엉덩이를 뒤로 밀며 내려가기','햄스트링이 늘어나는 느낌에 집중'],
-        tip:'무릎을 더 구부리면 일반 데드리프트, 덜 구부리면 RDL.',
-        diff:3, primary:['햄스트링','대둔근'], secondary:['척추기립근'] },
-      eq:['dumbell','barbell','cable','body'] },
-    { id:'sumo-squat', name:'수모 스쿼트', muscles:'대둔근 · 내전근 · 대퇴사두',
-      desc:'넓은 스탠스로 둔근과 내전근 강조',
-      detail:{ summary:'발을 넓게 벌리고 발끝을 바깥으로 향해 실시하는 스쿼트. 둔근과 내전근을 더 강하게 자극합니다.',
-        points:['발을 어깨 넓이의 1.5~2배로 벌리기','발끝을 45° 바깥으로','무릎이 발끝 방향으로 일치하게','허벅지가 수평 이하로 내려가기'],
-        tip:'발 간격이 넓을수록 내전근과 둔근 자극 증가.',
-        diff:2, primary:['대둔근','내전근'], secondary:['대퇴사두','햄스트링'] },
-      eq:['dumbell','barbell','cable','body'] },
+  core: [
+    {
+      id:'situp', name:'싯업', muscles:'복직근 · 장요근',
+      desc:'기본 복근 운동 — 상부 복직근 자극',
+      detail:{
+        summary:'등을 바닥에 누운 채 상체를 일으키는 운동. 복직근 상부와 장요근을 자극합니다.',
+        points:['무릎을 구부려 발을 바닥에 고정','손을 가슴 위 또는 뒤통수에','허리가 떨어지지 않도록 코어 긴장','천천히 내려가며 복근 스트레칭'],
+        tip:'크런치보다 넓은 가동 범위가 특징입니다.',
+        diff:1, primary:['복직근 상부'], secondary:['장요근','복사근']
+      },
+      eq:['body']
+    },
+    {
+      id:'leg-raise', name:'레그 레이즈', muscles:'복직근 하부 · 장요근',
+      desc:'하복부를 집중 자극하는 레그 레이즈',
+      detail:{
+        summary:'누운 채 다리를 들어올려 하복부를 집중 자극합니다. 행잉 방식은 난이도가 더 높습니다.',
+        points:['허리가 바닥에서 떨어지지 않도록','다리를 90° 이상 올리기','천천히 내리며 하복부 긴장 유지','행잉 시 반동 사용 금지'],
+        tip:'하복부는 자극하기 어렵습니다. 느리게!',
+        diff:2, primary:['복직근 하부'], secondary:['장요근','복횡근']
+      },
+      eq:['body']
+    },
+    {
+      id:'knee-up', name:'니업', muscles:'복직근 하부 · 장요근 · 코어',
+      desc:'무릎을 가슴으로 당기는 코어 운동',
+      detail:{
+        summary:'행잉 또는 딥바에서 무릎을 가슴까지 당겨 올리는 운동으로 하복부를 강하게 자극합니다.',
+        points:['반동 없이 복근으로만 당기기','무릎을 최대한 가슴까지 끌어당기기','정점에서 1초 홀딩','천천히 내리며 복근 긴장 유지'],
+        tip:'레그 레이즈 숙달 후 도전하세요.',
+        diff:3, primary:['복직근 하부','장요근'], secondary:['코어 전체']
+      },
+      eq:['body']
+    },
+    {
+      id:'russian-twist', name:'러시안 트위스트', muscles:'복사근 · 복직근',
+      desc:'회전 동작으로 복사근 집중 단련',
+      detail:{
+        summary:'앉은 자세에서 상체를 좌우로 비틀어 복사근을 집중 자극합니다.',
+        points:['상체를 45° 뒤로 기울이기','발을 들어올리면 난이도 상승','좌우 번갈아가며 터치하기','허리가 아닌 복사근으로 회전'],
+        tip:'메디신볼이나 덤벨로 중량을 추가할 수 있습니다.',
+        diff:2, primary:['복사근'], secondary:['복직근','장요근']
+      },
+      eq:['dumbell','body']
+    },
+    {
+      id:'plank', name:'플랭크', muscles:'코어 전체 · 견갑 안정근',
+      desc:'코어 전체를 등척성 수축으로 강화',
+      detail:{
+        summary:'팔꿈치와 발끝으로 몸을 지지하는 자세를 유지하는 코어 안정화 운동입니다.',
+        points:['머리부터 발까지 일직선 유지','엉덩이가 올라가거나 처지지 않게','숨을 참지 말고 정상 호흡 유지','시선은 바닥, 목 이완'],
+        tip:'30초 → 1분 → 2분 순으로 목표 시간을 높이세요.',
+        diff:1, primary:['복횡근','복직근'], secondary:['견갑안정근','둔근','척추기립근']
+      },
+      eq:['body']
+    },
+    {
+      id:'ab-slide', name:'AB 슬라이드', muscles:'코어 전체 · 광배근 · 어깨',
+      desc:'롤아웃으로 코어 전체를 극한 자극',
+      detail:{
+        summary:'AB휠을 이용해 앞으로 롤아웃하는 운동으로 코어 전체와 광배근을 극한으로 자극합니다.',
+        points:['무릎을 바닥에 대고 시작 (초보)','코어를 최대한 긴장시켜 허리 보호','천천히 앞으로 밀고, 복근으로 당기기','허리가 바닥에 닿을 때까지 내려가지 말 것'],
+        tip:'허리 부상 위험이 높습니다. 코어 기본기 후 도전.',
+        diff:5, primary:['복횡근','복직근'], secondary:['광배근','전면삼각근']
+      },
+      eq:['body']
+    },
   ],
   legs: [
-    { id:'leg-press', name:'레그 프레스', muscles:'대퇴사두 · 둔근',
-      desc:'머신으로 안전하게 하체를 강하게 단련',
-      detail:{ summary:'레그프레스 머신에서 발판을 밀어내는 운동. 허리 부담 없이 하체를 강하게 단련합니다.',
-        points:['발 위치에 따라 자극 부위 변화','발 높이→둔근/햄, 발 낮게→대퇴사두','무릎이 완전히 잠기지 않게 유지','허리가 시트에서 떨어지지 않도록'],
-        tip:'스쿼트가 어려울 때 대안으로 좋습니다.',
-        diff:2, primary:['대퇴사두','둔근'], secondary:['햄스트링','종아리'] },
-      eq:['machine','cable'] },
-    { id:'leg-extension', name:'레그 익스텐션', muscles:'대퇴사두 (고립)',
-      desc:'대퇴사두를 고립 단련하는 머신 운동',
-      detail:{ summary:'레그 익스텐션 머신에서 무릎을 펴는 운동으로 대퇴사두를 고립 자극합니다.',
-        points:['등을 등받이에 완전히 밀착','발목 패드를 발목 바로 위에 위치','천천히 구부리며 내려가기','최대 수축 지점에서 1초 홀딩'],
-        tip:'무릎 부상이 있을 경우 주의가 필요합니다.',
-        diff:1, primary:['대퇴사두'], secondary:[] },
-      eq:['machine','cable','body'] },
-    { id:'leg-curl', name:'레그 컬', muscles:'햄스트링 (고립)',
-      desc:'햄스트링을 집중 단련하는 고립 운동',
-      detail:{ summary:'발을 구부려 햄스트링을 수축시키는 고립 운동입니다.',
-        points:['패드를 아킬레스건 위, 종아리에 위치','최대한 뒤꿈치를 엉덩이로 당기기','천천히 내려가며 햄스트링 스트레칭','허리가 들리지 않도록 (라잉 방식)'],
-        tip:'라잉→시티드→스탠딩 순으로 가동 범위 다름.',
-        diff:1, primary:['햄스트링'], secondary:['종아리'] },
-      eq:['machine','cable','body'] },
-    { id:'adductor', name:'어덕터', muscles:'내전근 (허벅지 내측)',
-      desc:'허벅지 안쪽 내전근 강화',
-      detail:{ summary:'다리를 모으는 동작으로 허벅지 내측 내전근을 강화합니다.',
-        points:['패드를 허벅지 안쪽에 위치','다리를 최대한 모아 내전근 수축','천천히 벌리며 내전근 스트레칭','상체를 흔들지 말 것'],
-        tip:'골반 안정성과 무릎 건강에도 중요합니다.',
-        diff:1, primary:['내전근'], secondary:['박근'] },
-      eq:['machine','cable','body'] },
-    { id:'abductor', name:'앱덕터', muscles:'외전근 · 중둔근 (허벅지 외측)',
-      desc:'허벅지 외측과 중둔근 강화',
-      detail:{ summary:'다리를 바깥으로 벌리는 동작으로 허벅지 외측과 중둔근을 강화합니다.',
-        points:['패드를 허벅지 바깥쪽에 위치','다리를 최대한 벌려 외전근 수축','천천히 모으며 스트레칭','상체를 흔들지 말 것'],
-        tip:'중둔근 발달은 힙 라인과 무릎 건강에 중요합니다.',
-        diff:1, primary:['외전근','중둔근'], secondary:[] },
-      eq:['machine','cable','body'] },
-    { id:'squat', name:'스쿼트', muscles:'대퇴사두 · 둔근 · 햄스트링',
-      desc:'하체 운동의 왕 — 하체 전체를 균형있게 발달',
-      detail:{ summary:'하체 운동의 기본이자 최고. 대퇴사두, 둔근, 햄스트링을 동시에 자극하는 복합 운동입니다.',
+    {
+      id:'squat', name:'스쿼트', muscles:'대퇴사두 · 둔근 · 햄스트링',
+      desc:'하체 운동의 왕 — 하체 전체 발달',
+      detail:{
+        summary:'하체 운동의 기본이자 최고. 대퇴사두, 둔근, 햄스트링을 동시에 자극하는 복합 운동입니다.',
         points:['발은 어깨 넓이, 발끝은 15~30° 외회전','무릎이 발끝 방향으로 일치하게','허리 아치 유지, 가슴을 세우고','허벅지가 지면과 평행 이하로 내려가기'],
         tip:'깊이가 핵심입니다. 무거운 중량보다 깊이!',
-        diff:3, primary:['대퇴사두','둔근'], secondary:['햄스트링','척추기립근','코어'] },
-      eq:['machine','barbell','body'] },
-    { id:'lunge', name:'런지', muscles:'대퇴사두 · 둔근 · 햄스트링',
+        diff:3, primary:['대퇴사두','둔근'], secondary:['햄스트링','척추기립근','코어']
+      },
+      eq:['dumbell','barbell','machine','body']
+    },
+    {
+      id:'leg-press', name:'레그 프레스', muscles:'대퇴사두 · 둔근',
+      desc:'머신으로 안전하게 하체를 단련',
+      detail:{
+        summary:'레그프레스 머신에서 발판을 밀어내는 운동. 허리 부담 없이 하체를 강하게 단련합니다.',
+        points:['발 위치에 따라 자극 부위 변화','발 높이 → 둔근/햄, 발 낮게 → 대퇴사두','무릎이 완전히 잠기지 않게 (약간 구부린 상태 유지)','허리가 시트에서 떨어지지 않도록'],
+        tip:'스쿼트가 어려울 때 대안으로 좋습니다.',
+        diff:2, primary:['대퇴사두','둔근'], secondary:['햄스트링','종아리']
+      },
+      eq:['machine']
+    },
+    {
+      id:'leg-extension', name:'레그 익스텐션', muscles:'대퇴사두 (고립)',
+      desc:'대퇴사두를 고립 단련하는 머신 운동',
+      detail:{
+        summary:'레그 익스텐션 머신에서 무릎을 펴는 운동으로 대퇴사두를 고립 자극합니다.',
+        points:['등을 등받이에 완전히 밀착','발목 패드를 발목 바로 위에 위치','천천히 구부리며 내려가기','최대 수축 지점에서 1초 홀딩'],
+        tip:'무릎 부상이 있을 경우 주의가 필요합니다.',
+        diff:1, primary:['대퇴사두'], secondary:[]
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'leg-curl', name:'레그 컬', muscles:'햄스트링 (고립)',
+      desc:'햄스트링을 집중 단련하는 고립 운동',
+      detail:{
+        summary:'발을 구부려 햄스트링을 수축시키는 고립 운동입니다. 라잉/시티드/스탠딩 방식이 있습니다.',
+        points:['패드를 아킬레스건 위, 종아리에 위치','최대한 뒤꿈치를 엉덩이로 당기기','천천히 내려가며 햄스트링 스트레칭','허리가 들리지 않도록 (라잉 방식)'],
+        tip:'라잉 레그컬 → 시티드 → 스탠딩 순으로 가동 범위 다름.',
+        diff:1, primary:['햄스트링'], secondary:['종아리']
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'adductor', name:'어덕터', muscles:'내전근 (허벅지 내측)',
+      desc:'허벅지 안쪽 내전근 강화',
+      detail:{
+        summary:'다리를 모으는 동작으로 허벅지 내측 내전근을 강화합니다.',
+        points:['패드를 허벅지 안쪽에 위치','다리를 최대한 모아 내전근 수축','천천히 벌리며 내전근 스트레칭','상체를 흔들지 말 것'],
+        tip:'골반 안정성과 무릎 건강에도 중요합니다.',
+        diff:1, primary:['내전근'], secondary:['박근']
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'abductor', name:'앱덕터', muscles:'외전근 · 중둔근 (허벅지 외측)',
+      desc:'허벅지 외측과 중둔근 강화',
+      detail:{
+        summary:'다리를 바깥으로 벌리는 동작으로 허벅지 외측과 중둔근을 강화합니다.',
+        points:['패드를 허벅지 바깥쪽에 위치','다리를 최대한 벌려 외전근 수축','천천히 모으며 스트레칭','상체를 흔들지 말 것'],
+        tip:'중둔근 발달은 힙 라인과 무릎 건강에 중요합니다.',
+        diff:1, primary:['외전근','중둔근'], secondary:[]
+      },
+      eq:['cable','machine','body']
+    },
+    {
+      id:'lunge', name:'런지', muscles:'대퇴사두 · 둔근 · 햄스트링',
       desc:'하체 균형과 근력을 동시에 키우는 런지',
-      detail:{ summary:'한 발씩 앞으로 내딛어 무릎을 구부리는 단다리 운동. 균형감각과 하체 근육을 동시에 발달시킵니다.',
+      detail:{
+        summary:'한 발씩 앞으로 내딛어 무릎을 구부리는 단다리 운동. 균형감각과 하체 근육을 동시에 발달시킵니다.',
         points:['앞무릎이 발끝을 넘어가지 않게','뒷무릎이 바닥에 닿기 전까지 내리기','상체를 곧게 세우고 코어 긴장','양발 간격은 한 보폭 이상'],
         tip:'불가리안 스플릿 스쿼트로 발전시킬 수 있습니다.',
-        diff:2, primary:['대퇴사두','둔근'], secondary:['햄스트링','코어'] },
-      eq:['machine','dumbell','body'] },
-    { id:'calf-raise', name:'카프 레이즈', muscles:'비복근 · 가자미근 (종아리)',
-      desc:'종아리 근육을 집중 강화',
-      detail:{ summary:'발뒤꿈치를 들어올려 종아리 근육(비복근, 가자미근)을 강화합니다.',
-        points:['발 앞꿈치만 지지대에 올리기','최대한 높이 들어올리기','정점에서 1~2초 홀딩','천천히 내리며 완전 스트레칭'],
-        tip:'무릎 구부린 채 실시하면 가자미근에 더 자극.',
-        diff:1, primary:['비복근','가자미근'], secondary:[] },
-      eq:['machine','dumbell','barbell','body'] },
+        diff:2, primary:['대퇴사두','둔근'], secondary:['햄스트링','코어']
+      },
+      eq:['dumbell','barbell','cable','body']
+    },
   ],
   cardio: [
-    { id:'running', name:'러닝', muscles:'전신 유산소', desc:'유산소 능력의 기본', isCardio:true, met:8.0,
-      detail:{ summary:'가장 기본적인 유산소 운동. 심폐 기능을 향상시키고 체지방을 효과적으로 감소시킵니다.',
-        points:['발뒤꿈치가 아닌 발 중간 부분으로 착지','팔을 90° 구부려 앞뒤로 자연스럽게','호흡은 2걸음 들이쉬고 2걸음 내쉬기','인클라인 러닝으로 강도 조절 가능'],
-        tip:'처음엔 걷기+달리기 인터벌로 시작하세요.', diff:2, primary:['심폐기능'], secondary:['하체','코어'] } },
-    { id:'incline-walk', name:'인클라인 워킹', muscles:'유산소 · 둔근 · 종아리', desc:'경사 워킹으로 둔근과 유산소 동시 자극', isCardio:true, met:5.0,
-      detail:{ summary:'트레드밀 경사(10~15%)를 높이고 걷는 운동. 둔근과 햄스트링을 강하게 자극합니다.',
-        points:['속도보다 경사가 중요 (12% 이상 권장)','핸드레일을 잡지 않기','보폭을 크게, 발 전체로 착지','상체를 약간 앞으로 기울이기'],
-        tip:'12-3-30 방법(경사12%, 속도3mph, 30분)이 유명합니다.', diff:1, primary:['심폐기능','둔근'], secondary:['햄스트링','종아리'] } },
-    { id:'cycle', name:'사이클', muscles:'유산소 · 하체', desc:'관절 부담 없는 유산소 운동', isCardio:true, met:6.0,
-      detail:{ summary:'자전거 타기 운동으로 관절에 부담이 적고 하체와 심폐기능을 동시에 단련합니다.',
-        points:['안장 높이를 무릎이 약간 구부러지도록 설정','RPM 80~100 유지 (케이던스)','저항을 높이면 근력 운동 효과','상체를 안정적으로 유지'],
-        tip:'HIIT(고강도 인터벌)로 활용하면 효과 극대화.', diff:1, primary:['심폐기능'], secondary:['대퇴사두','둔근'] } },
-    { id:'rowing', name:'로잉머신', muscles:'전신 유산소 (상체 비중↑)', desc:'전신을 사용하는 고효율 유산소', isCardio:true, met:7.0,
-      detail:{ summary:'로잉 머신으로 노 젓는 동작을 반복하는 전신 유산소 운동입니다.',
-        points:['다리 → 코어 → 팔 순서로 당기기','팔을 앞으로 뻗을 때 상체를 살짝 앞으로','팔꿈치를 옆구리 쪽으로 당기기','발 스트랩을 단단히 고정'],
-        tip:'허리 부상 예방을 위해 자세가 핵심입니다.', diff:3, primary:['심폐기능'], secondary:['광배근','둔근','햄스트링'] } },
-    { id:'stair', name:'스테어 클라이머', muscles:'유산소 · 둔근 · 대퇴', desc:'계단 오르기로 하체와 심폐 동시 단련', isCardio:true, met:9.0,
-      detail:{ summary:'계단 오르기 머신(천국의 계단)으로 심폐기능과 하체, 특히 둔근을 강하게 자극합니다.',
-        points:['핸드레일에 기대지 않기 (자세 유지)','발을 완전히 패드에 올리기','상체를 약간 앞으로 기울이기','속도보다 자세가 중요'],
-        tip:'핸드레일 없이 실시하면 칼로리 소모 30% 증가.', diff:2, primary:['심폐기능','둔근'], secondary:['대퇴사두','종아리'] } },
-    { id:'jumprope', name:'줄넘기', muscles:'전신 유산소 · 종아리 · 협응력', desc:'고강도 전신 유산소', isCardio:true, met:10.0,
-      detail:{ summary:'높은 칼로리 소모와 협응력, 리듬감을 동시에 향상시키는 고강도 유산소입니다.',
-        points:['발 앞꿈치로만 착지 (충격 최소화)','팔은 몸에 가까이 붙이고 손목으로 돌리기','허리를 세우고 시선은 정면','더블언더 → 상급 도전'],
-        tip:'10분 줄넘기는 30분 조깅과 동등한 효과.', diff:2, primary:['심폐기능'], secondary:['종아리','어깨','협응력'] } },
-    { id:'elliptical', name:'일립티컬', muscles:'유산소 전신 (저충격)', desc:'관절 부담 최소의 전신 유산소', isCardio:true, met:5.5,
-      detail:{ summary:'관절에 충격이 거의 없는 저충격 유산소 운동. 상하체를 함께 사용합니다.',
-        points:['발을 완전히 패드에 올리기','팔 핸들을 밀고 당기며 상체도 사용','저항을 높이면 근력 효과 증가','자연스러운 보폭 유지'],
-        tip:'무릎 부상 회복 중에도 안전하게 활용 가능.', diff:1, primary:['심폐기능'], secondary:['대퇴사두','둔근','상체'] } },
-    { id:'battle-rope', name:'배틀 로프', muscles:'전신 유산소 · 상체 · 코어', desc:'상체 중심 고강도 인터벌', isCardio:true, met:8.5,
-      detail:{ summary:'두꺼운 로프를 양손으로 파도치듯 흔드는 고강도 운동. 상체와 코어를 강하게 자극합니다.',
-        points:['발을 어깨 넓이로 벌리고 무릎 살짝 구부리기','코어를 긴장시킨 채 전신으로 흔들기','20초 운동 10초 휴식 인터벌','파도/교차/서클 등 다양한 패턴'],
-        tip:'HIIT 세션에 포함하면 효과적입니다.', diff:3, primary:['심폐기능','상체'], secondary:['코어','어깨'] } },
+    {id:'running', name:'러닝', muscles:'전신 유산소', desc:'유산소 능력의 기본', isCardio:true, met:8.0,
+      detail:{summary:'가장 기본적인 유산소 운동. 심폐 기능을 향상시키고 체지방을 효과적으로 감소시킵니다.',
+      points:['발뒤꿈치가 아닌 발 중간 부분으로 착지','팔을 90° 구부려 앞뒤로 자연스럽게','호흡은 2걸음 들이쉬고 2걸음 내쉬기','인클라인 러닝으로 강도 조절 가능'],
+      tip:'처음엔 걷기+달리기 인터벌로 시작하세요.', diff:2, primary:['심폐기능'], secondary:['하체','코어']}},
+    {id:'incline-walk', name:'인클라인 워킹', muscles:'유산소 · 둔근 · 종아리', desc:'경사 워킹으로 둔근과 유산소 동시 자극', isCardio:true, met:5.0,
+      detail:{summary:'트레드밀 경사(10~15%)를 높이고 걷는 운동. 둔근과 햄스트링을 강하게 자극합니다.',
+      points:['속도보다 경사가 중요 (12% 이상 권장)','핸드레일을 잡지 않기','보폭을 크게, 발 전체로 착지','상체를 약간 앞으로 기울이기'],
+      tip:'12-3-30 방법(경사12%, 속도3mph, 30분)이 유명합니다.', diff:1, primary:['심폐기능','둔근'], secondary:['햄스트링','종아리']}},
+    {id:'cycle', name:'사이클', muscles:'유산소 · 하체', desc:'관절 부담 없는 유산소 운동', isCardio:true, met:6.0,
+      detail:{summary:'자전거 타기 운동으로 관절에 부담이 적고 하체와 심폐기능을 동시에 단련합니다.',
+      points:['안장 높이를 무릎이 약간 구부러지도록 설정','RPM 80~100 유지 (케이던스)','저항을 높이면 근력 운동 효과','상체를 안정적으로 유지'],
+      tip:'HIIT(고강도 인터벌)로 활용하면 효과 극대화.', diff:1, primary:['심폐기능'], secondary:['대퇴사두','둔근']}},
+    {id:'rowing', name:'로잉머신', muscles:'전신 유산소 (상체 비중↑)', desc:'전신을 사용하는 고효율 유산소', isCardio:true, met:7.0,
+      detail:{summary:'로잉 머신으로 노 젓는 동작을 반복하는 운동. 상체와 하체를 모두 사용하는 전신 유산소입니다.',
+      points:['다리 → 코어 → 팔 순서로 당기기','팔을 앞으로 뻗을 때 상체를 살짝 앞으로','팔꿈치를 옆구리 쪽으로 당기기','발 스트랩을 단단히 고정'],
+      tip:'허리 부상 예방을 위해 자세가 핵심입니다.', diff:3, primary:['심폐기능'], secondary:['광배근','둔근','햄스트링']}},
+    {id:'stair', name:'스테어 클라이머', muscles:'유산소 · 둔근 · 대퇴', desc:'계단 오르기로 하체와 심폐 동시 단련', isCardio:true, met:9.0,
+      detail:{summary:'계단 오르기 머신으로 심폐기능과 하체, 특히 둔근을 강하게 자극합니다.',
+      points:['핸드레일에 기대지 않기 (자세 유지)','발을 완전히 패드에 올리기','상체를 약간 앞으로 기울이기','속도보다 자세가 중요'],
+      tip:'핸드레일 없이 실시하면 칼로리 소모가 30% 증가합니다.', diff:2, primary:['심폐기능','둔근'], secondary:['대퇴사두','종아리']}},
+    {id:'jumprope', name:'줄넘기', muscles:'전신 유산소 · 종아리 · 협응력', desc:'고강도 전신 유산소', isCardio:true, met:10.0,
+      detail:{summary:'줄넘기는 높은 칼로리 소모와 협응력, 리듬감을 동시에 향상시키는 고강도 유산소입니다.',
+      points:['발 앞꿈치로만 착지 (충격 최소화)','팔은 몸에 가까이 붙이고 손목으로 돌리기','허리를 세우고 시선은 정면','더블언더 → 상급 도전'],
+      tip:'10분 줄넘기는 30분 조깅과 동등한 효과입니다.', diff:2, primary:['심폐기능'], secondary:['종아리','어깨','협응력']}},
+    {id:'elliptical', name:'일립티컬', muscles:'유산소 전신 (저충격)', desc:'관절 부담 최소의 전신 유산소', isCardio:true, met:5.5,
+      detail:{summary:'관절에 충격이 거의 없는 저충격 유산소 운동. 상하체를 함께 사용합니다.',
+      points:['발을 완전히 패드에 올리기','팔 핸들을 밀고 당기며 상체도 사용','저항을 높이면 근력 효과 증가','자연스러운 보폭 유지'],
+      tip:'무릎 부상 회복 중에도 안전하게 활용 가능합니다.', diff:1, primary:['심폐기능'], secondary:['대퇴사두','둔근','상체']}},
+    {id:'battle-rope', name:'배틀 로프', muscles:'전신 유산소 · 상체 · 코어', desc:'상체 중심 고강도 인터벌', isCardio:true, met:8.5,
+      detail:{summary:'두꺼운 로프를 양손으로 파도치듯 흔드는 고강도 운동. 상체와 코어를 강하게 자극합니다.',
+      points:['발을 어깨 넓이로 벌리고 무릎 살짝 구부리기','코어를 긴장시킨 채 전신으로 흔들기','20초 운동 10초 휴식 인터벌','파도/교차/서클 등 다양한 패턴'],
+      tip:'HIIT 세션에 포함하면 효과적입니다.', diff:3, primary:['심폐기능','상체'], secondary:['코어','어깨']}},
   ],
 };
-
 
 // Equipment definitions
 const EQUIPMENTS = {
@@ -3212,6 +3261,8 @@ function getMuscleSVG(primary, secondary, catColor) {
 }
 
 // ── GEAR INFO per equipment ID ──
+
+
 const GEAR_INFO = {
   dumbell: {
     name:'덤벨', note:'추천', rec:true,
@@ -3242,6 +3293,433 @@ const GEAR_INFO = {
     desc:'맨몸·특수 장비·보조기구 등을 사용하는 운동',
     img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80',
     how:'맨몸 운동이나 풀업바, 딥스바, 케틀벨, 저항밴드 등 다양한 보조 장비를 활용합니다. 어디서든 할 수 있어 접근성이 높고 기능적 움직임을 강조합니다.'
+  },
+};
+
+// ── MACHINE PHOTOS: 운동별 머신 종류 사진 (도구 탭) ──
+const MACHINE_PHOTOS = {
+  // 가슴
+  'flat-press': {
+    title:'체스트 프레스 머신',
+    desc:'앉아서 수행하는 가슴 운동 전용 머신. 궤도가 고정되어 안전하고 초보자도 쉽게 대흉근을 자극할 수 있습니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'체스트 프레스 머신'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'시티드 체스트 프레스'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'컨버지 체스트 프레스'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'스미스 머신 벤치 프레스'},
+    ]
+  },
+  'incline-press': {
+    title:'인클라인 프레스 머신',
+    desc:'상부 가슴을 집중 공략하는 인클라인(경사) 프레스 머신. 쇄골 아래 상부 가슴 볼륨을 키우는 데 효과적입니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'인클라인 체스트 프레스'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'스미스 머신 인클라인'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'인클라인 머신 (30도)'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'인클라인 케이블 프레스'},
+    ]
+  },
+  'fly': {
+    title:'펙 덱 플라이 머신 & 케이블 크로스오버',
+    desc:'가슴 내측 선명도를 높이는 플라이 계열 머신. 펙 덱과 케이블 크로스오버 두 종류가 대표적입니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 크로스오버'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'펙 덱 플라이 머신'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 플라이 (하이)'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 플라이 (로우)'},
+    ]
+  },
+  // 어깨
+  'front-press': {
+    title:'숄더 프레스 머신',
+    desc:'어깨 전·측면 삼각근을 발달시키는 프레스 머신. 시티드, 스탠딩, 스미스 등 다양한 형태가 있습니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'숄더 프레스 머신 (시티드)'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'플레이트 로디드 숄더 프레스'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'스미스 머신 밀리터리 프레스'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 숄더 프레스'},
+    ]
+  },
+  'rear-raise': {
+    title:'리어 델트 플라이 머신 (펙 덱 역방향)',
+    desc:'후면 삼각근을 고립시키는 머신. 펙 덱 머신을 역방향으로 앉아 사용하거나 전용 리어 델트 머신을 활용합니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'리어 델트 플라이 머신'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 리버스 플라이'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'펙 덱 역방향 사용'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'리어 델트 케이블 머신'},
+    ]
+  },
+  'face-pull': {
+    title:'케이블 페이스 풀 머신',
+    desc:'케이블 머신에 로프를 연결해 수행. 어깨 높이에 풀리를 세팅하고 얼굴 쪽으로 당기는 방식입니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 머신 (로프 연결)'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'고 풀리 케이블 세팅'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'듀얼 케이블 크로스'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 타워 풀리'},
+    ]
+  },
+  // 등
+  'lat-pulldown': {
+    title:'랫 풀다운 머신',
+    desc:'광배근을 집중 발달시키는 풀다운 머신. 와이드·뉴트럴·언더 그립 등 다양한 그립으로 변형이 가능합니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'랫 풀다운 (와이드 그립)'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'클로즈 그립 풀다운'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'언더 그립 풀다운'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'스트레이트 암 풀다운'},
+    ]
+  },
+  'seated-row': {
+    title:'시티드 로우 머신',
+    desc:'앉아서 케이블이나 레버를 당기는 로잉 머신. 광배근·능형근·이두근을 자극합니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'케이블 시티드 로우'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'레버리지 시티드 로우'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드 로우'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'머신 로우 (그립 변형)'},
+    ]
+  },
+  'hyper-extension': {
+    title:'하이퍼익스텐션 벤치 (로만 체어)',
+    desc:'척추기립근과 둔근을 단련하는 전용 벤치. 로만 체어(Roman Chair)라고도 불립니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'로만 체어 45도형'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'수평형 하이퍼벤치'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'GHD 머신 (글루트햄)'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 백 익스텐션'},
+    ]
+  },
+  // 하체
+  'leg-press': {
+    title:'레그 프레스 머신',
+    desc:'대퇴사두·둔근을 안전하게 단련하는 하체 전문 머신. 45도 경사형과 수평형 두 가지가 일반적입니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'45도 레그 프레스'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'수평형 레그 프레스'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드 레그 프레스'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'싱글 레그 프레스'},
+    ]
+  },
+  'leg-extension': {
+    title:'레그 익스텐션 머신',
+    desc:'대퇴사두근을 고립 단련하는 머신. 앉아서 발판을 올리는 단관절 운동입니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'레그 익스텐션 머신'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'플레이트 로디드형'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 레그 익스텐션'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'콤보 익스텐션/컬 머신'},
+    ]
+  },
+  'leg-curl': {
+    title:'레그 컬 머신',
+    desc:'햄스트링을 고립 단련하는 머신. 라잉(엎드린), 시티드(앉은), 스탠딩 세 가지 형태가 있습니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'라잉 레그 컬 (엎드린)'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'시티드 레그 컬 (앉은)'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'스탠딩 레그 컬'},
+      {url:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'케이블 레그 컬'},
+    ]
+  },
+  'squat': {
+    title:'스쿼트 랙 & 스미스 머신',
+    desc:'스쿼트 수행을 위한 파워랙과 스미스 머신. 바벨 스쿼트를 안전하게 수행할 수 있습니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'파워 랙 (스쿼트 케이지)'},
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'스미스 머신 스쿼트'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'핵 스쿼트 머신'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'펜듈럼 스쿼트 머신'},
+    ]
+  },
+  'adductor': {
+    title:'어덕터 & 앱덕터 머신',
+    desc:'내전근(어덕터)과 외전근(앱덕터)을 전문으로 단련하는 머신. 대부분 한 기구로 양쪽 다 사용 가능합니다.',
+    photos:[
+      {url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'어덕터 머신 (모으기)'},
+      {url:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'앱덕터 머신 (벌리기)'},
+      {url:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'케이블 힙 어덕션'},
+      {url:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'콤보 어덕터/앱덕터 머신'},
+    ]
+  },
+};
+
+// ── WORKOUT METHODS: 운동법 사진 + 단계별 설명 (운동법 탭) ──
+const WORKOUT_METHODS = {
+  // 가슴
+  'fly': {
+    title:'케이블 크로스오버 & 덤벨 플라이 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 케이블 크로스오버 시작 자세'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 케이블 수축 동작'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 인클라인 덤벨 플라이'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 최대 수축 지점'},
+    ],
+    steps:[
+      '케이블 풀리를 어깨 높이 또는 그보다 약간 높게 설정합니다.',
+      '양 손잡이를 잡고 기구 중앙에 한 발 앞으로 내딛어 중심을 잡습니다.',
+      '큰 나무를 껴안는 느낌으로 팔을 원형으로 가슴 앞쪽으로 모아줍니다.',
+      '팔꿈치는 살짝 굽힌 상태를 유지하며 가슴 안쪽 수축에 집중합니다.',
+      '무게를 버티며 천천히 팔을 원래 위치로 되돌립니다.',
+    ],
+    tip:'케이블 풀리 높이에 따라 타격 부위가 달라집니다 — 높을수록 가슴 하부, 낮을수록 가슴 상부를 자극합니다. 반동 없이 천천히 수행하는 것이 핵심입니다.'
+  },
+  'flat-press': {
+    title:'벤치 프레스 & 스미스 머신 벤치 프레스 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 벤치 프레스 준비'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 가슴까지 내리기'},
+      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 스미스 머신 벤치'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 덤벨 벤치 프레스'},
+    ],
+    steps:[
+      '벤치에 누워 발바닥을 지면에 고정하고 견갑골을 모아 가슴을 활짝 폅니다.',
+      '바벨을 어깨너비보다 약간 넓게 잡고 가슴 정중앙(젖꼭지 라인) 위에 위치시킵니다.',
+      '숨을 들이마시며 팔꿈치를 몸통과 45~75도 각도로 유지하며 천천히 가슴까지 내립니다.',
+      '숨을 내뱉으며 가슴 근육의 힘으로 바벨을 수직으로 밀어 올립니다.',
+      '팔을 완전히 다 펴서 관절을 잠그기(Lock-out) 직전까지만 올립니다.',
+    ],
+    tip:'바벨이 손바닥 아랫부분(두툼한 곳)에 수직으로 얹혀야 손목이 꺾이지 않습니다. 허리 아치를 너무 과하게 만들면 부상 위험이 있으니 자연스러운 아치를 유지하세요.'
+  },
+  'incline-press': {
+    title:'인클라인 프레스 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 인클라인 벤치 세팅 (30~45도)'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 바벨 인클라인 프레스'},
+      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 덤벨 인클라인 프레스'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 상부 가슴 수축 지점'},
+    ],
+    steps:[
+      '벤치 각도를 30~45도로 맞춥니다. 각도가 너무 높으면 가슴보다 어깨가 더 개입됩니다.',
+      '바벨이나 덤벨을 쇄골 아래 상부 가슴 쪽에 위치시킵니다.',
+      '견갑골을 벤치에 밀착시키고 가슴을 활짝 편 상태로 준비합니다.',
+      '천천히 내리면서 상부 가슴이 늘어나는 스트레칭 느낌을 받습니다.',
+      '가슴 힘으로 밀어 올리며 상부 가슴 수축에 집중합니다.',
+    ],
+    tip:'벤치 각도가 높아질수록 어깨 전면 삼각근이 더 많이 개입됩니다. 처음에는 30도 정도의 낮은 각도로 시작해 상부 가슴 자극을 익히는 것을 권장합니다.'
+  },
+  'dips': {
+    title:'딥스 & 디클라인 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80', label:'① 딥스 준비 자세 (상체 앞으로)'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 90도까지 내려가기'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'③ 가슴 힘으로 올라오기'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 어시스트 딥스 머신'},
+    ],
+    steps:[
+      '평행봉을 잡고 팔을 펴서 몸을 띄웁니다.',
+      '가슴에 집중하려면 상체를 앞으로 30도 정도 숙이고 무릎을 뒤로 모읍니다.',
+      '팔꿈치가 90도가 될 때까지 천천히 내려갑니다.',
+      '가슴 근육의 힘으로 바닥을 밀어내듯 올라옵니다.',
+      '팔을 완전히 다 펴서 관절에 충격이 가기 직전까지만 올립니다.',
+    ],
+    tip:'상체를 세우면 삼두근 위주, 앞으로 숙이면 가슴 하부 위주의 자극이 됩니다. 맨몸으로 어렵다면 어시스트 딥스 머신을 활용해 근력을 먼저 키우세요.'
+  },
+  // 어깨
+  'front-press': {
+    title:'밀리터리 프레스 & 아놀드 프레스 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 밀리터리 프레스 준비'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 머리 위로 밀기'},
+      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 아놀드 프레스 (덤벨 회전)'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 덤벨 숄더 프레스 (시티드)'},
+    ],
+    steps:[
+      '바벨을 어깨너비보다 약간 넓게 잡고 쇄골 윗부분에 위치시킵니다.',
+      '발은 어깨너비로 벌리고 복부에 힘을 주어 척추를 고정합니다.',
+      '숨을 내뱉으며 바벨을 머리 위로 수직으로 밀어 올립니다.',
+      '바가 얼굴을 스쳐 지나가도록 하며 머리 위에서 일직선을 만듭니다.',
+      '무게를 버티며 천천히 쇄골 위치까지 내립니다.',
+    ],
+    tip:'허리가 뒤로 꺾이지 않도록 복압을 유지하는 것이 핵심입니다. 무릎을 굽혔다 펴는 반동을 쓰면 밀리터리 프레스가 아닌 푸쉬 프레스가 됩니다.'
+  },
+  'side-raise': {
+    title:'사이드 레이즈 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 준비 자세 (덤벨 허벅지 옆)'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 어깨 높이까지 들어 올리기'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 케이블 사이드 레이즈'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 내리기 (이완)'},
+    ],
+    steps:[
+      '덤벨을 양손에 잡고 허벅지 옆에 둡니다.',
+      '팔꿈치를 아주 살짝 굽혀 고정하고 이 각도를 끝까지 유지합니다.',
+      '어깨 근육의 힘으로 덤벨을 어깨 높이까지 들어 올립니다.',
+      '이 때 새끼손가락이 엄지보다 약간 높게 올라가도록 손목을 조절합니다.',
+      '근육의 긴장을 유지하며 천천히 덤벨을 처음 위치로 내립니다.',
+    ],
+    tip:'어깨가 귀 쪽으로 으쓱 올라가지 않도록 항상 아래로 눌러 고정하세요. 승모근 개입을 막아야 측면 삼각근에 정확한 자극을 줄 수 있습니다.'
+  },
+  'front-raise': {
+    title:'프런트 레이즈 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 덤벨 프런트 레이즈 준비'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 눈높이까지 올리기'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 바벨 프런트 레이즈'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 케이블 프런트 레이즈'},
+    ],
+    steps:[
+      '덤벨을 양손에 잡고 허벅지 앞에 위치시킵니다.',
+      '팔꿈치를 살짝 굽혀 고정한 채 정면으로 눈높이까지 들어 올립니다.',
+      '어깨 전면 근육의 힘으로만 올린다는 느낌에 집중합니다.',
+      '근육의 저항을 느끼며 천천히 처음 위치로 내립니다.',
+    ],
+    tip:'반동을 쓰면 허리에 무리가 갑니다. 무게가 부담스럽다면 한 팔씩 번갈아 수행하는 얼터네이트 방식을 추천합니다.'
+  },
+  'rear-raise': {
+    title:'벤트오버 레터럴 레이즈 & 리버스 플라이 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 상체를 앞으로 숙인 준비 자세'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 양팔 옆으로 벌리기 (수축)'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 케이블 리버스 플라이'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 인클라인 벤치 활용'},
+    ],
+    steps:[
+      '덤벨을 잡고 무릎을 살짝 굽혀 상체를 바닥과 평행하게 숙입니다.',
+      '허리는 곧게 펴고 복부에 힘을 주어 고정합니다.',
+      '팔꿈치를 살짝 굽힌 채 양팔을 옆으로 들어 올립니다.',
+      '날개뼈를 접어서 당기지 말고, 팔을 옆으로 던진다는 느낌으로 수행합니다.',
+      '어깨 후면 근육의 긴장을 느끼며 천천히 처음 위치로 내립니다.',
+    ],
+    tip:'새끼손가락이 약간 위를 향하도록 손등 각도를 조절하면 후면 삼각근에 더 강한 자극을 줄 수 있습니다.'
+  },
+  // 등
+  'lat-pulldown': {
+    title:'랫 풀다운 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 와이드 그립 준비 자세'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 가슴까지 당기기 (수축)'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 언더 그립 변형'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 올리기 (이완)'},
+    ],
+    steps:[
+      '팩(패드)을 허벅지에 단단히 고정하고 바를 어깨너비보다 넓게 잡습니다.',
+      '상체를 약간 뒤로 기울이고 가슴을 활짝 폅니다.',
+      '팔꿈치를 아래로 당긴다는 느낌으로 바를 가슴 윗부분까지 당깁니다.',
+      '광배근이 최대로 수축되는 지점에서 1초 멈추고 자극을 느낍니다.',
+      '무게를 버티며 천천히 팔을 펴 처음 위치로 돌아갑니다.',
+    ],
+    tip:'팔(이두근) 힘으로 당기지 말고 팔꿈치를 주머니에 넣는다는 느낌으로 등 근육을 먼저 사용하세요. 그립 넓이에 따라 자극 부위가 달라집니다.'
+  },
+  'seated-row': {
+    title:'시티드 로우 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'① 뉴트럴 그립 준비 자세'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 복부 쪽으로 당기기 (수축)'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'③ 와이드 그립 시티드 로우'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 머신 로우 변형'},
+    ],
+    steps:[
+      '발판에 발을 올리고 무릎을 살짝 굽혀 케이블 핸들을 잡습니다.',
+      '상체를 곧게 세우고 팔을 앞으로 뻗어 등 근육의 스트레칭을 느낍니다.',
+      '팔꿈치를 몸에 붙이며 복부 쪽으로 핸들을 당깁니다.',
+      '날개뼈가 서로 모이는 느낌으로 등 근육을 최대한 수축합니다.',
+      '무게를 버티며 천천히 팔을 펴 스트레칭 자세로 돌아갑니다.',
+    ],
+    tip:'당길 때 상체를 뒤로 젖히거나 앞으로 숙이지 마세요. 상체를 고정하고 팔과 등만으로 당겨야 광배근에 정확한 자극이 갑니다.'
+  },
+  'deadlift': {
+    title:'데드리프트 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 앞 초기 자세'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 복압 유지하며 들어올리기'},
+      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 루마니안 데드리프트'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 완전히 선 자세 (락아웃)'},
+    ],
+    steps:[
+      '바벨 앞에 발을 골반 너비로 벌리고 바가 발등 중앙 위에 오도록 합니다.',
+      '상체를 숙여 어깨너비로 바를 잡고 정강이가 바에 살짝 닿도록 무릎을 굽힙니다.',
+      '가슴을 활짝 펴고 허리를 곧게 세워 척추 중립을 만듭니다.',
+      '숨을 크게 들이마셔 복압을 유지하며 바닥을 발로 강하게 밀어 바를 들어 올립니다.',
+      '바는 정강이와 허벅지에 밀착시키며 수직으로 움직여야 허리 부담이 줄어듭니다.',
+    ],
+    tip:'허리를 굽히는 것은 절대 금지입니다. 복압 유지와 척추 중립이 데드리프트에서 가장 중요한 요소입니다. 처음에는 가벼운 무게로 자세부터 완성하세요.'
+  },
+  'hyper-extension': {
+    title:'하이퍼익스텐션 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80', label:'① 로만 체어 자세 세팅'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 상체 내리기 (이완)'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'③ 허리 힘으로 올라오기 (수축)'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 플레이트 추가 (고급)'},
+    ],
+    steps:[
+      '패드 높이를 골반 라인보다 약간 아래에 오도록 조절합니다.',
+      '발판에 발을 고정하고 양손은 가슴 위에 X자로 모으거나 머리 뒤에 댑니다.',
+      '허리를 곧게 편 상태를 유지하며 천천히 상체를 앞으로 숙입니다.',
+      '허리 근육의 힘을 사용하여 몸이 일직선이 되는 지점까지 올라옵니다.',
+      '과신전(너무 뒤로 젖히기)은 척추에 무리를 주므로 반드시 피합니다.',
+    ],
+    tip:'허리 집중: 상체를 곧게 / 엉덩이·햄스트링 집중: 등을 약간 둥글게 말고 골반 축으로 움직입니다. 부하를 높이고 싶다면 가슴에 플레이트를 들고 수행합니다.'
+  },
+  // 하체
+  'squat': {
+    title:'바벨 스쿼트 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'① 바벨 어깨에 올리기'},
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'② 무릎 굽히며 앉기'},
+      {img:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80', label:'③ 허벅지 평행까지 내려가기'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'④ 힘껏 올라오기'},
+    ],
+    steps:[
+      '바벨을 승모근 위(하이바) 또는 후면 삼각근(로우바)에 올려 어깨 뒤에 안정적으로 위치시킵니다.',
+      '발은 어깨너비로 벌리고 발끝을 15~30도 바깥을 향하게 합니다.',
+      '가슴을 세우고 코어에 힘을 주며 무릎을 발끝 방향으로 밀면서 천천히 앉습니다.',
+      '허벅지가 바닥과 평행이 될 때까지 내려갑니다.',
+      '발바닥 전체로 지면을 강하게 밀어내며 올라옵니다.',
+    ],
+    tip:'무릎이 안쪽으로 모이지 않도록 항상 발끝 방향으로 밀어내야 합니다. 등이 굽어지거나 뒤꿈치가 들리면 무게를 줄이고 자세를 먼저 교정하세요.'
+  },
+  'leg-press': {
+    title:'레그 프레스 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 발판에 발 위치시키기'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 무릎 굽혀 내리기'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 발판 강하게 밀어 올리기'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 발 위치에 따른 자극 부위'},
+    ],
+    steps:[
+      '시트에 앉아 허리를 패드에 밀착시키고 발판에 발을 어깨너비로 올립니다.',
+      '안전 잠금 장치를 풀고 발판이 몸 쪽으로 천천히 내려오도록 합니다.',
+      '무릎이 90도 정도가 될 때까지 내립니다. 허리가 패드에서 떨어지지 않도록 주의합니다.',
+      '발바닥 전체로 발판을 강하게 밀어 올립니다.',
+      '무릎을 완전히 잠그지 않는 지점까지만 펴 근육 긴장을 유지합니다.',
+    ],
+    tip:'발 위치에 따라 타격 부위가 달라집니다 — 높으면 둔근·햄스트링, 낮으면 대퇴사두 위주입니다. 무릎이 안으로 모이지 않도록 바깥으로 밀어내세요.'
+  },
+  'leg-extension': {
+    title:'레그 익스텐션 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 시트 높이 & 롤러 조절'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 발 들어 올리기 (수축)'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 대퇴사두 최대 수축'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 내리기 (이완)'},
+    ],
+    steps:[
+      '시트에 앉아 롤러가 발목 앞쪽에 오도록 높이를 조절합니다.',
+      '등받이를 등에 밀착시키고 허벅지를 시트에 고정합니다.',
+      '대퇴사두 근육의 힘으로 다리를 거의 일직선이 될 때까지 들어 올립니다.',
+      '최대 수축 지점에서 1~2초 멈추고 허벅지 앞면에 자극을 느낍니다.',
+      '무게를 버티며 천천히 처음 위치로 내립니다.',
+    ],
+    tip:'관절 부담을 줄이려면 완전히 다 내리지 말고 70~80% 정도까지만 내립니다. 무릎 통증이 있다면 가동 범위를 줄이세요.'
+  },
+  'leg-curl': {
+    title:'레그 컬 운동법',
+    photos:[
+      {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', label:'① 라잉 레그 컬 준비 (엎드려)'},
+      {img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80', label:'② 발꿈치 엉덩이 쪽으로 당기기'},
+      {img:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80', label:'③ 시티드 레그 컬 (앉아서)'},
+      {img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80', label:'④ 천천히 이완'},
+    ],
+    steps:[
+      '머신에 엎드려 발목 뒤쪽에 롤러가 오도록 위치를 조절합니다.',
+      '골반을 패드에 밀착시키고 허리가 들리지 않도록 고정합니다.',
+      '햄스트링 힘으로 발꿈치를 엉덩이 쪽으로 당깁니다.',
+      '최대 수축 지점에서 잠깐 멈추고 허벅지 뒤쪽 자극을 느낍니다.',
+      '무게를 버티며 천천히 처음 위치로 내립니다.',
+    ],
+    tip:'발꿈치를 당길 때 엉덩이가 들리면 햄스트링이 아닌 둔근이 개입됩니다. 골반을 고정하고 허벅지 뒤쪽 힘만 사용하세요.'
   },
 };
 
@@ -3285,36 +3763,63 @@ function showDetail(e, catId, typeId) {
       </div>
     </div>`).join('');
 
-  // Gear list
-  const allowedEq = type.eq || ['dumbell','barbell','cable','machine','body'];
-  const gearHTML = allowedEq.map(eqId => {
-    const g = GEAR_INFO[eqId];
-    const eq = EQUIPMENTS[eqId];
-    if (!g || !eq) return '';
-    return `
-    <div class="gear-card">
-      <div class="gear-img-wrap">
-        <img src="${g.img}" alt="${g.name}" loading="lazy" onerror="this.parentElement.style.background='var(--bg4)';this.style.display='none'"/>
-        <div class="gear-img-overlay"></div>
-        <div class="gear-img-label">
-          <div style="width:32px;height:32px;background:rgba(0,0,0,0.5);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${eq.color};flex-shrink:0;border:1px solid rgba(255,255,255,0.1);">${EQ_SVGS[eq.svgKey]||""}</div>
-          <div class="gear-img-name">${g.name}</div>
-        </div>
-      </div>
-      <div class="gear-body">
-        <div class="gear-badge ${g.rec?"rec":""}" style="display:inline-block;margin-bottom:6px;">${g.note}</div>
-        <div class="gear-desc">${g.desc}</div>
-        <div class="gear-how-title" style="margin-top:10px;">사용 방법</div>
-        <div class="gear-how-text">${g.how}</div>
-      </div>
-    </div>`;
-  }).join('');
-
   // Muscle legend
   const muscleLegendHTML = [
     ...(d.primary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot primary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type" style="color:${cat.color}">주동근</div></div>`),
     ...(d.secondary||[]).map(m => `<div class="muscle-legend-row"><div class="muscle-dot secondary"></div><div class="muscle-legend-name">${m}</div><div class="muscle-legend-type">보조근</div></div>`),
   ].join('');
+
+  // 도구 탭 - 머신 사진 4분할 그리드
+  const mp = MACHINE_PHOTOS[type.id];
+  const machineGearHTML = mp
+    ? `<div style="padding:4px 0 8px;">
+        <div style="font-size:13px;font-weight:800;color:var(--text0);letter-spacing:0.5px;margin-bottom:4px;">${mp.title}</div>
+        <div style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:14px;">${mp.desc}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+          ${mp.photos.map(p => `
+            <div style="border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3;background:var(--bg4);">
+              <img src="${p.url}" alt="${p.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>
+              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:18px 8px 6px;">
+                <div style="font-size:10px;font-weight:700;color:#fff;letter-spacing:0.3px;">${p.label}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`
+    : `<div style="text-align:center;padding:40px 16px;color:var(--text3);">
+        <div style="font-size:32px;margin-bottom:12px;">🔧</div>
+        <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:6px;">전용 머신 없음</div>
+        <div style="font-size:12px;">이 운동은 덤벨·바벨·바디웨이트로 수행합니다.</div>
+      </div>`;
+
+  // 운동법 탭 - 사진 4분할 + 단계별 설명
+  const wm = WORKOUT_METHODS[type.id];
+  const howtoHTML = wm
+    ? `<div style="padding:4px 0 8px;">
+        <div style="font-size:13px;font-weight:800;color:var(--text0);letter-spacing:0.5px;margin-bottom:12px;">${wm.title}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+          ${wm.photos.map((p,i) => `
+            <div style="border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3;background:var(--bg4);">
+              <img src="${p.img}" alt="${p.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>
+              <div style="position:absolute;top:6px;left:6px;width:20px;height:20px;border-radius:50%;background:${cat.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#000;">${i+1}</div>
+              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));padding:18px 8px 6px;">
+                <div style="font-size:10px;font-weight:700;color:#fff;">${p.label}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div style="margin-bottom:14px;">
+          ${wm.steps.map((s,i) => `
+            <div style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;">
+              <div style="width:22px;height:22px;border-radius:6px;background:${cat.bg};color:${cat.color};font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${i+1}</div>
+              <div style="font-size:13px;color:var(--text1);line-height:1.55;">${s}</div>
+            </div>`).join('')}
+        </div>
+        ${wm.tip ? `<div class="tip-box"><div class="tip-icon">💡</div><div class="tip-text">${wm.tip}</div></div>` : ""}
+      </div>`
+    : `<div style="text-align:center;padding:40px 16px;color:var(--text3);">
+        <div style="font-size:32px;margin-bottom:12px;">💪</div>
+        <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:6px;">운동법 준비 중</div>
+        <div style="font-size:12px;">가이드 탭의 자세 가이드를 참고하세요.</div>
+      </div>`;
 
   _guideTabState = 'guide';
 
@@ -3332,9 +3837,9 @@ function showDetail(e, catId, typeId) {
 
     <!-- TABS -->
     <div class="guide-tabs">
-      <button class="guide-tab active" data-tab="guide" onclick="switchGuideTab('guide')">가이드</button>
-      <button class="guide-tab" data-tab="muscles" onclick="switchGuideTab('muscles')">근육</button>
-      <button class="guide-tab" data-tab="gear" onclick="switchGuideTab('gear')">장비</button>
+      <button class="guide-tab active" data-tab="guide" onclick="switchGuideTab('guide')">가이드 · 근육</button>
+      <button class="guide-tab" data-tab="gear" onclick="switchGuideTab('gear')">도구</button>
+      <button class="guide-tab" data-tab="howto" onclick="switchGuideTab('howto')">운동법</button>
     </div>
 
     <!-- PANELS -->
@@ -3376,34 +3881,34 @@ function showDetail(e, catId, typeId) {
           <div class="tip-icon">💡</div>
           <div class="tip-text">${d.tip}</div>
         </div>` : ""}
-      </div>
 
-      <!-- MUSCLES PANEL -->
-      <div class="guide-panel" data-panel="muscles">
-        <div class="muscle-diagram">
-          <div class="muscle-figure">${muscleSVG}</div>
-          <div class="muscle-legend">
-            <div class="muscle-legend-title">근육 분포</div>
-            ${muscleLegendHTML}
+        <!-- 근육 다이어그램 (가이드 탭 하단 합침) -->
+        <div class="detail-section" style="margin-top:16px;">
+          <div class="detail-section-title">근육 분포</div>
+          <div class="muscle-diagram" style="margin-top:8px;">
+            <div class="muscle-figure">${muscleSVG}</div>
+            <div class="muscle-legend">
+              <div class="muscle-legend-title">사용 근육</div>
+              ${muscleLegendHTML}
+            </div>
           </div>
-        </div>
-
-        <div class="detail-section" style="margin-top:4px;">
-          <div class="detail-section-title">주동근</div>
-          <div class="muscle-tags" style="margin-bottom:12px;">
-            ${(d.primary||[]).map(m => `<span class="muscle-tag primary">${m}</span>`).join("")}
-          </div>
-          <div class="detail-section-title">보조근</div>
-          <div class="muscle-tags">
-            ${(d.secondary||[]).map(m => `<span class="muscle-tag">${m}</span>`).join("")}
+          <div style="margin-top:10px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">주동근</div>
+            <div class="muscle-tags" style="margin-bottom:8px;">${(d.primary||[]).map(m=>`<span class="muscle-tag primary">${m}</span>`).join("")}</div>
+            <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">보조근</div>
+            <div class="muscle-tags">${(d.secondary||[]).map(m=>`<span class="muscle-tag">${m}</span>`).join("")}</div>
           </div>
         </div>
       </div>
 
-      <!-- GEAR PANEL -->
+      <!-- GEAR PANEL (도구 - 머신 이미지 그리드) -->
       <div class="guide-panel" data-panel="gear">
-        <div class="detail-section-title" style="margin-bottom:12px;">사용 가능 장비</div>
-        <div class="gear-list">${gearHTML}</div>
+        ${machineGearHTML}
+      </div>
+
+      <!-- HOWTO PANEL (운동법) -->
+      <div class="guide-panel" data-panel="howto">
+        ${howtoHTML}
       </div>
 
     </div>
@@ -4029,6 +4534,93 @@ function showToast(msg, accent=false) {
 // START
 // ═══════════════════════════════════════
 init();
+
+// ═══════════════════════════════════════
+// PWA 설치 프롬프트
+// ═══════════════════════════════════════
+let _deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredPrompt = e;
+  // 설치 버튼 표시
+  const btn = document.getElementById('pwaInstallBtn');
+  if (btn) btn.style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  _deferredPrompt = null;
+  const btn = document.getElementById('pwaInstallBtn');
+  if (btn) btn.style.display = 'none';
+  showToast('앱이 설치되었습니다! 🎉', true);
+});
+
+async function triggerPWAInstall() {
+  if (_deferredPrompt) {
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    if (outcome === 'accepted') showToast('설치 완료! 홈 화면을 확인하세요 🎉', true);
+    _deferredPrompt = null;
+    const btn = document.getElementById('pwaInstallBtn');
+    if (btn) btn.style.display = 'none';
+  } else {
+    // iOS or already installed — 안내 모달
+    showInstallGuide();
+  }
+}
+
+function showInstallGuide() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const msg = isIOS
+    ? 'Safari에서 하단 공유 버튼(□↑) → "홈 화면에 추가"를 선택하세요'
+    : '브라우저 메뉴(⋮) → "앱 설치" 또는 "홈 화면에 추가"를 선택하세요';
+  document.getElementById('installGuideText').textContent = msg;
+  openModal('installGuide');
+}
+
+// Service Worker 등록
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
 </script>
+
+<!-- PWA 설치 안내 모달 -->
+<div class="overlay" id="overlay-installGuide" onclick="overlayClick(event,'installGuide')">
+  <div class="sheet" style="max-height:50vh;">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title">📱 앱 설치</div>
+      <button class="sheet-close" onclick="closeModal('installGuide')">✕</button>
+    </div>
+    <div style="padding:20px 20px 0;">
+      <div style="display:flex;gap:14px;align-items:center;background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:16px;">
+        <div style="width:52px;height:52px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--text0);">IRON LOG</div>
+          <div style="font-size:12px;color:var(--text3);">헬스 운동 기록 앱</div>
+        </div>
+      </div>
+      <div id="installGuideText" style="font-size:14px;color:var(--text1);line-height:1.7;background:var(--bg3);border-radius:12px;padding:14px;margin-bottom:16px;"></div>
+    </div>
+    <div class="sheet-footer" style="padding:12px 20px;">
+      <button class="btn-add" onclick="closeModal('installGuide')" style="width:100%;">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- PWA 설치 플로팅 버튼 -->
+<button id="pwaInstallBtn" onclick="triggerPWAInstall()"
+  style="display:none;position:fixed;bottom:80px;right:16px;z-index:500;
+    background:var(--accent);color:#000;border:none;border-radius:50px;
+    padding:10px 18px;gap:8px;align-items:center;cursor:pointer;
+    font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;
+    letter-spacing:0.5px;box-shadow:0 4px 20px rgba(232,255,71,0.35);">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v13M8 11l4 4 4-4"/><rect x="3" y="17" width="18" height="4" rx="2"/></svg>
+  앱 설치
+</button>
 </body>
 </html>
